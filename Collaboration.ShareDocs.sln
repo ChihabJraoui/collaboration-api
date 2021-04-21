@@ -1,0 +1,67 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SourceCode", "SourceCode", "{00434E87-A1D4-4BC9-875C-B44FBCDCA984}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BusinessLayer", "BusinessLayer", "{32461B79-303A-4677-AEF4-B5C1A2579F30}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataAccessLayer", "DataAccessLayer", "{AE2A7087-F812-4439-94F6-297A13AE076F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PresentationLayer", "PresentationLayer", "{906BF491-AAB5-4EB4-A072-EC964368A720}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collaboration.ShareDocs.Application", "Collaboration.ShareDocs\SourceCode\BusinessLayer\Collaboration.ShareDocs.Application\Collaboration.ShareDocs.Application.csproj", "{366DCDCD-CF23-46B7-A69A-A77603922674}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collaboration.ShareDocs.Persistence", "Collaboration.ShareDocs\SourceCode\DataAccessLayer\Collaboration.ShareDocs.Persistence\Collaboration.ShareDocs.Persistence.csproj", "{2CFCCEC0-AB98-42B2-B826-8D70E15708E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collaboration.ShareDocs.Provision", "Collaboration.ShareDocs\SourceCode\PresentationLayer\Collaboration.ShareDocs.Provision\Collaboration.ShareDocs.Provision.csproj", "{4654E136-3602-4ED1-B7E5-B42E6AC71918}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collaboration.ShareDocs.Localization", "Collaboration.ShareDocs\SourceCode\PresentationLayer\Collaboration.ShareDocs.Localization\Collaboration.ShareDocs.Localization.csproj", "{BE391FDF-F553-496B-92B3-2ECC154B707D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collaboration.ShareDocs.Api", "Collaboration.ShareDocs\SourceCode\PresentationLayer\Collaboration.ShareDocs.Api\Collaboration.ShareDocs.Api.csproj", "{FD15A6EC-9320-4280-BA85-07E5CE5C8B76}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{366DCDCD-CF23-46B7-A69A-A77603922674}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{366DCDCD-CF23-46B7-A69A-A77603922674}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{366DCDCD-CF23-46B7-A69A-A77603922674}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{366DCDCD-CF23-46B7-A69A-A77603922674}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CFCCEC0-AB98-42B2-B826-8D70E15708E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CFCCEC0-AB98-42B2-B826-8D70E15708E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CFCCEC0-AB98-42B2-B826-8D70E15708E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CFCCEC0-AB98-42B2-B826-8D70E15708E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4654E136-3602-4ED1-B7E5-B42E6AC71918}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4654E136-3602-4ED1-B7E5-B42E6AC71918}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4654E136-3602-4ED1-B7E5-B42E6AC71918}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4654E136-3602-4ED1-B7E5-B42E6AC71918}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE391FDF-F553-496B-92B3-2ECC154B707D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE391FDF-F553-496B-92B3-2ECC154B707D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE391FDF-F553-496B-92B3-2ECC154B707D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE391FDF-F553-496B-92B3-2ECC154B707D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD15A6EC-9320-4280-BA85-07E5CE5C8B76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD15A6EC-9320-4280-BA85-07E5CE5C8B76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD15A6EC-9320-4280-BA85-07E5CE5C8B76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD15A6EC-9320-4280-BA85-07E5CE5C8B76}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{32461B79-303A-4677-AEF4-B5C1A2579F30} = {00434E87-A1D4-4BC9-875C-B44FBCDCA984}
+		{AE2A7087-F812-4439-94F6-297A13AE076F} = {00434E87-A1D4-4BC9-875C-B44FBCDCA984}
+		{906BF491-AAB5-4EB4-A072-EC964368A720} = {00434E87-A1D4-4BC9-875C-B44FBCDCA984}
+		{366DCDCD-CF23-46B7-A69A-A77603922674} = {32461B79-303A-4677-AEF4-B5C1A2579F30}
+		{2CFCCEC0-AB98-42B2-B826-8D70E15708E9} = {AE2A7087-F812-4439-94F6-297A13AE076F}
+		{4654E136-3602-4ED1-B7E5-B42E6AC71918} = {906BF491-AAB5-4EB4-A072-EC964368A720}
+		{BE391FDF-F553-496B-92B3-2ECC154B707D} = {906BF491-AAB5-4EB4-A072-EC964368A720}
+		{FD15A6EC-9320-4280-BA85-07E5CE5C8B76} = {906BF491-AAB5-4EB4-A072-EC964368A720}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {84758A7B-7734-4E01-A089-D452A6783EB3}
+	EndGlobalSection
+EndGlobal
