@@ -34,8 +34,8 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
         {
             var entity = await _context.Workspaces
                 .Where(e => e.Id == workspaceId)
-                .SingleOrDefaultAsync(cancellationToken)
-                ;
+                .SingleOrDefaultAsync(cancellationToken);
+
             _context.Workspaces.Remove(entity);
             await _context.SaveChangesAsync(cancellationToken);
 

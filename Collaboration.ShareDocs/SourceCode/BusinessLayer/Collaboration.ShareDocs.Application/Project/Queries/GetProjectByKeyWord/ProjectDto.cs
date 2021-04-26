@@ -6,15 +6,15 @@ using System.Text;
 
 namespace Application.Project.Queries.GetProjectByKeyWord
 {
-    public class ProjectDto : IMapForm<Core.Entities.Project>
+    public class ProjectDto : IMapForm<Collaboration.ShareDocs.Persistence.Entities.Project>
     {
         public string Label { get; set; }
         public string Icon { get; set; }
-        public virtual Core.Entities.Workspace Workspace { get; set; }
+        public virtual Collaboration.ShareDocs.Persistence.Entities.Workspace Workspace { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Core.Entities.Project, ProjectDto>();
+            profile.CreateMap<Collaboration.ShareDocs.Persistence.Entities.Project, ProjectDto>();
         }
 
     }

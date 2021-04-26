@@ -4,10 +4,11 @@ using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Collaboration.ShareDocs.Persistence.Entities;
 
 namespace Application.Folder.Queries.GetAllFolder
 {
-    public class GetFoldersDto:IMapForm<Core.Entities.Folder>
+    public class GetFoldersDto:IMapForm<Folder>
     {
         public string Name { get; set; }
 
@@ -20,15 +21,15 @@ namespace Application.Folder.Queries.GetAllFolder
         public DateTime? LastModified { get; set; }
 
         public string DeletedBy { get; set; }
+
         public DateTime? DeletedAt { get; set; }
 
-        public virtual ICollection<Core.Entities.File> Files { get; set; }
+        public virtual ICollection<File> Files { get; set; }
 
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Core.Entities.Folder, GetFoldersDto>()
-               ;
+            profile.CreateMap<Folder, GetFoldersDto>();
         }
     }
 }

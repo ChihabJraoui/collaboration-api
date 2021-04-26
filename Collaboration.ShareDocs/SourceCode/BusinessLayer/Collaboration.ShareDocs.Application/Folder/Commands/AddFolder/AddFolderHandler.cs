@@ -2,6 +2,7 @@
 using Application.Common.Interfaces;
 using Application.Project.Queries.GetProjectById;
 using Application.Repositories;
+using Collaboration.ShareDocs.Persistence.Interfaces;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -23,27 +24,27 @@ namespace Application.Folder.Commands
             _currentUserService = currentUserService;
             _projectRepository = projectRepository;
         }
-        public async Task<Core.Entities.Folder> Handle(AddFolderCommand request, CancellationToken cancellationToken)
+        public async Task<Collaboration.ShareDocs.Persistence.Entities.Folder> Handle(AddFolderCommand request, CancellationToken cancellationToken)
         {
             var existe = await _folderRepository.UniqueName(request.Name);
             if (!existe)
             {
                 throw new BusinessRuleException("Is already existe");
             };
-            var folder = new Core.Entities.Folder(request.Name);
+            var folder = new Collaboration.ShareDocs.Persistence.Entities.Folder(request.Name);
             
             //requered the idProject
             var queryProject = new GetProjectByIdQuery
             {
                 Id = request.ProjectId
-            };
+            }; 
 
             var project = await _projectRepository.GetAsync(queryProject);
             if(project == null)
             {
                 throw new BusinessRuleException("Project doesn't exist");
-
             }
+
             return  await _folderRepository.AddAsync(folder,request,_currentUserService,project);
         }
     }

@@ -1,12 +1,11 @@
 ﻿using Application.Common.Mapping;
 using AutoMapper;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Collections.Generic;  
 
 namespace Application.Workspace.Queries.GetAllWorkspaces
 {
-    public class WorkspaceDto:IMapForm<Core.Entities.Workspace>
+    public class WorkspaceDto:IMapForm<Collaboration.ShareDocs.Persistence.Entities.Workspace>
     {
         public Guid id { get; set; }
         public string Name { get; set; }
@@ -28,12 +27,11 @@ namespace Application.Workspace.Queries.GetAllWorkspaces
         public bool IsPrivate { get; set; }
 
 
-        public virtual ICollection<Core.Entities.Project> Projects { get; set; }
+        public virtual ICollection<Collaboration.ShareDocs.Persistence.Entities.Project> Projects { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Core.Entities.Workspace, WorkspaceDto>()
-               ;
+            profile.CreateMap<Collaboration.ShareDocs.Persistence.Entities.Workspace, WorkspaceDto>();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Application.Common.Exceptions;
 using Application.Repositories;
+using Collaboration.ShareDocs.Persistence.Interfaces;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Project.Queries.GetProjectById
 {
-    public class GetProjectByIdQueryHandler : IRequestHandler<GetProjectByIdQuery, Core.Entities.Project>
+    public class GetProjectByIdQueryHandler : IRequestHandler<GetProjectByIdQuery, Collaboration.ShareDocs.Persistence.Entities.Project>
     {
         private readonly IProjectRepository _projectRepository;
 
@@ -19,7 +20,7 @@ namespace Application.Project.Queries.GetProjectById
         }
 
 
-        public async Task<Core.Entities.Project> Handle(GetProjectByIdQuery request, CancellationToken cancellationToken)
+        public async Task<Collaboration.ShareDocs.Persistence.Entities.Project> Handle(GetProjectByIdQuery request, CancellationToken cancellationToken)
         {
             if (request.Id == Guid.Empty)
             {
