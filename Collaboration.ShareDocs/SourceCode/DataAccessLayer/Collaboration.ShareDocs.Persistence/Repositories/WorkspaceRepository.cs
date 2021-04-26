@@ -25,6 +25,11 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
             return newworkspace.Entity.Id;
         }
 
+        public Task<Workspace> CreateAsync(Workspace workspace, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<string> DeleteAsync(Guid workspaceId, CancellationToken cancellationToken)
         {
             var entity = await _context.Workspaces
@@ -37,7 +42,12 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
            
             return entity.DeletedBy;
         }
-    
+
+        public Task<bool> DeleteAsync(Workspace project, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task <List<Workspace>> GetAllAsync(CancellationToken cancellationToken)
         {
             return await _context.Workspaces.OrderByDescending(n => n.Created).ToListAsync(cancellationToken);
@@ -49,6 +59,11 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
                .Include(w => w.Projects).OrderBy(n => n.Created);
             var Workspace = await query.FirstOrDefaultAsync();
             return Workspace;
+        }
+
+        public Task<Workspace> GetAsync(Guid projectId, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<List<Workspace>> GetByKeyWord(string keyWord)
@@ -75,7 +90,7 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
             return lastModifiedWorkspace.FirstOrDefault();
         }
 
-        public async Task<Workspace> UpdataAsync(Workspace workspace, CancellationToken cancellationToken)
+        public async Task<Workspace> UpdateAsync(Workspace workspace, CancellationToken cancellationToken)
         {
            
             var workspaceData = await GetAsync(workspace.Id);
@@ -89,6 +104,7 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
                 await this._context.SaveChangesAsync(cancellationToken);
             
             return workspaceData;
-        }
+        } 
+         
     }
 }
