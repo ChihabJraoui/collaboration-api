@@ -7,13 +7,18 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Collaboration.ShareDocs.Persistence
 {
-    public class AppDbContext:DbContext
+    public class AppDbContext: IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {
         private readonly ICurrentUser _currentUserService;
         private readonly IDateTime _dateTime;
+        public AppDbContext(DbContextOptions<AppDbContext> options)
+            : base(options)
+        {
+        }
 
         public AppDbContext(DbContextOptions<AppDbContext> options,ICurrentUser currentUser,IDateTime dateTime)
             : base(options)
@@ -50,11 +55,16 @@ namespace Collaboration.ShareDocs.Persistence
         public DbSet<Folder> Folders { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Customize the ASP.NET Identity model and override the defaults if needed.
+            // For example, you can rename the ASP.NET Identity table names and more.
+            // Add your customizations after calling base.OnModelCreating(builder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+            //// Entity Relation configuration
             var configuration = new EntityConfigurations.EntityConfigurations();
             base.OnModelCreating(modelBuilder);
             // Entity Relation configuration
             configuration.RenameIdentityTables(modelBuilder);
+            configuration.IdentityUserLoginConfig(modelBuilder);
         }
 
     }
