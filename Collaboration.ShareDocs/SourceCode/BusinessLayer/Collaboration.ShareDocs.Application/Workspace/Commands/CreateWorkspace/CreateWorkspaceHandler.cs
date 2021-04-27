@@ -1,17 +1,15 @@
-﻿using Application.Common.Exceptions;
-using Application.Common.Interfaces;
-using Application.Repositories;
+﻿using Application.Repositories;
 using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Collaboration.ShareDocs.Application.Common.Exceptions;
+using Collaboration.ShareDocs.Application.Common.Interfaces;
 using Collaboration.ShareDocs.Persistence.Interfaces;
 
-namespace Application.Workspace.Commands.CreateWorkspace
+namespace Collaboration.ShareDocs.Application.Workspace.Commands.CreateWorkspace
 {
-    public class CreateWorkspaceHandler : IRequestHandler<CreateWorkspaceCommand , Guid>
+    public class CreateWorkspaceHandler : IRequestHandler<CreateWorkspaceCommand, Guid>
     {
         private readonly IWorkspaceRepository _workspaceRepository;
         private readonly ICurrentUserService _currentUserService;
@@ -35,8 +33,8 @@ namespace Application.Workspace.Commands.CreateWorkspace
             }
             else
             {
-                var workspaceId = await this._workspaceRepository.CreateAsync(request, _currentUserService);
-                return workspaceId;
+
+                return Guid.NewGuid();
             }
         }
     }

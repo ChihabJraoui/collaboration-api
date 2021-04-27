@@ -1,9 +1,7 @@
-﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using MediatR;
 
-namespace Application.Project.Commands.AddMemberToProject
+namespace Collaboration.ShareDocs.Application.Project.Commands.AddMemberToProject
 {
     public class AddMemberToProject:IRequest<Unit>
     {

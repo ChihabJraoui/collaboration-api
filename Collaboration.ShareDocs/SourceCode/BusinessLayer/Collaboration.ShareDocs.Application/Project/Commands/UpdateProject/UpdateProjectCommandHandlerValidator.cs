@@ -1,9 +1,6 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Application.Project.Commands.UpdateProject
+namespace Collaboration.ShareDocs.Application.Project.Commands.UpdateProject
 {
     public class UpdateProjectCommandHandlerValidator : AbstractValidator<UpdateProjectCommand>
     {

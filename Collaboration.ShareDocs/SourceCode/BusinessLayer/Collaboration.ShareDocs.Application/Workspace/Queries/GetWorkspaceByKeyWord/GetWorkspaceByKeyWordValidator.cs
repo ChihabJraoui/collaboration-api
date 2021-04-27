@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Application.Workspace.Queries.GetWorkspaceByKeyWord
+namespace Collaboration.ShareDocs.Application.Workspace.Queries.GetWorkspaceByKeyWord
 {
     
     public class GetWorkspaceByKeyWordValidator:AbstractValidator<GetWorkspaceByKeyWord>

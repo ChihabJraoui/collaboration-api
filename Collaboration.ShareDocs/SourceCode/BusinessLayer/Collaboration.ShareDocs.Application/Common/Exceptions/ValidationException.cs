@@ -1,10 +1,9 @@
-﻿using FluentValidation.Results;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using FluentValidation.Results;
 
-namespace Application.Common.Exceptions
+namespace Collaboration.ShareDocs.Application.Common.Exceptions
 {
     public class ValidationException :Exception
     {

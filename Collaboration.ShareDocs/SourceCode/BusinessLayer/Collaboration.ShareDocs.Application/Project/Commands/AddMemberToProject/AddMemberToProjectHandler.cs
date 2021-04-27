@@ -1,13 +1,11 @@
-﻿using Application.Common.Interfaces;
-using Application.Repositories;
-using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using Application.Repositories;
+using Collaboration.ShareDocs.Application.Common.Interfaces;
+using Collaboration.ShareDocs.Persistence.Interfaces;
+using MediatR;
 
-namespace Application.Project.Commands.AddMemberToProject
+namespace Collaboration.ShareDocs.Application.Project.Commands.AddMemberToProject
 {
     public class AddMemberToProjectHandler :IRequestHandler<AddMemberToProject , Unit>
     {
@@ -30,7 +28,7 @@ namespace Application.Project.Commands.AddMemberToProject
 
         public async Task<Unit> Handle(AddMemberToProject request, CancellationToken cancellationToken)
         {
-            await _projectRepository.AddMembersToProject(request.MemberID, request.ProjectID);
+           // await _projectRepository.AddMembersToProject(request.MemberID, request.ProjectID);
             return Unit.Value;
         }
     }

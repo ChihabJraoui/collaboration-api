@@ -1,15 +1,14 @@
-﻿using Application.Project.Commands;
-using Application.Project.Commands.AddMemberToProject;
-using Application.Project.Commands.DeleteProject;
-using Application.Project.Commands.UpdateProject;
-using Application.Project.Queries.GetProjectById;
-using Application.Project.Queries.GetProjectByKeyWord;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Collaboration.ShareDocs.Application.Project.Commands.AddMemberToProject;
+using Collaboration.ShareDocs.Application.Project.Commands.CreateProject;
+using Collaboration.ShareDocs.Application.Project.Commands.DeleteProject;
+using Collaboration.ShareDocs.Application.Project.Commands.UpdateProject;
+using Collaboration.ShareDocs.Application.Project.Queries.GetProjectById;
+using Collaboration.ShareDocs.Application.Project.Queries.GetProjectByKeyWord;
+using Collaboration.ShareDocs.Persistence.Entities;
 
 namespace Collaboration.ShareDocs.Api.Controllers
 {
@@ -40,7 +39,7 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// <param name="query"> GetProjectByIdQuery</param>
         /// <returns>Project</returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<Core.Entities.Project>> GetById(Guid id)
+        public async Task<ActionResult<Project>> GetById(Guid id)
         {
             var result = await this._mediator.Send(new GetProjectByIdQuery { Id=id });
             return result;
@@ -51,7 +50,7 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// <param name="query"> GetProjectByKeyWordQuery</param>
         /// <returns>Projects</returns>
         [HttpGet("search")]
-        public async Task<ProjectsDTOLists> GetByKeyWord([FromQuery] GetProjectByKeyWordQuery query)
+        public async Task<ProjectsDtoLists> GetByKeyWord([FromQuery] GetProjectByKeyWordQuery query)
         {
             var result = await this._mediator.Send(query);
             return result;

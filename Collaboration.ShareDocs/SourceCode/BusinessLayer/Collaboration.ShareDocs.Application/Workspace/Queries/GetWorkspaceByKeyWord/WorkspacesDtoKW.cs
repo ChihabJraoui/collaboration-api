@@ -1,12 +1,10 @@
-﻿using Application.Common.Mapping;
-using AutoMapper;
+﻿using AutoMapper;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using Collaboration.ShareDocs.Application.Common.Mapping;
 
-namespace Application.Workspace.Queries.GetWorkspaceByKeyWord
+namespace Collaboration.ShareDocs.Application.Workspace.Queries.GetWorkspaceByKeyWord
 {
-    public class WorkspacesDtoKW : IMapForm<Core.Entities.Workspace>
+    public class WorkspacesDtoKW : IMapForm<Persistence.Entities.Workspace>
     {
         public Guid Id{ get; set; }
         public string Name { get; set; }
@@ -16,7 +14,7 @@ namespace Application.Workspace.Queries.GetWorkspaceByKeyWord
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Core.Entities.Workspace, WorkspacesDtoKW>();
+            profile.CreateMap<Persistence.Entities.Workspace, WorkspacesDtoKW>();
         }
 
     }

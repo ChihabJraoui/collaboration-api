@@ -1,9 +1,7 @@
-﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using MediatR;
 
-namespace Application.Workspace.Commands
+namespace Collaboration.ShareDocs.Application.Workspace.Commands.CreateWorkspace
 {
     public class CreateWorkspaceCommand : IRequest<Guid>
     {

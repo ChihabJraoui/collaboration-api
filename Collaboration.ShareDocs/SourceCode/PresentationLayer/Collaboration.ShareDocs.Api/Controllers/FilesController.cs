@@ -26,22 +26,22 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// </summary>
         /// <param name="command"> CreateProjectCommand </param>
         /// <returns>string</returns>
-        [HttpPost("uplod")]
+        //[HttpPost("uplod")]
         
-        public async Task<ActionResult<Core.Entities.File>> Post(AddFileCommand command)
-        {
-            var result = await this._mediator.Send(command);
-            return result;
-        }
+        //public async Task<ActionResult<File>> Post(AddFileCommand command)
+        //{
+        //    var result = await this._mediator.Send(command);
+        //    return result;
+        //}
 
 
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Core.Entities.File>> Get(Guid id)
-        {
-            var result = await this._mediator.Send(new GetFileQuery { FileId=id });
-            return result;
-        }
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<File>> Get(Guid id)
+        //{
+        //    var result = await this._mediator.Send(new GetFileQuery { FileId=id });
+        //    return result;
+        //}
         //
         [HttpPost]
         public IActionResult UploadFile()

@@ -5,8 +5,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Collaboration.ShareDocs.Persistence.Interfaces;
 
-namespace Application.Workspace.Queries.GetLastModifiedWorkspace
+namespace Collaboration.ShareDocs.Application.Workspace.Queries.GetLastModifiedWorkspace
 {
 
     public class GetLastModifiedWorkspaceHandler : IRequestHandler<GetLastModifiedWorkspaceQuery, WorkspaceLastModifiedDto>
@@ -19,7 +20,8 @@ namespace Application.Workspace.Queries.GetLastModifiedWorkspace
         }
         public Task<WorkspaceLastModifiedDto> Handle(GetLastModifiedWorkspaceQuery request, CancellationToken cancellationToken)
         {
-            return this._workspaceRepository.GetLastModifiedAsync(request, cancellationToken);
+            //return this._workspaceRepository.GetLastModifiedAsync(request, cancellationToken);
+            return null;
         }
     }
 }

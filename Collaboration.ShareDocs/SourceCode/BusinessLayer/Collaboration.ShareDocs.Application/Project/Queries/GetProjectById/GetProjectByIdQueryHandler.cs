@@ -1,14 +1,11 @@
-﻿using Application.Common.Exceptions;
-using Application.Repositories;
-using Collaboration.ShareDocs.Persistence.Interfaces;
-using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Collaboration.ShareDocs.Application.Common.Exceptions;
+using Collaboration.ShareDocs.Persistence.Interfaces;
+using MediatR;
 
-namespace Application.Project.Queries.GetProjectById
+namespace Collaboration.ShareDocs.Application.Project.Queries.GetProjectById
 {
     public class GetProjectByIdQueryHandler : IRequestHandler<GetProjectByIdQuery, Collaboration.ShareDocs.Persistence.Entities.Project>
     {
@@ -27,7 +24,8 @@ namespace Application.Project.Queries.GetProjectById
                 throw new BusinessRuleException("Project id is requered");
             }
             
-            return await this._projectRepository.GetAsync(request);
+            //return await this._projectRepository.GetAsync(request);
+            return null;
         }
     }
 }

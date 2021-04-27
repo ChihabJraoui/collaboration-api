@@ -1,11 +1,9 @@
-﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using MediatR;
 
-namespace Application.Workspace.Queries.GetWorkspace
+namespace Collaboration.ShareDocs.Application.Workspace.Queries.GetWorkspace
 {
-    public class GetWorkspaceByIdQuery:IRequest<Core.Entities.Workspace>
+    public class GetWorkspaceByIdQuery:IRequest<Persistence.Entities.Workspace>
     {
         public Guid WorkspaceRequestId { get; set; }
 

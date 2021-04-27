@@ -1,9 +1,6 @@
-﻿using Application.Common.Mapping;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace Application.Workspace.Queries.GetWorkspaceByKeyWord
+namespace Collaboration.ShareDocs.Application.Workspace.Queries.GetWorkspaceByKeyWord
 {
     public class WorkspaceDtoLists
     {

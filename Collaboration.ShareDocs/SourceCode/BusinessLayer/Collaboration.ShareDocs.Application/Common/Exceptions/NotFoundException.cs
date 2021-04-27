@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Application.Common.Exceptions
+namespace Collaboration.ShareDocs.Application.Common.Exceptions
 {
     public class NotFoundException :Exception
     {

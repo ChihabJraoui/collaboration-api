@@ -1,15 +1,12 @@
-﻿using Application.Common.Exceptions;
-using Application.Repositories;
+﻿using Collaboration.ShareDocs.Persistence.Interfaces;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Collaboration.ShareDocs.Application.Common.Exceptions;
 
-namespace Application.Project.Queries.GetProjectByKeyWord
+namespace Collaboration.ShareDocs.Application.Project.Queries.GetProjectByKeyWord
 {
-    public class GetProjectByKeyWordHandler : IRequestHandler<GetProjectByKeyWordQuery, ProjectsDTOLists>
+    public class GetProjectByKeyWordHandler : IRequestHandler<GetProjectByKeyWordQuery, ProjectsDtoLists>
     {
         private readonly IProjectRepository _pojectRepository;
 
@@ -17,15 +14,16 @@ namespace Application.Project.Queries.GetProjectByKeyWord
         {
             _pojectRepository = pojectRepository;
         }
-        public async Task<ProjectsDTOLists> Handle(GetProjectByKeyWordQuery request, CancellationToken cancellationToken)
+        public async Task<ProjectsDtoLists> Handle(GetProjectByKeyWordQuery request, CancellationToken cancellationToken)
         {
             //TODO Add some RE for Business Rules 
-            var projects = await _pojectRepository.GetByKeyWordAsync(request);
-            if(projects.Projects.Count==0)
+            var projects = await _pojectRepository.GetByKeyWordAsync(request.KeyWord);
+            if(projects.Count==0)
             {
                 throw new BusinessRuleException("Not Found ");
             }
-            return projects;
+            //return projects;
+            return null;
         }
     }
 }

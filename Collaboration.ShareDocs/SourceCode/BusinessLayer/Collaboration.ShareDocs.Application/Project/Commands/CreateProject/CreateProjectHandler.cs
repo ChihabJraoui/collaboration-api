@@ -1,15 +1,13 @@
-﻿using Application.Common.Exceptions;
-using Application.Common.Interfaces;
-using Application.Repositories;
-using Application.Workspace.Queries.GetWorkspace;
+﻿using Application.Repositories;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Collaboration.ShareDocs.Application.Common.Exceptions;
+using Collaboration.ShareDocs.Application.Common.Interfaces;
+using Collaboration.ShareDocs.Application.Workspace.Queries.GetWorkspace;
+using Collaboration.ShareDocs.Persistence.Interfaces;
 
-namespace Application.Project.Commands
+namespace Collaboration.ShareDocs.Application.Project.Commands.CreateProject
 {
     public class CreateProjectHandler : IRequestHandler<CreateProjectCommand, string>
     {
@@ -32,21 +30,24 @@ namespace Application.Project.Commands
         {
             var query = new GetWorkspaceByIdQuery { WorkspaceRequestId = command.WorkspaceId};
             var label = await _methodesRepository.UniqueName(command.Label, cancellationToken);
-            var workspaceExiste = await _workspaceRepository.GetAsync(query);
-            if (workspaceExiste == null)
-            {
-                throw new BusinessRuleException("Workspace doesn't exist");
-            }
-            else if(!label)
-            {
-                throw new BusinessRuleException("this new project is already exist");
-            }
-            else
-            {
-                var project = await _projectRepository.CreateAsync(command, workspaceExiste, _currentUserService);
-                return project;
-            }
-            
+            //var workspaceExiste = await _workspaceRepository.GetAsync(query);
+            //if (workspaceExiste == null)
+            //{
+            //    throw new BusinessRuleException("Workspace doesn't exist");
+            //}
+           
+            //else if(!label)
+            //{
+            //    throw new BusinessRuleException("this new project is already exist");
+                
+            //}
+            //else
+            //{
+            //    //var project = await _projectRepository.CreateAsync(command, workspaceExiste, _currentUserService);
+            //    //return project;
+            //}
+            return null;
+
         }
     }
 }

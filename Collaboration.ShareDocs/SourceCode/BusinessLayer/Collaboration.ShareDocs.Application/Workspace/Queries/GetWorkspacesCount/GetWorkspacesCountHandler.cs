@@ -1,12 +1,9 @@
-﻿using Application.Repositories;
-using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using Collaboration.ShareDocs.Persistence.Interfaces;
+using MediatR;
 
-namespace Application.Workspace.Queries.GetWorkspacesCount
+namespace Collaboration.ShareDocs.Application.Workspace.Queries.GetWorkspacesCount
 {
     public class GetWorkspacesCountHandler : IRequestHandler<GetWorkspacesCountQuery, int>
     {
@@ -18,7 +15,8 @@ namespace Application.Workspace.Queries.GetWorkspacesCount
         }
         public async Task<int> Handle(GetWorkspacesCountQuery request, CancellationToken cancellationToken)
         {
-            return await _workspaceRepository.GetCount(request);
+            //return await _workspaceRepository.GetCount(request);
+            return 1;
         }
     }
 }

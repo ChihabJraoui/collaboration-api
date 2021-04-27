@@ -1,9 +1,6 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Application.Workspace.Queries.GetWorkspace
+namespace Collaboration.ShareDocs.Application.Workspace.Queries.GetWorkspace
 {
     public class GetWorkspaceByIdHandlerVlidator:AbstractValidator<GetWorkspaceByIdQuery>
     {

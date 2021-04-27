@@ -1,9 +1,9 @@
-﻿using Application.Common.Mapping;
-using AutoMapper;
+﻿using AutoMapper;
 using System;
-using System.Collections.Generic;  
+using System.Collections.Generic;
+using Collaboration.ShareDocs.Application.Common.Mapping;
 
-namespace Application.Workspace.Queries.GetAllWorkspaces
+namespace Collaboration.ShareDocs.Application.Workspace.Queries.GetAllWorkspaces
 {
     public class WorkspaceDto:IMapForm<Collaboration.ShareDocs.Persistence.Entities.Workspace>
     {

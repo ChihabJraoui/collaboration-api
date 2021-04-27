@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Application.Project.Queries.GetProjectByKeyWord
+namespace Collaboration.ShareDocs.Application.Project.Queries.GetProjectByKeyWord
 {
-    public class ProjectsDTOLists
+    public class ProjectsDtoLists
     {
         public List<ProjectDto> Projects { get; set; }
     }

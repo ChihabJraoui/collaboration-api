@@ -1,15 +1,11 @@
-﻿using Application.Common.Exceptions;
-using Application.Repositories;
-using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using Collaboration.ShareDocs.Persistence.Interfaces;
 
-namespace Application.Workspace.Queries.GetWorkspace
+namespace Collaboration.ShareDocs.Application.Workspace.Queries.GetWorkspace
 {
-    public class GetWorkspaceByIdHandler : IRequestHandler<GetWorkspaceByIdQuery, Core.Entities.Workspace>
+    public class GetWorkspaceByIdHandler : IRequestHandler<GetWorkspaceByIdQuery, Persistence.Entities.Workspace>
     {
         private readonly IWorkspaceRepository _workspaceRepository;
 
@@ -17,10 +13,11 @@ namespace Application.Workspace.Queries.GetWorkspace
         {
             _workspaceRepository = workspaceRepository;
         }
-        public async Task<Core.Entities.Workspace> Handle(GetWorkspaceByIdQuery request, CancellationToken cancellationToken)
+        public async Task<Persistence.Entities.Workspace> Handle(GetWorkspaceByIdQuery request, CancellationToken cancellationToken)
         {
-                var workspace = await _workspaceRepository.GetAsync(request);
-                return workspace;
+                //var workspace = await _workspaceRepository.GetAsync(request);
+                //return workspace;
+                return null;
         }
     }
 }

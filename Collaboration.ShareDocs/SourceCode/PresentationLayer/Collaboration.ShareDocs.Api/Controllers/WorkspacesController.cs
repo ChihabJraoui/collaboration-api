@@ -1,25 +1,24 @@
-﻿using Application.Workspace.Commands;
-using Application.Workspace.Commands.DeleteWorkspace;
-using Application.Workspace.Commands.UpdateWorkspace;
-using Application.Workspace.Queries.GetAllWorkspaces;
-using Application.Workspace.Queries.GetLastModifiedWorkspace;
-using Application.Workspace.Queries.GetLastWorkspace;
-using Application.Workspace.Queries.GetWorkspace;
-using Application.Workspace.Queries.GetWorkspaceByKeyWord;
-using Application.Workspace.Queries.GetWorkspacesCount;
+﻿using Application.Workspace.Commands.DeleteWorkspace;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Collaboration.ShareDocs.Application.Workspace.Commands.CreateWorkspace;
+using Collaboration.ShareDocs.Application.Workspace.Commands.DeleteWorkspace;
+using Collaboration.ShareDocs.Application.Workspace.Commands.UpdateWorkspace;
+using Collaboration.ShareDocs.Application.Workspace.Queries.GetAllWorkspaces;
+using Collaboration.ShareDocs.Application.Workspace.Queries.GetLastModifiedWorkspace;
+using Collaboration.ShareDocs.Application.Workspace.Queries.GetLastWorkspace;
+using Collaboration.ShareDocs.Application.Workspace.Queries.GetWorkspace;
+using Collaboration.ShareDocs.Application.Workspace.Queries.GetWorkspaceByKeyWord;
+using Collaboration.ShareDocs.Application.Workspace.Queries.GetWorkspacesCount;
+using Collaboration.ShareDocs.Persistence.Entities;
 
 
 namespace Collaboration.ShareDocs.Api.Controllers
 {
-    
+
     public class WorkspacesController : ApiController
     {
         private readonly IMediator _mediator;
@@ -51,7 +50,7 @@ namespace Collaboration.ShareDocs.Api.Controllers
         [HttpGet("id")]
         [Authorize(Roles = "SuperAdmin")]
 
-        public async Task<ActionResult<Core.Entities.Workspace>> Get(Guid id)
+        public async Task<ActionResult<Workspace>> Get(Guid id)
         {
             var result = await this._mediator.Send(new GetWorkspaceByIdQuery { WorkspaceRequestId = id }) ;
             return result;
@@ -127,7 +126,7 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// <returns></returns>
         [HttpPut]
         [Authorize(Roles = "SuperAdmin")]
-        public async Task<ActionResult<Core.Entities.Workspace>> Update(UpdateWorkspaceCommand command)
+        public async Task<ActionResult<Workspace>> Update(UpdateWorkspaceCommand command)
         {
            
            

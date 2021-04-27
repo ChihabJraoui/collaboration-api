@@ -5,8 +5,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Collaboration.ShareDocs.Persistence.Interfaces;
 
-namespace Application.Workspace.Queries.GetAllWorkspaces
+namespace Collaboration.ShareDocs.Application.Workspace.Queries.GetAllWorkspaces
 {
     public class GetAllWorkspacesQueryHandler : IRequestHandler<GetAllWorkspaceQuery, WorkspacesDTOLists>
     {
@@ -19,8 +20,9 @@ namespace Application.Workspace.Queries.GetAllWorkspaces
        
         public async Task<WorkspacesDTOLists> Handle(GetAllWorkspaceQuery request, CancellationToken cancellationToken)
         {
-            var workspaceLists = await _workspaceRepository.GetAllAsync(request, cancellationToken);
-            return workspaceLists;
+            //var workspaceLists = await _workspaceRepository.GetAllAsync(request, cancellationToken);
+            //return workspaceLists;
+            return null;
         }
     }
 }

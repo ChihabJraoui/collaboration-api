@@ -1,20 +1,17 @@
-﻿using Application.Common.Mapping;
-using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using AutoMapper;
+using Collaboration.ShareDocs.Application.Common.Mapping; 
 
-namespace Application.Project.Queries.GetProjectByKeyWord
+namespace Collaboration.ShareDocs.Application.Project.Queries.GetProjectByKeyWord
 {
-    public class ProjectDto : IMapForm<Collaboration.ShareDocs.Persistence.Entities.Project>
+    public class ProjectDto : IMapForm<Persistence.Entities.Project>
     {
         public string Label { get; set; }
         public string Icon { get; set; }
-        public virtual Collaboration.ShareDocs.Persistence.Entities.Workspace Workspace { get; set; }
+        public virtual Persistence.Entities.Workspace Workspace { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Collaboration.ShareDocs.Persistence.Entities.Project, ProjectDto>();
+            profile.CreateMap<Persistence.Entities.Project, ProjectDto>();
         }
 
     }

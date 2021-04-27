@@ -1,15 +1,14 @@
-﻿using Application.Common.Exceptions;
-using Application.Common.Interfaces;
-using Application.Project.Queries.GetProjectById;
-using Application.Repositories;
-using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Repositories;
+using Collaboration.ShareDocs.Application.Common.Exceptions;
+using Collaboration.ShareDocs.Application.Common.Interfaces;
+using Collaboration.ShareDocs.Application.Project.Queries.GetProjectById;
+using Collaboration.ShareDocs.Persistence.Interfaces;
+using MediatR;
 
-namespace Application.Project.Commands.UpdateProject
+namespace Collaboration.ShareDocs.Application.Project.Commands.UpdateProject
 {
     public class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectCommand>
     {
@@ -33,14 +32,14 @@ namespace Application.Project.Commands.UpdateProject
             {
                 Id = request.ProjectId,
             };
-            var project =await _projectRepository.GetAsync(getEntity);
-            var exist = await _methodesRepository.UniqueName(request.Label, cancellationToken);
-            if (!exist)
-            {
-                throw new BusinessRuleException("is alredy exist");
+            //var project =await _projectRepository.GetAsync(getEntity);
+            //var exist = await _methodesRepository.UniqueName(request.Label, cancellationToken);
+            //if (!exist)
+            //{
+            //    throw new BusinessRuleException("is alredy exist");
 
-            }
-            await _projectRepository.UpdateAsync(request,project, _currentUserService);
+            //}
+            //await _projectRepository.UpdateAsync(request,project, _currentUserService);
 
             return Unit.Value;
         }

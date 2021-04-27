@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Application.Project.Commands.DeleteProject
+namespace Collaboration.ShareDocs.Application.Project.Commands.DeleteProject
 {
     public class DeleteProjectDto
     {

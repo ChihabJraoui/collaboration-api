@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 
-namespace Application.Common.Exceptions
+namespace Collaboration.ShareDocs.Application.Common.Exceptions
 {
     public class ApiException:Exception
     {

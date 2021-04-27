@@ -44,5 +44,13 @@ namespace Collaboration.ShareDocs.Persistence.Interfaces
         /// <param name=""></param>
         /// <returns>int</returns>
         Task<int> GetCount();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="workspaceId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<string> DeleteAsync( Guid workspaceId, CancellationToken cancellationToken );
     }
 }

@@ -1,9 +1,6 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Application.Project.Commands
+namespace Collaboration.ShareDocs.Application.Project.Commands.CreateProject
 {
     public class CreateProjectHandlerValidator : AbstractValidator<CreateProjectCommand>
     {

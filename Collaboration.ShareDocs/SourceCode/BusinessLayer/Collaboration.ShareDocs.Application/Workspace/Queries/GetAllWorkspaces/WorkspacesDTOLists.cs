@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace Application.Workspace.Queries.GetAllWorkspaces
+namespace Collaboration.ShareDocs.Application.Workspace.Queries.GetAllWorkspaces
 {
     public class WorkspacesDTOLists
     {

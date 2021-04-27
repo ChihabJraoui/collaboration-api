@@ -1,9 +1,7 @@
-﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using MediatR;
 
-namespace Application.Project.Queries.GetProjectById
+namespace Collaboration.ShareDocs.Application.Project.Queries.GetProjectById
 {
     public class GetProjectByIdQuery :IRequest<Collaboration.ShareDocs.Persistence.Entities.Project>
     {

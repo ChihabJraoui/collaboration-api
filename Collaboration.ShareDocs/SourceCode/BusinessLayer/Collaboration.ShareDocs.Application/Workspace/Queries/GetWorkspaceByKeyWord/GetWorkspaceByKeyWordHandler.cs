@@ -1,13 +1,10 @@
-﻿using Application.Common.Exceptions;
-using Application.Repositories;
-using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using Collaboration.ShareDocs.Application.Common.Exceptions;
+using Collaboration.ShareDocs.Persistence.Interfaces;
 
-namespace Application.Workspace.Queries.GetWorkspaceByKeyWord
+namespace Collaboration.ShareDocs.Application.Workspace.Queries.GetWorkspaceByKeyWord
 {
     public class GetWorkspaceByKeyWordHandler : IRequestHandler<GetWorkspaceByKeyWord, WorkspaceDtoLists>
     {
@@ -19,12 +16,13 @@ namespace Application.Workspace.Queries.GetWorkspaceByKeyWord
         }
         public async Task<WorkspaceDtoLists> Handle(GetWorkspaceByKeyWord request, CancellationToken cancellationToken)
         {
-            var workspaces = await _workspaceRepository.GetByKeyWord(request);
-            if (workspaces.Workspaces.Count == 0)
-            {
-                throw new BusinessRuleException("Not Found ");
-            }
-            return workspaces;
+            //var workspaces = await _workspaceRepository.GetByKeyWord(request.KeyWord);
+            //if (workspaces.Count == 0)
+            //{
+            //    throw new BusinessRuleException("Not Found ");
+            //}
+            //return workspaces;
+            return null;
         }
     }
 }

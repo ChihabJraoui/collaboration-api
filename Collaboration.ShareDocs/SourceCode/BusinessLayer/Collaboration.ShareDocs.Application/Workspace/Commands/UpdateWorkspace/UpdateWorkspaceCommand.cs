@@ -1,11 +1,9 @@
-﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using MediatR;
 
-namespace Application.Workspace.Commands.UpdateWorkspace
+namespace  Collaboration.ShareDocs.Application.Workspace.Commands.UpdateWorkspace
 {
-    public class UpdateWorkspaceCommand:IRequest<Core.Entities.Workspace>
+    public class UpdateWorkspaceCommand:IRequest<Persistence.Entities.Workspace>
     {
         public Guid WorkspaceId { get; set; }
         public string Name { get; set; }

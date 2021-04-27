@@ -14,14 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Repositories\IFileRepository.cs" />
-    <Compile Remove="Repositories\IFolderRepository.cs" />
-    <Compile Remove="Repositories\IMethodesRepository.cs" />
-    <Compile Remove="Repositories\IProjectRepository.cs" />
-    <Compile Remove="Repositories\IWorkspaceRepository.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="FluentValidation" Version="10.0.4" />
     <PackageReference Include="MediatR" Version="9.0.0" />
@@ -30,10 +22,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\DataAccessLayer\Collaboration.ShareDocs.Persistence\Collaboration.ShareDocs.Persistence.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Repositories\" />
   </ItemGroup>
 
 </Project>

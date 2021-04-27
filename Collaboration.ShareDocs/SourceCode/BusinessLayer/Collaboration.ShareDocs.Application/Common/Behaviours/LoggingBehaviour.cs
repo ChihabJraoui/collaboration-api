@@ -1,15 +1,11 @@
-﻿using Application.Common.Interfaces;
-
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Collaboration.ShareDocs.Application.Common.Interfaces;
 using MediatR.Pipeline;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace Application.Common.Behaviours
+namespace Collaboration.ShareDocs.Application.Common.Behaviours
 {
     public class LoggingBehaviour<TRequest> : IRequestPreProcessor<TRequest>
     {

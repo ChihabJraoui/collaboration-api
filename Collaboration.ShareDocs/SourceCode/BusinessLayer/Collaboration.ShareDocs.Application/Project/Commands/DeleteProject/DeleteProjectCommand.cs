@@ -1,15 +1,12 @@
-﻿using Application.Common.Exceptions;
-using Application.Common.Interfaces;
-using Application.Repositories;
-using Collaboration.ShareDocs.Persistence.Interfaces;
+﻿using Collaboration.ShareDocs.Persistence.Interfaces;
 using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Collaboration.ShareDocs.Application.Common.Exceptions;
+using Collaboration.ShareDocs.Application.Common.Interfaces;
 
-namespace Application.Project.Commands.DeleteProject
+namespace Collaboration.ShareDocs.Application.Project.Commands.DeleteProject
 {
 
     public class DeleteProjectCommand : IRequest<DeleteProjectDto>
@@ -33,9 +30,10 @@ namespace Application.Project.Commands.DeleteProject
                 {
                     throw new BusinessRuleException($"this {request.ProjectId} is empty");
                 }
-                var result = _projectRepository.DeleteAsync(request, _currentUserService);
+                //var result = _projectRepository.DeleteAsync(request.ProjectId, _currentUserService,cancellationToken);
 
-                return result;
+                //return result;
+                return null;
             }
         }
     }

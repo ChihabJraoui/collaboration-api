@@ -1,12 +1,10 @@
-﻿using Application.Common.Mapping;
+﻿using System;
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Collaboration.ShareDocs.Application.Common.Mapping;
 
-namespace Application.Workspace.Queries.GetLastWorkspace
+namespace Collaboration.ShareDocs.Application.Workspace.Queries.GetLastWorkspace
 {
-    public class LastWorkspaceDto:IMapForm<Core.Entities.Workspace>
+    public class LastWorkspaceDto:IMapForm<Persistence.Entities.Workspace>
     {
         public string Name { get; set; }
         
@@ -25,7 +23,7 @@ namespace Application.Workspace.Queries.GetLastWorkspace
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Core.Entities.Workspace, LastWorkspaceDto>();
+            profile.CreateMap<Persistence.Entities.Workspace, LastWorkspaceDto>();
         }
     }
 }

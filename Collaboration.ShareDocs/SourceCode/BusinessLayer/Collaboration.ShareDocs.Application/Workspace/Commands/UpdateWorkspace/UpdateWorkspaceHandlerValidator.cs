@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Application.Workspace.Commands.UpdateWorkspace
+namespace Collaboration.ShareDocs.Application.Workspace.Commands.UpdateWorkspace
 {
     public class UpdateWorkspaceHandlerValidator :AbstractValidator<UpdateWorkspaceCommand>
     {

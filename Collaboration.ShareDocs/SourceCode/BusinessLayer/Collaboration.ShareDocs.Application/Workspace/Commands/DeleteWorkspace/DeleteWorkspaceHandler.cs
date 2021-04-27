@@ -1,14 +1,13 @@
-﻿using Application.Common.Exceptions;
-using Application.Common.Interfaces;
-using Application.Repositories;
-using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Workspace.Commands.DeleteWorkspace;
+using Collaboration.ShareDocs.Application.Common.Exceptions;
+using Collaboration.ShareDocs.Application.Common.Interfaces;
+using Collaboration.ShareDocs.Persistence.Interfaces;
+using MediatR;
 
-namespace Application.Workspace.Commands.DeleteWorkspace
+namespace Collaboration.ShareDocs.Application.Workspace.Commands.DeleteWorkspace
 {
     public class DeleteWorkspaceHandler : IRequestHandler<DeleteWorkspaceCommad,DeleteWorkspaceReturnDto>
     {
@@ -28,9 +27,10 @@ namespace Application.Workspace.Commands.DeleteWorkspace
                 throw new BusinessRuleException($"Workspace {request.WorkspaceId} doesn't exist");
             }
 
-            var dto = await _workspaceRepository.DeleteAsync(request, _currentUserService, cancellationToken);
+            //var dto = await _workspaceRepository.DeleteAsync(request.WorkspaceId, _currentUserService, cancellationToken);
 
-            return dto;
+            //return dto;
+            return null;
         }
     }
 }

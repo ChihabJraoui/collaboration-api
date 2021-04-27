@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Application.Common.Mapping
+namespace Collaboration.ShareDocs.Application.Common.Mapping
 {
     public interface IMapForm<T>
     {

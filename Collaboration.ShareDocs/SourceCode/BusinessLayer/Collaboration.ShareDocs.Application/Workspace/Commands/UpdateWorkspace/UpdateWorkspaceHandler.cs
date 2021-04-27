@@ -1,17 +1,19 @@
-﻿using Application.Common.Exceptions;
-using Application.Common.Interfaces;
+﻿
 using Application.Repositories;
-using Application.Workspace.Queries.GetWorkspace;
 using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Collaboration.ShareDocs.Application.Common.Exceptions;
+using Collaboration.ShareDocs.Application.Common.Interfaces;
+using Collaboration.ShareDocs.Application.Workspace.Queries.GetWorkspace;
+using Collaboration.ShareDocs.Persistence.Interfaces;
 
-namespace Application.Workspace.Commands.UpdateWorkspace
+namespace Collaboration.ShareDocs.Application.Workspace.Commands.UpdateWorkspace
 {
-    public class UpdateWorkspaceHandler : IRequestHandler<UpdateWorkspaceCommand,Core.Entities.Workspace>
+    public class UpdateWorkspaceHandler : IRequestHandler<UpdateWorkspaceCommand,Persistence.Entities.Workspace>
     {
         private readonly IWorkspaceRepository _workspaceRepository;
         private readonly ICurrentUserService _currentUserService;
@@ -23,7 +25,7 @@ namespace Application.Workspace.Commands.UpdateWorkspace
             _currentUserService = currentUserService;
             _methodesRopository = methodesRepository;
         }
-        public async Task<Core.Entities.Workspace> Handle(UpdateWorkspaceCommand request, CancellationToken cancellationToken)
+        public async Task<Persistence.Entities.Workspace> Handle(UpdateWorkspaceCommand request, CancellationToken cancellationToken)
         {
             var query = new GetWorkspaceByIdQuery
             {
@@ -39,16 +41,17 @@ namespace Application.Workspace.Commands.UpdateWorkspace
             }
             else
             {
-                var isExsit = await this._workspaceRepository.GetAsync(query);
-                if (isExsit != null)
-                {
-                    var result = await this._workspaceRepository.UpdataAsync(request, _currentUserService, cancellationToken);
-                    return result;
-                }
-                else
-                {
-                    throw new BusinessRuleException($"The workspace id is doesn't exist in your database");
-                }
+                //var isExsit = await this._workspaceRepository.GetAsync(query);
+                //if (isExsit != null)
+                //{
+                //    var result = await this._workspaceRepository.UpdataAsync(request, _currentUserService, cancellationToken);
+                //    return result;
+                //}
+                //else
+                //{
+                //    throw new BusinessRuleException($"The workspace id is doesn't exist in your database");
+                //}
+                return null;
 
             }
             

@@ -1,11 +1,9 @@
-﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Reflection;
-using System.Text;
+using AutoMapper;
 
-namespace Application.Common.Mapping
+namespace Collaboration.ShareDocs.Application.Common.Mapping
 {
     public class MappingProfile : Profile
     {

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Application.Workspace.Commands.CreateWorkspace
+namespace Collaboration.ShareDocs.Application.Workspace.Commands.CreateWorkspace
 {
     public class CreateWorkspaceHandlerValidator:AbstractValidator<CreateWorkspaceCommand>
     {
