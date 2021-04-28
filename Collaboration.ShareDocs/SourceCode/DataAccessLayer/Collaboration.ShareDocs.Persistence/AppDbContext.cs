@@ -14,9 +14,11 @@ namespace Collaboration.ShareDocs.Persistence
     {
         private readonly ICurrentUser _currentUserService;
         private readonly IDateTime _dateTime;
+ 
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
+
         }
 
         public AppDbContext(DbContextOptions<AppDbContext> options,ICurrentUser currentUser,IDateTime dateTime)
