@@ -24,4 +24,11 @@
     <ProjectReference Include="..\..\DataAccessLayer\Collaboration.ShareDocs.Persistence\Collaboration.ShareDocs.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Commands\Projects\Command\Validators\" />
+    <Folder Include="Commands\Projects\Dto\" />
+    <Folder Include="Commands\Users\Command\Validators\" />
+    <Folder Include="Commands\Users\Dto\" />
+  </ItemGroup>
+
 </Project>
