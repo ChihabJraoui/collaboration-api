@@ -30,40 +30,28 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<string> DeleteAsync(Guid workspaceId, CancellationToken cancellationToken)
+        public async Task<bool> DeleteAsync(Workspace workspace, CancellationToken cancellationToken)
         {
-            var entity = await _context.Workspaces
-                .Where(e => e.Id == workspaceId)
-                .SingleOrDefaultAsync(cancellationToken);
-
-            _context.Workspaces.Remove(entity);
+             _context.Workspaces.Remove(workspace);
             await _context.SaveChangesAsync(cancellationToken);
 
-           
-            return entity.DeletedBy;
+
+            return true;
         }
 
-        public Task<bool> DeleteAsync(Workspace project, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
+   
 
         public async Task <List<Workspace>> GetAllAsync(CancellationToken cancellationToken)
         {
             return await _context.Workspaces.OrderByDescending(n => n.Created).ToListAsync(cancellationToken);
         }
 
-        public async Task<Workspace> GetAsync(Guid workspaceId)
+        public async Task<Workspace> GetAsync(Guid workspaceId, CancellationToken cancellationToken)
         {
             var query =  _context.Workspaces.Where(w => w.Id ==workspaceId)
                .Include(w => w.Projects).OrderBy(n => n.Created);
             var Workspace = await query.FirstOrDefaultAsync();
             return Workspace;
-        }
-
-        public Task<Workspace> GetAsync(Guid projectId, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<List<Workspace>> GetByKeyWord(string keyWord)
@@ -93,7 +81,7 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
         public async Task<Workspace> UpdateAsync(Workspace workspace, CancellationToken cancellationToken)
         {
            
-            var workspaceData = await GetAsync(workspace.Id);
+            var workspaceData = await GetAsync(workspace.Id,cancellationToken);
             
                 workspaceData.Name = workspace.Name;
                 workspaceData.Description = workspace.Description;

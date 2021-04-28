@@ -8,9 +8,9 @@ namespace Collaboration.ShareDocs.Persistence.Interfaces
 {
     public interface IRepositoryBase<T>
     {
-        Task<T> CreateAsync(T workspace, CancellationToken cancellationToken);
-        Task<T> GetAsync(Guid projectId, CancellationToken cancellationToken);
-        Task<T> UpdateAsync(T project, CancellationToken cancellationToken);
-        Task<bool> DeleteAsync(T project,CancellationToken cancellationToken); 
+        Task<T> CreateAsync(T obj, CancellationToken cancellationToken);
+        Task<T> GetAsync(Guid id, CancellationToken cancellationToken);
+        Task<T> UpdateAsync(T obj, CancellationToken cancellationToken);
+        Task<bool> DeleteAsync(T obj, CancellationToken cancellationToken); 
     }
 }

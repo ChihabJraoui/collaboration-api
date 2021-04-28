@@ -8,12 +8,12 @@ namespace Collaboration.ShareDocs.Api.Controllers
 {
     //using Web.Filters;
 
-    //[
-    //    Produces("application/json"),
-    //    Route("api/[controller]"),
-    //    ApiController,
-    //    ServiceFilter(typeof(ApiExceptionFilter))
-    //]
+    [
+        Produces("application/json"),
+        Route("api/[controller]"),
+        ApiController,
+        //ServiceFilter(typeof(ApiExceptionFilter))
+    ]
     public class ApiController:ControllerBase
     {
         public ApiController()

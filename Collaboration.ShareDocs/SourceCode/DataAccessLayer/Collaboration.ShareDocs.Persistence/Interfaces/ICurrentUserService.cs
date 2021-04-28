@@ -4,8 +4,8 @@ using System.Text;
 
 namespace Collaboration.ShareDocs.Persistence.Interfaces
 {
-    public interface ICurrentUser
+    public interface ICurrentUserService
     {
-        public string Username { get; set; }
+        string UserId { get; }
     }
 }

@@ -4,13 +4,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using Collaboration.ShareDocs.Application.Common.Interfaces;
+
 using Collaboration.ShareDocs.Persistence.Entities;
+using Collaboration.ShareDocs.Persistence.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Collaboration.ShareDocs.Application.Commands.Users.Command
+namespace Collaboration.ShareDocs.Application.Commands.Users
 {
     public class GetUserCommand : IRequest<string>
     {
@@ -37,6 +38,8 @@ namespace Collaboration.ShareDocs.Application.Commands.Users.Command
             public async Task<string> Handle( GetUserCommand request, CancellationToken cancellationToken )
             {
                 var user = await this._userManager.Users.SingleOrDefaultAsync(u => u.Id == request.Id, cancellationToken);
+
+                var ff = new Workspace();
 
 
                 if ( user == null )

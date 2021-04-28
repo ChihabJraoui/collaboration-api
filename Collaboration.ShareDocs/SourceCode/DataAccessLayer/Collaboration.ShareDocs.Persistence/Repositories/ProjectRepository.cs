@@ -13,10 +13,10 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
 {
     public class ProjectRepository : IProjectRepository
     {
-        private readonly ICurrentUser _currentUserService;
+        private readonly ICurrentUserService _currentUserService;
         private readonly AppDbContext _context;
 
-        public ProjectRepository(ICurrentUser currentUserService,
+        public ProjectRepository(ICurrentUserService currentUserService,
                                  AppDbContext context
                                  )
         {
@@ -63,9 +63,9 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
             return project;
         }
 
-        public Task<List<Project>> GetByKeyWordAsync(string keyWord)
+        public async Task<List<Project>> GetByKeyWordAsync(string keyWord)
         {
-            throw new NotImplementedException();
+            return await _context.Projects.Where(p => p.Label.Contains(keyWord)).ToListAsync();
         }
     }
 }

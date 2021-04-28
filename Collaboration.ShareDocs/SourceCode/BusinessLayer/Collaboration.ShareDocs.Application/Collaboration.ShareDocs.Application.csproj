@@ -5,10 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Commands\Workspaces\Queries\**" />
     <Compile Remove="File\**" />
     <Compile Remove="Folder\**" />
+    <EmbeddedResource Remove="Commands\Workspaces\Queries\**" />
     <EmbeddedResource Remove="File\**" />
     <EmbeddedResource Remove="Folder\**" />
+    <None Remove="Commands\Workspaces\Queries\**" />
     <None Remove="File\**" />
     <None Remove="Folder\**" />
   </ItemGroup>
@@ -25,10 +28,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\Projects\Command\Validators\" />
-    <Folder Include="Commands\Projects\Dto\" />
-    <Folder Include="Commands\Users\Command\Validators\" />
     <Folder Include="Commands\Users\Dto\" />
+    <Folder Include="Commands\Users\Validators\" />
+    <Folder Include="Commands\Workspaces\Validators\" />
   </ItemGroup>
 
 </Project>

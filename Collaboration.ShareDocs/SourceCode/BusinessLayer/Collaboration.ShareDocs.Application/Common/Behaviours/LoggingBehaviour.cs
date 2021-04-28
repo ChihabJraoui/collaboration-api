@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Collaboration.ShareDocs.Application.Common.Interfaces;
+using Collaboration.ShareDocs.Persistence.Interfaces;
 using MediatR.Pipeline;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;

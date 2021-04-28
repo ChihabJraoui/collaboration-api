@@ -1,3 +1,4 @@
+using Collaboration.ShareDocs.Api.Configurations;
 using Collaboration.ShareDocs.Provision;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,6 +29,8 @@ namespace Collaboration.ShareDocs.Api
         {
             services.AddProvisionDependancy(Configuration);
             services.AddControllers();
+            services.AddWebDependancy();
+            services.AddSwaggerSetup(this.Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +46,8 @@ namespace Collaboration.ShareDocs.Api
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSwaggerSetup(this.Configuration);
 
             app.UseEndpoints(endpoints =>
             {

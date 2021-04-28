@@ -13,14 +13,14 @@ namespace Collaboration.ShareDocs.Persistence
 {
     public class AppDbContext: IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {
-        private readonly ICurrentUser _currentUserService;
+        private readonly ICurrentUserService _currentUserService;
         private readonly IDateTime _dateTime;
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
         }
 
-        public AppDbContext(DbContextOptions<AppDbContext> options,ICurrentUser currentUser,IDateTime dateTime)
+        public AppDbContext(DbContextOptions<AppDbContext> options,ICurrentUserService currentUser,IDateTime dateTime)
             : base(options)
         {
             _currentUserService = currentUser;
@@ -33,15 +33,15 @@ namespace Collaboration.ShareDocs.Persistence
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        entry.Entity.CreatedBy = _currentUserService.Username;
+                        entry.Entity.CreatedBy = _currentUserService.UserId;
                         entry.Entity.Created = _dateTime.Now;
                         break;
                     case EntityState.Modified:
-                        entry.Entity.LastModifiedBy = _currentUserService.Username;
+                        entry.Entity.LastModifiedBy = _currentUserService.UserId;
                         entry.Entity.LastModified = _dateTime.Now;
                         break;
                     case EntityState.Deleted:
-                        entry.Entity.DeletedBy = _currentUserService.Username;
+                        entry.Entity.DeletedBy = _currentUserService.UserId;
                         entry.Entity.DeletedAt = _dateTime.Now;
                         break;
                 }
