@@ -11,6 +11,7 @@ namespace Collaboration.ShareDocs.Persistence.Entities
         public ApplicationUser User { get; set; }
         public Guid ProjectId { get; set; }
         public Project Project { get; set; }
+        public bool IsAdmin { get; set; }
 
     }
 }

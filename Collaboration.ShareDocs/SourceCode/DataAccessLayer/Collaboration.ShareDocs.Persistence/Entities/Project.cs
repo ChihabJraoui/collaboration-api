@@ -19,6 +19,6 @@ namespace Collaboration.ShareDocs.Persistence.Entities
         public virtual ICollection<Folder> Folders { get; set; } 
         public virtual Workspace Workspace { get; set; }
 
-        //public ICollection<UserProject> Users { get; set; }
+        public ICollection<UserProject> Users { get; set; }
     }
 }

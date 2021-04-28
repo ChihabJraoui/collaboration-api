@@ -12,13 +12,7 @@ namespace Collaboration.ShareDocs.Persistence.Entities
         public bool IsActive { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-
-
-
         public ICollection<UserProject> Projects { get; set; }
-
-
-
-        public ICollection<Follow> Follows { get; set; }
+        //public ICollection<Follow> Follows { get; set; }
     }
 }
