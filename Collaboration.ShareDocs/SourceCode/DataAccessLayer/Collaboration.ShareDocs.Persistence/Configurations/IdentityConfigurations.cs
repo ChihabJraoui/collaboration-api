@@ -1,13 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 using Collaboration.ShareDocs.Persistence.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
-namespace Collaboration.ShareDocs.Persistence.EntityConfigurations
+namespace Collaboration.ShareDocs.Persistence.Configurations
 {
-    public class EntityConfigurations
+    public class IdentityConfigurations
     {
         public void RenameIdentityTables(ModelBuilder modelBuilder)
         {

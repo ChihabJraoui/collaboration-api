@@ -11,10 +11,9 @@ namespace Collaboration.ShareDocs.Persistence
     {
         public static IServiceCollection AddPersistenceDependancy(this IServiceCollection services, IConfiguration configuration)
         {
+            var conString = configuration.GetConnectionString("default");
             services.AddDbContext<AppDbContext>(options =>
-            options.UseSqlServer(
-                configuration.GetConnectionString("default"),
-                b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)));
+            options.UseSqlServer(conString, b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)));
 
             return services;
         }
