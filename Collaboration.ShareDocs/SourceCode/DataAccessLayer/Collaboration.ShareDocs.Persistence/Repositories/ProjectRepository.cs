@@ -35,7 +35,7 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
 
         public async Task<Project> GetAsync(Guid projectId, CancellationToken cancellationToken)
         {
-            var project = await _context.Projects.Where(w => w.ProjectId == projectId)
+            var project = await _context.Projects.Where(w => w.Id == projectId)
                 .Include(w => w.Folders).Include(x => x.Workspace).OrderBy(n => n.Created).SingleOrDefaultAsync(cancellationToken);
             return project;
         }
@@ -54,7 +54,7 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
 
         public async Task<Project> UpdateAsync(Project project, CancellationToken cancellationToken)
         {
-            var projectData = await GetAsync(project.ProjectId, cancellationToken);
+            var projectData = await GetAsync(project.Id, cancellationToken);
             projectData.Label = project.Label;
             projectData.Description = project.Description;
             projectData.Icon = project.Icon;

@@ -30,7 +30,7 @@ namespace Collaboration.ShareDocs.Application.Project.Commands.DeleteProject
                 {
                     throw new BusinessRuleException($"this {request.ProjectId} is empty");
                 }
-                //var result = _projectRepository.DeleteAsync(request.ProjectId, _currentUserService,cancellationToken);
+                //var result = _projectRepository.DeleteAsync(request.Id, _currentUserService,cancellationToken);
 
                 //return result;
                 return null;

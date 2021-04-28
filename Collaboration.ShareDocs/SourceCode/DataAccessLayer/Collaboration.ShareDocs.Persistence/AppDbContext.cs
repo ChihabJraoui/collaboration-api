@@ -3,10 +3,9 @@ using Collaboration.ShareDocs.Persistence.Entities;
 using Collaboration.ShareDocs.Persistence.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Collaboration.ShareDocs.Persistence.Configurations;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Collaboration.ShareDocs.Persistence
@@ -53,6 +52,8 @@ namespace Collaboration.ShareDocs.Persistence
         public DbSet<Project> Projects { get; set; }
         public DbSet<File> Files { get; set; }
         public DbSet<Folder> Folders { get; set; }
+        public DbSet<UserProject> UserProjects { get; set; }
+        public DbSet<Follow> Follows { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Customize the ASP.NET Identity model and override the defaults if needed.
@@ -60,7 +61,7 @@ namespace Collaboration.ShareDocs.Persistence
             // Add your customizations after calling base.OnModelCreating(builder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
             //// Entity Relation configuration
-            var configuration = new EntityConfigurations.EntityConfigurations();
+            var configuration = new IdentityConfigurations();
             base.OnModelCreating(modelBuilder);
             // Entity Relation configuration
             configuration.RenameIdentityTables(modelBuilder);

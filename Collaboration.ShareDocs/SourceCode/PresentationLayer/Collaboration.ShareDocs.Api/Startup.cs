@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Collaboration.ShareDocs.Application;
 
 namespace Collaboration.ShareDocs.Api
 {
@@ -26,7 +27,7 @@ namespace Collaboration.ShareDocs.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddProvisionDependancy(Configuration);
+            services.AddApplicationDependancy( Configuration );
             services.AddControllers();
         }
 

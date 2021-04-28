@@ -12,12 +12,13 @@ namespace Collaboration.ShareDocs.Persistence.Entities
         {
             Folders = new Collection<Folder>();
         }
-        public Guid ProjectId { get; set; }
+        public Guid Id { get; set; }
         public string Label { get; set; }
         public string Description { get; set; }
         public string Icon { get; set; }
-        public virtual ICollection<Folder> Folders { get; set; }
-
+        public virtual ICollection<Folder> Folders { get; set; } 
         public virtual Workspace Workspace { get; set; }
+
+        //public ICollection<UserProject> Users { get; set; }
     }
 }
