@@ -20,24 +20,23 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
         }
 
         public async Task<Workspace> CreateAsync(Workspace workspace, CancellationToken cancellationToken)
-        { 
-            var newWorkspace = await dbSet.AddAsync(workspace, cancellationToken); 
+        {
+            var newWorkspace =await InsertAsync(workspace, cancellationToken); 
+
             return newWorkspace.Entity;
         }
 
 
-
         public async Task<bool> DeleteAsync(Workspace workspace, CancellationToken cancellationToken)
-        { 
-            this.dbSet.Remove(workspace);
+        {
+            base.Remove(workspace);
+
             return true;
         }
-
-
-
+         
         public async Task<List<Workspace>> GetAllAsync(CancellationToken cancellationToken)
         {
-            return await _context.Workspaces.OrderByDescending(n => n.Created).ToListAsync(cancellationToken);
+            return await dbSet.OrderByDescending(n => n.Created).ToListAsync(cancellationToken);
         }
 
         public async Task<Workspace> GetAsync(Guid workspaceId, CancellationToken cancellationToken)
@@ -60,7 +59,7 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
 
         public async Task<Workspace> GetLastAsync(CancellationToken cancellationToken)
         {
-            var lastWorkspace = await dbSet.OrderByDescending(w => w.Created).ToListAsync(cancellationToken);  
+            var lastWorkspace = await dbSet.OrderByDescending(w => w.Created).ToListAsync(cancellationToken);
             return lastWorkspace.FirstOrDefault();
         }
 

@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 
 namespace Collaboration.ShareDocs.Persistence.Repositories
@@ -55,12 +56,23 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
             return dbSet.Find(id);
         }
 
-         
+
 
         public virtual void Insert(TEntity entity)
         {
             dbSet.Add(entity);
         }
+
+        public virtual async Task<EntityEntry<TEntity>> InsertAsync(TEntity entity, CancellationToken cancellation)
+        {
+            return await dbSet.AddAsync(entity, cancellation);
+        }
+
+        public virtual void Remove(TEntity entity)
+        {
+            dbSet.Remove(entity);
+        }
+
 
         public virtual void Delete(object id)
         {
