@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 
-namespace Collaboration.ShareDocs.Persistence.Interfaces
+namespace Collaboration.ShareDocs.Persistence.Repositories
 {
 
     public class GenericRepository<TEntity> where TEntity : class
@@ -22,7 +22,7 @@ namespace Collaboration.ShareDocs.Persistence.Interfaces
             this.dbSet = context.Set<TEntity>();
         }
 
-        public virtual IEnumerable<TEntity> Get(
+        public virtual IEnumerable<TEntity> GetQ(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             string includeProperties = "")

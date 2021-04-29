@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace Collaboration.ShareDocs.Persistence.Repositories
 {
-    public class WorkspaceRepository : IWorkspaceRepository
+    public class WorkspaceRepository : GenericRepository<Project>, IWorkspaceRepository
     {
         private readonly AppDbContext _context;
 
-        public WorkspaceRepository(AppDbContext appDbcontext)
+        public WorkspaceRepository(AppDbContext context) : base(context)
         {
-            _context = appDbcontext;
+            _context = context;
         }
         public async Task<Workspace> CreateAsync(Workspace workspace, CancellationToken cancellationToken)
         {

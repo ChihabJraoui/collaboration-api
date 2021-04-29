@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace Collaboration.ShareDocs.Persistence.Repositories
 {
-    public class ProjectRepository : IProjectRepository
+    public class ProjectRepository : GenericRepository<Project>, IProjectRepository
     { 
         private readonly AppDbContext _context;
 
-        public ProjectRepository(AppDbContext context)
+        public ProjectRepository(AppDbContext context):base(context)
         { 
             _context = context;
         }
