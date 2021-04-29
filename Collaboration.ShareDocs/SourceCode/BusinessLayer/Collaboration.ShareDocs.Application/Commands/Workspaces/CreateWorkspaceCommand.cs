@@ -49,7 +49,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
                     {
                         Name = request.Name,
                         Description = request.Description,
-                        Image = request.Image
+                        Image = request.Image, 
                     };
 
                     var workspace = await workspaceRepository.CreateAsync(newWorkspace, cancellationToken);
