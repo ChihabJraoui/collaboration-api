@@ -49,7 +49,7 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
             return obj;
         }
 
-        public async Task<bool> DeleteAsync(Folder folder, CancellationToken cancellationToken)
+        public bool Delete(Folder folder)
         {
            
              _context.Folders.Remove(folder);

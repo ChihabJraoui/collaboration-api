@@ -21,19 +21,19 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
 
         public async Task<Workspace> CreateAsync(Workspace workspace, CancellationToken cancellationToken)
         {
-            var newWorkspace =await InsertAsync(workspace, cancellationToken); 
+            var newWorkspace = await InsertAsync(workspace, cancellationToken);
 
             return newWorkspace.Entity;
         }
 
 
-        public async Task<bool> DeleteAsync(Workspace workspace, CancellationToken cancellationToken)
+        public bool Delete(Workspace workspace)
         {
             base.Remove(workspace);
 
             return true;
         }
-         
+
         public async Task<List<Workspace>> GetAllAsync(CancellationToken cancellationToken)
         {
             return await dbSet.OrderByDescending(n => n.Created).ToListAsync(cancellationToken);

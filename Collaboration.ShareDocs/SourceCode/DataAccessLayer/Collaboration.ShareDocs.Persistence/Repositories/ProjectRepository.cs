@@ -37,7 +37,7 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
         }
 
 
-        async Task<bool> IRepositoryBase<Project>.DeleteAsync(Project project, CancellationToken cancellationToken)
+        public bool Delete(Project project, CancellationToken cancellationToken)
         {
 
             _context.Projects.Remove(project);
