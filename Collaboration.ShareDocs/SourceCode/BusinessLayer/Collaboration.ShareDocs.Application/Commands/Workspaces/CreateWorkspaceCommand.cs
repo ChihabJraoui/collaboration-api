@@ -20,7 +20,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
         {
             private readonly IUnitOfWork _unitOfWork;
             private readonly ICurrentUserService _currentUserService;
-            private readonly IMethodesRepository _methodesRepository;
+            private readonly IMethodesRepository _methodesRepository; 
             private readonly IMapper _mapper;
 
             public Handler(IUnitOfWork unitOfWork,
@@ -28,7 +28,8 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
                                           IMethodesRepository methodesRepository,
                                           IMapper mapper)
             {
-                this._unitOfWork = unitOfWork;
+                this._unitOfWork = unitOfWork; 
+
                 this._currentUserService = currentUserService;
                 this._methodesRepository = methodesRepository;
                 _mapper = mapper;
@@ -36,6 +37,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
             public async Task<CreateWorkspaceDto> Handle(CreateWorkspaceCommand request, CancellationToken cancellationToken)
             {
 
+                var workspaceRepository = _unitOfWork.WorkspaceRepository;
                 // R01 Workspace label is unique
                 if (!await _methodesRepository.UniqueName(request.Name, cancellationToken))
                 {
@@ -50,7 +52,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
                         Image = request.Image
                     };
 
-                    var workspace = await _unitOfWork.WorkspaceRepository.CreateAsync(newWorkspace, cancellationToken);
+                    var workspace = await workspaceRepository.CreateAsync(newWorkspace, cancellationToken);
                     await _unitOfWork.SaveChangesAsync(cancellationToken);
 
                     var response = _mapper.Map<CreateWorkspaceDto>(workspace);
