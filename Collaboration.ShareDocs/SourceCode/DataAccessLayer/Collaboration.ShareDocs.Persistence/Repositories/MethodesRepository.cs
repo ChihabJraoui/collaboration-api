@@ -1,4 +1,5 @@
 ﻿using Collaboration.ShareDocs.Persistence.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,9 +10,18 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
 {
     public class MethodesRepository : IMethodesRepository
     {
-        public Task<bool> UniqueName(string name, CancellationToken cancellationToken)
+        private readonly AppDbContext _context;
+        
+
+        public MethodesRepository(AppDbContext context)
         {
-            throw new NotImplementedException();
+            this._context = context;
+            
+        }
+        public async Task<bool> UniqueName(string name, CancellationToken cancellationToken)
+        {
+            return await _context.Workspaces
+                .AllAsync(n => n.Name != name);
         }
     }
 }
