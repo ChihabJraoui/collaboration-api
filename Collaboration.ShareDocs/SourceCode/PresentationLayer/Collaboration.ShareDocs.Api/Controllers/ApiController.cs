@@ -1,24 +1,34 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Collaboration.ShareDocs.Api.Controllers
 {
-    //using Web.Filters;
 
-    [
-        Produces("application/json"),
-        Route("api/[controller]"),
-        ApiController,
-        //ServiceFilter(typeof(ApiExceptionFilter))
-    ]
-    public class ApiController:ControllerBase
+    [ApiController, Route("api/[controller]/[action]")]
+    public abstract class BaseController : ControllerBase
     {
-        public ApiController()
-        {
+        private IMediator _mediator;
 
-        }
+        protected IMediator Mediator => this._mediator ??= this.HttpContext.RequestServices.GetService<IMediator>();
+
+        //protected IActionResult FormatResponseToActionResult(ApiResponseDetails response)
+        //{
+        //    switch ((HttpStatusCode)response.StatusCode)
+        //    {
+        //        case HttpStatusCode.OK:
+        //            return Ok(response.Object ?? response);
+        //        case HttpStatusCode.BadRequest:
+        //            return BadRequest(response);
+        //        case HttpStatusCode.NotFound:
+        //            return NotFound(response);
+        //        case HttpStatusCode.Conflict:
+        //            return Conflict(response);
+        //        case HttpStatusCode.Forbidden:
+        //            return StatusCode((int)HttpStatusCode.Forbidden, response);
+        //        default:
+        //            return Ok(response);
+        //    }
+        //}
     }
 }

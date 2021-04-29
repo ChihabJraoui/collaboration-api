@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Collaboration.ShareDocs.Application;
 using Collaboration.ShareDocs.Persistence;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace Collaboration.ShareDocs.Api
 {
@@ -35,6 +36,8 @@ namespace Collaboration.ShareDocs.Api
             services.AddControllers();
             services.AddWebDependancy();
             services.AddSwaggerSetup(this.Configuration);
+            services.AddHttpContextAccessor();
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +53,8 @@ namespace Collaboration.ShareDocs.Api
             app.UseRouting();
 
             app.UseAuthorization();
+
+ 
 
             app.UseSwaggerSetup(this.Configuration);
 

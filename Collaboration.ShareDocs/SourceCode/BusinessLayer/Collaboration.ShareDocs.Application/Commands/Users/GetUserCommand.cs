@@ -30,7 +30,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Users
                 IMapper mapper,
                 ICurrentUserService currentUserService )
             {
-                this._userManager        = userManager;
+                this._userManager = userManager;
                 this._mapper             = mapper;
                 this._currentUserService = currentUserService;
             }
@@ -42,7 +42,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Users
                 var ff = new Workspace();
 
 
-                if ( user == null )
+                if (user == null)
                 {
                     //return ApiCustomResponse.NotFound("User", request.Id.ToString());
                     return null;

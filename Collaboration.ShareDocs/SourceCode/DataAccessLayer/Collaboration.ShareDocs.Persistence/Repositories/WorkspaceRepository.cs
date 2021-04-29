@@ -18,24 +18,19 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
         {
             _context = appDbcontext;
         }
-        public async Task<Guid> CreateAsync(Workspace workspace)
+        public async Task<Workspace> CreateAsync(Workspace workspace,CancellationToken cancellationToken)
         {
             var newworkspace=await _context.Workspaces.AddAsync(workspace);
-            await _context.SaveChangesAsync();
-            return newworkspace.Entity.Id;
+            await _context.SaveChangesAsync(cancellationToken);
+            return newworkspace.Entity;
         }
 
-        public Task<Workspace> CreateAsync(Workspace workspace, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
+       
 
         public async Task<bool> DeleteAsync(Workspace workspace, CancellationToken cancellationToken)
         {
              _context.Workspaces.Remove(workspace);
             await _context.SaveChangesAsync(cancellationToken);
-
-
             return true;
         }
 

@@ -13,7 +13,7 @@ namespace Collaboration.ShareDocs.Application.Common.Behaviours
         private readonly ICurrentUserService _currentUserService;
         private readonly IConfiguration _configuration;
 
-        public LoggingBehaviour(ILogger<TRequest> logger,ICurrentUserService currentUserService, IConfiguration configuration  )
+        public LoggingBehaviour(ILogger<TRequest> logger, ICurrentUserService currentUserService, IConfiguration configuration)
         {
             _logger = logger;
             _currentUserService = currentUserService;
@@ -21,12 +21,15 @@ namespace Collaboration.ShareDocs.Application.Common.Behaviours
         }
         public async Task Process(TRequest request, CancellationToken cancellationToken)
         {
-            var requestName = typeof(TRequest).Name;
-            var userId = _currentUserService.UserId ?? string.Empty;
+            await Task.Run(()=>
+            {
+                var requestName = typeof(TRequest).Name;
+                var userId = _currentUserService.UserId ?? string.Empty;
 
-            _logger.LogInformation("DocumentManagement Request : {Name} {@UserId} Data: {@Request}",
-                this._configuration["Application:Name"], requestName, userId, request);
-
+                _logger.LogInformation("DocumentManagement Request : {Name} {@UserId} Data: {@Request}",
+                    this._configuration["Application:Name"], requestName, userId, request);
+            }); 
         }
+         
     }
 }

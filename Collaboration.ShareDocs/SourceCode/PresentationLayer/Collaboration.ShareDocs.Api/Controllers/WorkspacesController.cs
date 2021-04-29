@@ -11,14 +11,9 @@ using Collaboration.ShareDocs.Application.Commands.Workspaces.Dto;
 namespace Collaboration.ShareDocs.Api.Controllers
 {
 
-    public class WorkspacesController : ApiController
-    {
-        private readonly IMediator _mediator;
-
-        public WorkspacesController(IMediator meditor)
-        {
-            this._mediator = meditor;
-        }
+    public class WorkspacesController : BaseController
+    { 
+ 
         /// <summary>
         /// Create new Workspace
         /// </summary>
@@ -27,10 +22,9 @@ namespace Collaboration.ShareDocs.Api.Controllers
         [HttpPost("create")]
         public async Task<ActionResult<CreateWorkspaceDto>> Create(CreateWorkspaceCommand command)
         {
-            var result = await this._mediator.Send(command);
+            var result = await this.Mediator.Send(command);
             return result;
         }
-
 
         
 
