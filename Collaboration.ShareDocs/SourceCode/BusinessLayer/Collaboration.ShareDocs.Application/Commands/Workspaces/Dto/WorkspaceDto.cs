@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Collaboration.ShareDocs.Application.Commands.Workspaces.Dto
 {
-    public class CreateWorkspaceDto:IMapForm<Workspace>
+    public class WorkspaceDto:IMapForm<Workspace>
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -19,7 +19,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces.Dto
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Workspace, CreateWorkspaceDto>();
+            profile.CreateMap<Workspace, WorkspaceDto>();
         }
     }
 }

@@ -1,22 +1,26 @@
 ﻿using AutoMapper;
 using Collaboration.ShareDocs.Application.Commands.Workspaces.Dto;
 using Collaboration.ShareDocs.Application.Common.Exceptions;
-using Collaboration.ShareDocs.Persistence.Entities;
 using Collaboration.ShareDocs.Persistence.Interfaces;
 using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Collaboration.ShareDocs.Application.Commands.Workspaces
 {
-    public class CreateWorkspaceCommand : IRequest<WorkspaceDto>
+    public class UpdateWorkspaceCommand : IRequest<WorkspaceDto>
     {
+        public Guid WorkspaceId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
+        public bool BookMark { get; set; }
+        public bool IsPrivate { get; set; }
 
-
-        public class Handler : IRequestHandler<CreateWorkspaceCommand, WorkspaceDto>
+        public class Handler : IRequestHandler<UpdateWorkspaceCommand, WorkspaceDto>
         {
             private readonly IUnitOfWork _unitOfWork;
             private readonly ICurrentUserService _currentUserService;
@@ -24,38 +28,32 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
             private readonly IMapper _mapper;
 
             public Handler(IUnitOfWork unitOfWork,
-                                          ICurrentUserService currentUserService,
-                                          IMethodesRepository methodesRepository,
-                                          IMapper mapper)
+                           ICurrentUserService currentUserService,
+                           IMethodesRepository methodesRepository,
+                           IMapper mapper)
             {
                 this._unitOfWork = unitOfWork;
-
                 this._currentUserService = currentUserService;
                 this._methodesRepository = methodesRepository;
                 _mapper = mapper;
             }
-            public async Task<WorkspaceDto> Handle(CreateWorkspaceCommand request, CancellationToken cancellationToken)
-            {
 
-                var workspaceRepository = _unitOfWork.WorkspaceRepository;
+            public async Task<WorkspaceDto> Handle(UpdateWorkspaceCommand request, CancellationToken cancellationToken)
+            {
                 // R01 Workspace label is unique
                 if (!await _methodesRepository.UniqueName(request.Name, cancellationToken))
                 {
                     throw new BusinessRuleException($" The specified Name '{request.Name}' already exists.");
                 }
-
-                var newWorkspace = new Workspace
+                var workspace = await _unitOfWork.WorkspaceRepository.GetAsync(request.WorkspaceId, cancellationToken);
+                if (workspace == null)
                 {
-                    Name = request.Name,
-                    Description = request.Description,
-                    Image = request.Image
-                };
+                    throw new BusinessRuleException($" There is no workspace with this '{request.WorkspaceId}'");
+                }
+                await _unitOfWork.WorkspaceRepository.UpdateAsync(workspace, cancellationToken);
 
-                var workspace = await workspaceRepository.CreateAsync(newWorkspace, cancellationToken);
-                await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-                var response = _mapper.Map<WorkspaceDto>(workspace);
-                return response;
+                return null;
             }
         }
     }
