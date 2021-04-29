@@ -12,15 +12,11 @@ using System.Threading.Tasks;
 namespace Collaboration.ShareDocs.Persistence.Repositories
 {
     public class ProjectRepository : IProjectRepository
-    {
-        private readonly ICurrentUserService _currentUserService;
+    { 
         private readonly AppDbContext _context;
 
-        public ProjectRepository(ICurrentUserService currentUserService,
-                                 AppDbContext context
-                                 )
-        {
-            _currentUserService = currentUserService;
+        public ProjectRepository(AppDbContext context)
+        { 
             _context = context;
         }
 

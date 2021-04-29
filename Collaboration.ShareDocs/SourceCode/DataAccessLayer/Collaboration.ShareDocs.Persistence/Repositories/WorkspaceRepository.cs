@@ -18,32 +18,32 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
         {
             _context = appDbcontext;
         }
-        public async Task<Workspace> CreateAsync(Workspace workspace,CancellationToken cancellationToken)
+        public async Task<Workspace> CreateAsync(Workspace workspace, CancellationToken cancellationToken)
         {
-            var newworkspace=await _context.Workspaces.AddAsync(workspace);
-            await _context.SaveChangesAsync(cancellationToken);
-            return newworkspace.Entity;
+            var newWorkspace = await _context.Workspaces.AddAsync(workspace, cancellationToken);
+            //await _context.SaveChangesAsync(cancellationToken);
+            return newWorkspace.Entity;
         }
 
-       
+
 
         public async Task<bool> DeleteAsync(Workspace workspace, CancellationToken cancellationToken)
         {
-             _context.Workspaces.Remove(workspace);
-            await _context.SaveChangesAsync(cancellationToken);
+            _context.Workspaces.Remove(workspace);
+            //await _context.SaveChangesAsync(cancellationToken);
             return true;
         }
 
-   
 
-        public async Task <List<Workspace>> GetAllAsync(CancellationToken cancellationToken)
+
+        public async Task<List<Workspace>> GetAllAsync(CancellationToken cancellationToken)
         {
             return await _context.Workspaces.OrderByDescending(n => n.Created).ToListAsync(cancellationToken);
         }
 
         public async Task<Workspace> GetAsync(Guid workspaceId, CancellationToken cancellationToken)
         {
-            var query =  _context.Workspaces.Where(w => w.Id ==workspaceId)
+            var query = _context.Workspaces.Where(w => w.Id == workspaceId)
                .Include(w => w.Projects).OrderBy(n => n.Created);
             var Workspace = await query.FirstOrDefaultAsync();
             return Workspace;
@@ -51,7 +51,7 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
 
         public async Task<List<Workspace>> GetByKeyWord(string keyWord)
         {
-            return  await _context.Workspaces.Where(w => w.Name.Contains(keyWord)).ToListAsync();
+            return await _context.Workspaces.Where(w => w.Name.Contains(keyWord)).ToListAsync();
         }
 
         public async Task<int> GetCount()
@@ -75,19 +75,19 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
 
         public async Task<Workspace> UpdateAsync(Workspace workspace, CancellationToken cancellationToken)
         {
-           
-            var workspaceData = await GetAsync(workspace.Id,cancellationToken);
-            
-                workspaceData.Name = workspace.Name;
-                workspaceData.Description = workspace.Description;
-                workspaceData.Image = workspace.Image;
-                workspaceData.BookMark = workspace.BookMark;
-                workspaceData.IsPrivate = workspace.IsPrivate;
-                 //LastModifiedBy TO DO ?!
-                await this._context.SaveChangesAsync(cancellationToken);
-            
+
+            var workspaceData = await GetAsync(workspace.Id, cancellationToken);
+
+            workspaceData.Name = workspace.Name;
+            workspaceData.Description = workspace.Description;
+            workspaceData.Image = workspace.Image;
+            workspaceData.BookMark = workspace.BookMark;
+            workspaceData.IsPrivate = workspace.IsPrivate;
+            //LastModifiedBy TO DO ?!
+            await this._context.SaveChangesAsync(cancellationToken);
+
             return workspaceData;
-        } 
-         
+        }
+
     }
 }

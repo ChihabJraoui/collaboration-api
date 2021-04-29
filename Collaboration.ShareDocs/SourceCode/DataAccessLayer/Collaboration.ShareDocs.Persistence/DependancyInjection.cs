@@ -26,6 +26,7 @@ namespace Collaboration.ShareDocs.Persistence
             services.AddScoped<IMethodesRepository, MethodesRepository>();
             services.AddScoped<IFolderRepository, FolderRepository>();
             services.AddScoped<IFileRepository, FileRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;
         }

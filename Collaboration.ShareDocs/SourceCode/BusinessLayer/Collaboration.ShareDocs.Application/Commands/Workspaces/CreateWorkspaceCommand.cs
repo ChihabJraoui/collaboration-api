@@ -18,17 +18,17 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
 
         public class Handler : IRequestHandler<CreateWorkspaceCommand, CreateWorkspaceDto>
         {
-            private readonly IWorkspaceRepository _workspaceRepository;
+            private readonly IUnitOfWork _unitOfWork;
             private readonly ICurrentUserService _currentUserService;
             private readonly IMethodesRepository _methodesRepository;
             private readonly IMapper _mapper;
 
-            public Handler(IWorkspaceRepository workspaceRepository,
+            public Handler(IUnitOfWork unitOfWork,
                                           ICurrentUserService currentUserService,
                                           IMethodesRepository methodesRepository,
                                           IMapper mapper)
             {
-                this._workspaceRepository = workspaceRepository;
+                this._unitOfWork = unitOfWork;
                 this._currentUserService = currentUserService;
                 this._methodesRepository = methodesRepository;
                 _mapper = mapper;
@@ -47,13 +47,13 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
                     {
                         Name = request.Name,
                         Description = request.Description,
-                        Image = request.Image,
-                        CreatedBy = _currentUserService.UserId,
+                        Image = request.Image
                     };
 
-                    var workspace = await this._workspaceRepository.CreateAsync(newWorkspace, cancellationToken);
-                    var response = _mapper.Map<CreateWorkspaceDto>(workspace);
+                    var workspace = await _unitOfWork.WorkspaceRepository.CreateAsync(newWorkspace, cancellationToken);
+                    await _unitOfWork.SaveChangesAsync(cancellationToken);
 
+                    var response = _mapper.Map<CreateWorkspaceDto>(workspace);
                     return response;
                 }
             }
