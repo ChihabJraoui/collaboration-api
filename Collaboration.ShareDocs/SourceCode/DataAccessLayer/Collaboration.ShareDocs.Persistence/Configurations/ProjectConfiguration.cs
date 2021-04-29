@@ -1,9 +1,6 @@
 ﻿using Collaboration.ShareDocs.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Collaboration.ShareDocs.Persistence.Configurations
 {
@@ -16,6 +13,7 @@ namespace Collaboration.ShareDocs.Persistence.Configurations
                   .HasMaxLength(15);
             builder.Property(x => x.Description)
                    .HasMaxLength(30);
+
         }
     }
 }

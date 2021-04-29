@@ -7,34 +7,14 @@ using System.Threading.Tasks;
 
 namespace Collaboration.ShareDocs.Persistence.Interfaces
 {
-    public interface IProjectRepository
+    public interface IProjectRepository: IRepositoryBase<Project>
     {
+      
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="command,workspace,currentUserService">project,Workspace,ICurrentUser</param>
-        /// <returns>string</returns>
-        Task<Project> CreateAsync(Project project);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="projectId">GUID</param>
-        /// <returns>Project</returns>
-        Task<Project> GetAsync(Guid projectId);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="query,currentUserService,project">UpdateProjectCommand,ICurrentUserService,Project</param>
-        /// <returns>Unit</returns>
-        Task<Project> UpdateAsync(Project project, ICurrentUser currentUserService);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="query,currentUserService">DeleteProjectCommand, ICurrentUserService</param>
-        /// <returns>DeleteProjectDto</returns>
-        Task<string> DeleteAsync(Project project);
+        /// <param name="keyWord">GetProjectByKeyWord</param>
+        /// <returns>Projects</returns>
+        Task<List<Project>> GetByKeyWordAsync(string keyWord);
     }
 }

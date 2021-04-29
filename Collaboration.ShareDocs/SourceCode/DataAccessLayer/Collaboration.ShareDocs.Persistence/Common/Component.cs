@@ -1,5 +1,6 @@
 ﻿using Collaboration.ShareDocs.Persistence.Entities;
 
+
 namespace Collaboration.ShareDocs.Persistence.Common
 {
     public class Component:AuditableEntity

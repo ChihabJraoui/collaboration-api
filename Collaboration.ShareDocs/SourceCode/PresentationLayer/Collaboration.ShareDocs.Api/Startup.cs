@@ -1,3 +1,4 @@
+using Collaboration.ShareDocs.Api.Configurations;
 using Collaboration.ShareDocs.Provision;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,6 +12,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Collaboration.ShareDocs.Application;
+using Collaboration.ShareDocs.Persistence;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace Collaboration.ShareDocs.Api
 {
@@ -26,8 +31,13 @@ namespace Collaboration.ShareDocs.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddProvisionDependancy(Configuration);
+            services.AddApplicationDependancy(Configuration);
+
             services.AddControllers();
+            services.AddWebDependancy();
+            services.AddSwaggerSetup(this.Configuration);
+            services.AddHttpContextAccessor();
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +53,10 @@ namespace Collaboration.ShareDocs.Api
             app.UseRouting();
 
             app.UseAuthorization();
+
+ 
+
+            app.UseSwaggerSetup(this.Configuration);
 
             app.UseEndpoints(endpoints =>
             {

@@ -7,21 +7,9 @@ using System.Threading.Tasks;
 
 namespace Collaboration.ShareDocs.Persistence.Interfaces
 {
-    public interface IWorkspaceRepository
+    public interface IWorkspaceRepository : IRepositoryBase<Workspace>
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="workspace,currentUser">CreateWorkspaceCommand</param>
-        /// <returns>Guid</returns>
-        Task<Guid> CreateAsync(Workspace workspace);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="workspaceId">WorkspaceId</param>
-        /// <returns>Workspace Entity "//TODO dto"</returns>
-        Task<Workspace> GetAsync(Guid workspaceId);
+        
 
         /// <summary>
         /// 
@@ -41,21 +29,7 @@ namespace Collaboration.ShareDocs.Persistence.Interfaces
         /// </summary>
         /// <param name="cancellationToken">CancellationToken</param>
         /// <returns>Workspace</returns>
-        Task<Workspace> GetLastModifiedAsync(CancellationToken cancellationToken);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="workspace">UpdateWorkspaceCommand</param>
-        /// <returns>Workspace</returns>
-        Task<Workspace> UpdataAsync(Workspace workspace, CancellationToken cancellationToken);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="workspaceId,cancellationToken">Guid</param>
-        /// <returns>DeleteBy</returns>
-        Task<string> DeleteAsync(Guid workspaceId,CancellationToken cancellationToken);
+        Task<Workspace> GetLastModifiedAsync(CancellationToken cancellationToken); 
 
         /// <summary>
         /// 
@@ -70,5 +44,7 @@ namespace Collaboration.ShareDocs.Persistence.Interfaces
         /// <param name=""></param>
         /// <returns>int</returns>
         Task<int> GetCount();
+
+       
     }
 }

@@ -3,19 +3,25 @@ using Collaboration.ShareDocs.Persistence.Entities;
 using Collaboration.ShareDocs.Persistence.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Collaboration.ShareDocs.Persistence.Configurations;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Collaboration.ShareDocs.Persistence
 {
-    public class AppDbContext:DbContext
+    public class AppDbContext: IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {
-        private readonly ICurrentUser _currentUserService;
+        private readonly ICurrentUserService _currentUserService;
         private readonly IDateTime _dateTime;
+ 
+        public AppDbContext(DbContextOptions<AppDbContext> options)
+            : base(options)
+        {
 
-        public AppDbContext(DbContextOptions<AppDbContext> options,ICurrentUser currentUser,IDateTime dateTime)
+        }
+
+        public AppDbContext(DbContextOptions<AppDbContext> options,ICurrentUserService currentUser,IDateTime dateTime)
             : base(options)
         {
             _currentUserService = currentUser;
@@ -28,15 +34,15 @@ namespace Collaboration.ShareDocs.Persistence
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        entry.Entity.CreatedBy = _currentUserService.Username;
+                        entry.Entity.CreatedBy = _currentUserService.UserId;
                         entry.Entity.Created = _dateTime.Now;
                         break;
                     case EntityState.Modified:
-                        entry.Entity.LastModifiedBy = _currentUserService.Username;
+                        entry.Entity.LastModifiedBy = _currentUserService.UserId;
                         entry.Entity.LastModified = _dateTime.Now;
                         break;
                     case EntityState.Deleted:
-                        entry.Entity.DeletedBy = _currentUserService.Username;
+                        entry.Entity.DeletedBy = _currentUserService.UserId;
                         entry.Entity.DeletedAt = _dateTime.Now;
                         break;
                 }
@@ -48,13 +54,20 @@ namespace Collaboration.ShareDocs.Persistence
         public DbSet<Project> Projects { get; set; }
         public DbSet<File> Files { get; set; }
         public DbSet<Folder> Folders { get; set; }
+        public DbSet<UserProject> UserProjects { get; set; }
+        public DbSet<Follow> Follows { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Customize the ASP.NET Identity model and override the defaults if needed.
+            // For example, you can rename the ASP.NET Identity table names and more.
+            // Add your customizations after calling base.OnModelCreating(builder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
-            var configuration = new EntityConfigurations.EntityConfigurations();
+            //// Entity Relation configuration
+            var configuration = new IdentityConfigurations();
             base.OnModelCreating(modelBuilder);
             // Entity Relation configuration
             configuration.RenameIdentityTables(modelBuilder);
+            configuration.IdentityUserLoginConfig(modelBuilder);
         }
 
     }
