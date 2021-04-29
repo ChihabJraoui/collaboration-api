@@ -10,66 +10,62 @@ using System.Threading.Tasks;
 
 namespace Collaboration.ShareDocs.Persistence.Repositories
 {
-    public class WorkspaceRepository : IWorkspaceRepository
+    public class WorkspaceRepository : GenericRepository<Workspace>, IWorkspaceRepository
     {
         private readonly AppDbContext _context;
 
-        public WorkspaceRepository(AppDbContext appDbcontext)
+        public WorkspaceRepository(AppDbContext context) : base(context)
         {
-            _context = appDbcontext;
+            _context = context;
         }
+
         public async Task<Workspace> CreateAsync(Workspace workspace, CancellationToken cancellationToken)
         {
-            var newWorkspace = await _context.Workspaces.AddAsync(workspace, cancellationToken);
-            //await _context.SaveChangesAsync(cancellationToken);
+            var newWorkspace = await InsertAsync(workspace, cancellationToken);
+
             return newWorkspace.Entity;
         }
 
 
-
-        public async Task<bool> DeleteAsync(Workspace workspace, CancellationToken cancellationToken)
+        public bool Delete(Workspace workspace)
         {
-            _context.Workspaces.Remove(workspace);
-            //await _context.SaveChangesAsync(cancellationToken);
+            base.Remove(workspace);
+
             return true;
         }
 
-
-
         public async Task<List<Workspace>> GetAllAsync(CancellationToken cancellationToken)
         {
-            return await _context.Workspaces.OrderByDescending(n => n.Created).ToListAsync(cancellationToken);
+            return await dbSet.OrderByDescending(n => n.Created).ToListAsync(cancellationToken);
         }
 
         public async Task<Workspace> GetAsync(Guid workspaceId, CancellationToken cancellationToken)
         {
-            var query = _context.Workspaces.Where(w => w.Id == workspaceId)
+            var query = dbSet.Where(w => w.Id == workspaceId)
                .Include(w => w.Projects).OrderBy(n => n.Created);
-            var Workspace = await query.FirstOrDefaultAsync();
+            var Workspace = await query.FirstOrDefaultAsync(cancellationToken);
             return Workspace;
         }
 
         public async Task<List<Workspace>> GetByKeyWord(string keyWord)
         {
-            return await _context.Workspaces.Where(w => w.Name.Contains(keyWord)).ToListAsync();
+            return await dbSet.Where(w => w.Name.Contains(keyWord)).ToListAsync();
         }
 
         public async Task<int> GetCount()
         {
-            return await _context.Workspaces.CountAsync();
+            return await dbSet.CountAsync();
         }
 
         public async Task<Workspace> GetLastAsync(CancellationToken cancellationToken)
         {
-            var lastWorkspace = await _context.Workspaces
-               .OrderByDescending(w => w.Created).ToListAsync(cancellationToken); //this conce
+            var lastWorkspace = await dbSet.OrderByDescending(w => w.Created).ToListAsync(cancellationToken);
             return lastWorkspace.FirstOrDefault();
         }
 
         public async Task<Workspace> GetLastModifiedAsync(CancellationToken cancellationToken)
         {
-            var lastModifiedWorkspace = await _context.Workspaces
-                .OrderByDescending(w => w.LastModified).ToListAsync(cancellationToken);
+            var lastModifiedWorkspace = await dbSet.OrderByDescending(w => w.LastModified).ToListAsync(cancellationToken);
             return lastModifiedWorkspace.FirstOrDefault();
         }
 

@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace Collaboration.ShareDocs.Persistence.Repositories
 {
-    public class ProjectRepository : IProjectRepository
+    public class ProjectRepository : GenericRepository<Project>, IProjectRepository
     { 
         private readonly AppDbContext _context;
 
-        public ProjectRepository(AppDbContext context)
+        public ProjectRepository(AppDbContext context):base(context)
         { 
             _context = context;
         }
@@ -37,7 +37,7 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
         }
 
 
-        async Task<bool> IRepositoryBase<Project>.DeleteAsync(Project project, CancellationToken cancellationToken)
+        public bool Delete(Project project, CancellationToken cancellationToken)
         {
 
             _context.Projects.Remove(project);

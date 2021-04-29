@@ -8,14 +8,15 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Collaboration.ShareDocs.Persistence.Repositories
 {
-    public class FolderRepository : IFolderRepository
+    public class FolderRepository : GenericRepository<Folder>, IFolderRepository
     {
         private readonly AppDbContext _context;
 
-        public FolderRepository(AppDbContext context)
+        public FolderRepository( AppDbContext context ):base(context)
         {
             _context = context;
         }
@@ -48,7 +49,7 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
             return obj;
         }
 
-        public async Task<bool> DeleteAsync(Folder folder, CancellationToken cancellationToken)
+        public bool Delete(Folder folder)
         {
            
              _context.Folders.Remove(folder);

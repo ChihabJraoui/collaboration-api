@@ -9,7 +9,7 @@ namespace Collaboration.ShareDocs.Persistence.Interfaces
 {
     public interface IWorkspaceRepository : IRepositoryBase<Workspace>
     {
-        
+
 
         /// <summary>
         /// 
@@ -29,7 +29,7 @@ namespace Collaboration.ShareDocs.Persistence.Interfaces
         /// </summary>
         /// <param name="cancellationToken">CancellationToken</param>
         /// <returns>Workspace</returns>
-        Task<Workspace> GetLastModifiedAsync(CancellationToken cancellationToken); 
+        Task<Workspace> GetLastModifiedAsync(CancellationToken cancellationToken);
 
         /// <summary>
         /// 
@@ -45,6 +45,5 @@ namespace Collaboration.ShareDocs.Persistence.Interfaces
         /// <returns>int</returns>
         Task<int> GetCount();
 
-       
     }
 }

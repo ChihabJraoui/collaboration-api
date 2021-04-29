@@ -6,9 +6,10 @@ using System.Data;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 
-namespace Collaboration.ShareDocs.Persistence.Interfaces
+namespace Collaboration.ShareDocs.Persistence.Repositories
 {
 
     public class GenericRepository<TEntity> where TEntity : class
@@ -22,7 +23,7 @@ namespace Collaboration.ShareDocs.Persistence.Interfaces
             this.dbSet = context.Set<TEntity>();
         }
 
-        public virtual IEnumerable<TEntity> Get(
+        public virtual IEnumerable<TEntity> GetQ(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             string includeProperties = "")
@@ -55,12 +56,23 @@ namespace Collaboration.ShareDocs.Persistence.Interfaces
             return dbSet.Find(id);
         }
 
-         
+
 
         public virtual void Insert(TEntity entity)
         {
             dbSet.Add(entity);
         }
+
+        public virtual async Task<EntityEntry<TEntity>> InsertAsync(TEntity entity, CancellationToken cancellation)
+        {
+            return await dbSet.AddAsync(entity, cancellation);
+        }
+
+        public virtual void Remove(TEntity entity)
+        {
+            dbSet.Remove(entity);
+        }
+
 
         public virtual void Delete(object id)
         {
