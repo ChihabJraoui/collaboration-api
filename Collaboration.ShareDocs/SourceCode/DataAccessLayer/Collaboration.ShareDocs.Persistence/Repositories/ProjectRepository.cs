@@ -37,16 +37,7 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
         }
 
 
-        public bool Delete(Project project, CancellationToken cancellationToken)
-        {
-
-            _context.Projects.Remove(project);
-
-
-            await _context.SaveChangesAsync();
-
-            return true;
-        }
+       
 
         public async Task<Project> UpdateAsync(Project project, CancellationToken cancellationToken)
         {
@@ -62,6 +53,11 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
         public async Task<List<Project>> GetByKeyWordAsync(string keyWord)
         {
             return await _context.Projects.Where(p => p.Label.Contains(keyWord)).ToListAsync();
+        }
+
+        bool IRepositoryBase<Project>.Delete(Project obj)
+        {
+            throw new NotImplementedException();
         }
     }
 }

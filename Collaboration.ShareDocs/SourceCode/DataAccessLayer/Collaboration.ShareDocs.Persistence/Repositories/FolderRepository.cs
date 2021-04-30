@@ -53,7 +53,6 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
         {
            
              _context.Folders.Remove(folder);
-            await _context.SaveChangesAsync(cancellationToken);
             return true;
         }
 

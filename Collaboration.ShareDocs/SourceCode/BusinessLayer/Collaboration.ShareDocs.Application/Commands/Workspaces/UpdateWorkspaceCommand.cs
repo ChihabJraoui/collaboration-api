@@ -51,9 +51,10 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
                     throw new BusinessRuleException($" There is no workspace with this '{request.WorkspaceId}'");
                 }
                 await _unitOfWork.WorkspaceRepository.UpdateAsync(workspace, cancellationToken);
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-
-                return null;
+                var response = _mapper.Map<WorkspaceDto>(workspace);
+                return response;
             }
         }
     }

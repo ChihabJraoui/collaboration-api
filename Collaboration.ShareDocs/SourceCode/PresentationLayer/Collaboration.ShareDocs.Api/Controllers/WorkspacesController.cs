@@ -20,13 +20,25 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// <param name="command"></param>
         /// <returns></returns>
         [HttpPost("create")]
-        public async Task<ActionResult<CreateWorkspaceDto>> Create(CreateWorkspaceCommand command)
+        public async Task<ActionResult<WorkspaceDto>> Create(CreateWorkspaceCommand command)
+        {
+            var result = await this.Mediator.Send(command);
+            return result;
+        }
+       
+        /// <summary>
+        /// Update Workspace
+        /// </summary>
+        /// <param name="command"> new </param>
+        /// <returns></returns>
+        [HttpPut("update")]
+        public async Task<ActionResult<WorkspaceDto>> Update(UpdateWorkspaceCommand command)
         {
             var result = await this.Mediator.Send(command);
             return result;
         }
 
-        
+
 
     }
 }
