@@ -8,12 +8,15 @@ namespace Collaboration.ShareDocs.Persistence.Interfaces
 {
     public interface IUnitOfWork
     {
-        IProjectRepository ProjectRepository { get; }
 
+        IFolderRepository FolderRepository { get; }
+        IFileRepository FileRepository { get; }
+        IProjectRepository ProjectRepository { get; }
         IWorkspaceRepository WorkspaceRepository { get; }
+        IMethodesRepository MethodRepository { get; }
 
         void Save();
 
-        Task<int> SaveChangesAsync( CancellationToken cancellationToken = new CancellationToken( ) );
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken());
     }
 }

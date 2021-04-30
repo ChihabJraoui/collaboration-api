@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Collaboration.ShareDocs.Persistence.Interfaces;
+using Collaboration.ShareDocs.Persistence.Repositories;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Collaboration.ShareDocs.Persistence.Entities;
-using Collaboration.ShareDocs.Persistence.Interfaces;
-using Collaboration.ShareDocs.Persistence.Repositories;
 
 namespace Collaboration.ShareDocs.Persistence
 {
@@ -19,9 +16,34 @@ namespace Collaboration.ShareDocs.Persistence
             _context = appDbContext;
         }
 
-        private IProjectRepository _projectRepository;
-        private IWorkspaceRepository _workspaceRepository;
+        private IFolderRepository _folderRepository;
+        public IFolderRepository FolderRepository
+        {
+            get
+            {
+                if (_folderRepository == null)
+                {
+                    this._folderRepository = new FolderRepository(_context);
+                }
+                return _folderRepository;
+            }
+        }
 
+        private IFileRepository _fileRepository;
+        public IFileRepository FileRepository
+        {
+            get
+            {
+
+                if (this._fileRepository == null)
+                {
+                    this._fileRepository = new FileRepository(_context);
+                }
+                return _fileRepository;
+            }
+        }
+
+        private IProjectRepository _projectRepository;
         public IProjectRepository ProjectRepository
         {
             get
@@ -35,6 +57,7 @@ namespace Collaboration.ShareDocs.Persistence
             }
         }
 
+        private IWorkspaceRepository _workspaceRepository;
         public IWorkspaceRepository WorkspaceRepository
         {
             get
@@ -45,6 +68,20 @@ namespace Collaboration.ShareDocs.Persistence
                     this._workspaceRepository = new WorkspaceRepository(_context);
                 }
                 return _workspaceRepository;
+            }
+        }
+
+        private IMethodesRepository _methodRepository;
+        public IMethodesRepository MethodRepository
+        {
+            get
+            {
+
+                if (_methodRepository == null)
+                {
+                    this._methodRepository = new MethodesRepository(_context);
+                }
+                return _methodRepository;
             }
         }
 

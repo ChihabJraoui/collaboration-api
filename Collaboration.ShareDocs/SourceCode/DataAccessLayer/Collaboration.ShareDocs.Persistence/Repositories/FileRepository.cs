@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Collaboration.ShareDocs.Persistence.Repositories
 {
-    public class FileRepository : IFileRepository
+    public class FileRepository : GenericRepository<File>, IFileRepository
     {
         private readonly AppDbContext _context;
 
-        public FileRepository(AppDbContext context)
+        public FileRepository(AppDbContext context):base(context)
         {
             _context = context;
         }

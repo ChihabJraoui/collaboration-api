@@ -8,18 +8,19 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Collaboration.ShareDocs.Persistence.Repositories
 {
-    public class FolderRepository : IFolderRepository
+    public class FolderRepository : GenericRepository<Folder>, IFolderRepository
     {
         private readonly AppDbContext _context;
 
-        public FolderRepository(AppDbContext context)
+        public FolderRepository(AppDbContext context) : base(context)
         {
             _context = context;
         }
-        public async Task<Folder> CreateFolderChild(Folder folder, Folder folderParent,Project project, Component component, CancellationToken cancellationToken)
+        public async Task<Folder> CreateFolderChild(Folder folder, Folder folderParent, Project project, Component component, CancellationToken cancellationToken)
         {
             var folderChild = new Folder(component.Name)
             {
@@ -33,43 +34,34 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
             //component.Parent = parentRoot;
             folderParent.Components.Add(folder);
 
-            await _context.Folders.AddAsync(folder);
-            await _context.SaveChangesAsync();
+            await base.InsertAsync(folder, cancellationToken);
 
             return folderChild;
 
         }
         public async Task<Folder> CreateAsync(Folder obj, CancellationToken cancellationToken)
         {
+            await base.InsertAsync(obj, cancellationToken);
 
-            await _context.Folders.AddAsync(obj);
-            await _context.SaveChangesAsync(cancellationToken);
-            
             return obj;
         }
 
-        public async Task<bool> DeleteAsync(Folder folder, CancellationToken cancellationToken)
-        {
-           
-             _context.Folders.Remove(folder);
-            await _context.SaveChangesAsync(cancellationToken);
-            return true;
-        }
+        public bool Delete(Folder folder) => base.Delete(folder);
 
         public async Task<List<Folder>> GetAllAsync(CancellationToken cancellationToken)
         {
-            return await _context.Folders.OrderByDescending(n => n.Created).ToListAsync(cancellationToken);
+            return await dbSet.OrderByDescending(n => n.Created).ToListAsync(cancellationToken);
         }
 
         public async Task<Folder> GetAsync(Guid id, CancellationToken cancellationToken)
         {
-            var Folder = await _context.Folders.Where(w => w.FolderId == id).Include(y => y.Parent).SingleOrDefaultAsync();
+            var Folder = await dbSet.Where(w => w.FolderId == id).Include(y => y.Parent).SingleOrDefaultAsync();
 
             return Folder;
         }
         public async Task<Folder> GetQueryAsync(Guid FolderID)
         {
-            var Folder = await _context.Folders.Where(w => w.FolderId == FolderID).Include(y => y.Components).Include(y => y.Files).SingleOrDefaultAsync();
+            var Folder = await dbSet.Where(w => w.FolderId == FolderID).Include(y => y.Components).Include(y => y.Files).SingleOrDefaultAsync();
 
             return Folder;
         }
@@ -82,8 +74,7 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
 
         public async Task<bool> UniqueName(string name)
         {
-            return await _context.Folders
-                .AllAsync(n => n.Name != name);
+            return await dbSet.AllAsync(n => n.Name != name);
         }
 
         public Task<Folder> UpdateAsync(Folder obj, CancellationToken cancellationToken)
