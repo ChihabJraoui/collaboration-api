@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Collaboration.ShareDocs.Application.Commands.Workspaces.Dto;
 using Collaboration.ShareDocs.Application.Common.Exceptions;
+using Collaboration.ShareDocs.Application.Common.Response;
 using Collaboration.ShareDocs.Persistence.Entities;
 using Collaboration.ShareDocs.Persistence.Interfaces;
 using MediatR;
@@ -9,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace Collaboration.ShareDocs.Application.Commands.Workspaces
 {
-    public class CreateWorkspaceCommand : IRequest<WorkspaceDto>
+    public class CreateWorkspaceCommand : IRequest<ApiResponseDetails>
     {
         public string Name { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
 
 
-        public class Handler : IRequestHandler<CreateWorkspaceCommand, WorkspaceDto>
+        public class Handler : IRequestHandler<CreateWorkspaceCommand, ApiResponseDetails>
         {
             private readonly IUnitOfWork _unitOfWork;
             private readonly ICurrentUserService _currentUserService;
@@ -34,14 +35,15 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
                 this._methodesRepository = methodesRepository;
                 _mapper = mapper;
             }
-            public async Task<WorkspaceDto> Handle(CreateWorkspaceCommand request, CancellationToken cancellationToken)
+            public async Task<ApiResponseDetails> Handle(CreateWorkspaceCommand request, CancellationToken cancellationToken)
             {
 
                 var workspaceRepository = _unitOfWork.WorkspaceRepository;
                 // R01 Workspace label is unique
                 if (!await _methodesRepository.UniqueName(request.Name, cancellationToken))
                 {
-                    throw new BadRequestException($" The specified Name '{request.Name}' already exists.");
+                   // throw new BadRequestException($" The specified Name '{request.Name}' already exists.");
+                    return ApiCustomResponse.ValidationError(new Error("Name", $" The specified Name '{request.Name}' already exists."));
                 }
 
                 var newWorkspace = new Workspace
@@ -55,7 +57,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
 
                 var response = _mapper.Map<WorkspaceDto>(workspace);
-                return response;
+                return ApiCustomResponse.ReturnedObject(response);
             }
         }
     }
