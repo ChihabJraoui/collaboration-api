@@ -37,13 +37,10 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
         }
 
 
-        public bool Delete(Project project, CancellationToken cancellationToken)
+        public bool Delete(Project project)
         {
 
             _context.Projects.Remove(project);
-
-
-            await _context.SaveChangesAsync();
 
             return true;
         }

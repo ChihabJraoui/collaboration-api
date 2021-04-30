@@ -16,11 +16,11 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
     {
         private readonly AppDbContext _context;
 
-        public FolderRepository( AppDbContext context ):base(context)
+        public FolderRepository(AppDbContext context) : base(context)
         {
             _context = context;
         }
-        public async Task<Folder> CreateFolderChild(Folder folder, Folder folderParent,Project project, Component component, CancellationToken cancellationToken)
+        public async Task<Folder> CreateFolderChild(Folder folder, Folder folderParent, Project project, Component component, CancellationToken cancellationToken)
         {
             var folderChild = new Folder(component.Name)
             {
@@ -45,15 +45,13 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
 
             await _context.Folders.AddAsync(obj);
             await _context.SaveChangesAsync(cancellationToken);
-            
+
             return obj;
         }
 
         public bool Delete(Folder folder)
         {
-           
-             _context.Folders.Remove(folder);
-            await _context.SaveChangesAsync(cancellationToken);
+            dbSet.Remove(folder);
             return true;
         }
 

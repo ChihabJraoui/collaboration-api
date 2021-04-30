@@ -16,12 +16,12 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
         public MethodesRepository(AppDbContext context)
         {
             this._context = context;
-            
         }
+
         public async Task<bool> UniqueName(string name, CancellationToken cancellationToken)
         {
             return await _context.Workspaces
-                .AllAsync(n => n.Name != name);
+                .AllAsync(n => n.Name != name,cancellationToken);
         }
     }
 }
