@@ -24,7 +24,7 @@ namespace Collaboration.ShareDocs.Application.Common.Response
             var responseDetails = new ApiResponseDetails
             {
                 StatusCode = (int)HttpStatusCode.BadRequest,
-                StatusName = HttpStatusCode.Forbidden.ToString(),
+                StatusName = HttpStatusCode.BadRequest.ToString(),
                 Message    = message
             };
 

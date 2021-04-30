@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-
+using Collaboration.ShareDocs.Application.Common.Response;
 using Collaboration.ShareDocs.Persistence.Entities;
 using Collaboration.ShareDocs.Persistence.Interfaces;
 using MediatR;
@@ -13,11 +13,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Collaboration.ShareDocs.Application.Commands.Users
 {
-    public class GetUserCommand : IRequest<string>
+    public class GetUserCommand : IRequest<ApiResponseDetails>
     {
         public Guid Id { get; set; }
 
-        public class GetUserCommandHandler : IRequestHandler<GetUserCommand, string>
+        public class Handler : IRequestHandler<GetUserCommand, ApiResponseDetails>
         {
             private readonly UserManager<ApplicationUser> _userManager;
 
@@ -25,7 +25,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Users
 
             private readonly ICurrentUserService _currentUserService;
 
-            public GetUserCommandHandler(
+            public Handler(
                 UserManager<ApplicationUser> userManager,
                 IMapper mapper,
                 ICurrentUserService currentUserService )
@@ -35,17 +35,16 @@ namespace Collaboration.ShareDocs.Application.Commands.Users
                 this._currentUserService = currentUserService;
             }
 
-            public async Task<string> Handle( GetUserCommand request, CancellationToken cancellationToken )
+            public async Task<ApiResponseDetails> Handle( GetUserCommand request, CancellationToken cancellationToken )
             {
                 var user = await this._userManager.Users.SingleOrDefaultAsync(u => u.Id == request.Id, cancellationToken);
 
-                var ff = new Workspace();
 
 
                 if (user == null)
                 {
-                    //return ApiCustomResponse.NotFound("User", request.Id.ToString());
-                    return null;
+                    return ApiCustomResponse.NotFound( "User with Id :"+request.Id+"not found");
+                    
                 }
 
 
