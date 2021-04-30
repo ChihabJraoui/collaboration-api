@@ -1,0 +1,15 @@
+﻿{
+    "ConnectionStrings": {
+        "default": "Data Source=192.168.1.200\\SQLEXPRESS;Initial Catalog=CollaborationApplication;Persist Security Info=True;User ID=DevUser;Password=password",
+        "default_": "Server=.\\SQLEXPRESS;Database=CollaborationApplication;Trusted_Connection=True;Integrated Security= True;MultipleActiveResultSets=true;"
+    },
+    "Logging": {
+        "LogLevel": {
+            "Default": "Information",
+            "Microsoft": "Warning",
+            "Microsoft.Hosting.Lifetime": "Information"
+        }
+    },
+    "AllowedHosts": "*"
+}
+

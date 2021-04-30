@@ -16,6 +16,7 @@ using Collaboration.ShareDocs.Application;
 using Collaboration.ShareDocs.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using Collaboration.ShareDocs.Api.Middlwares;
 
 namespace Collaboration.ShareDocs.Api
 {
@@ -47,9 +48,8 @@ namespace Collaboration.ShareDocs.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseCustomExceptionHandler();
             app.UseHttpsRedirection();
-
             app.UseRouting();
 
             app.UseAuthorization();

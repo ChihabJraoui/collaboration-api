@@ -36,7 +36,7 @@ namespace Collaboration.ShareDocs.Application.Common.Behaviours
 
             if (failures.Count != 0)
             {
-                var validationException = new  ValidationExceptionException(failures);
+                var validationException = new Exceptions.ValidationException(failures);
                 _logger.LogError(ConstructErrorLogMessage(validationException, request));
                 throw validationException;
             }
@@ -44,7 +44,7 @@ namespace Collaboration.ShareDocs.Application.Common.Behaviours
             return next();
         }
 
-        private string ConstructErrorLogMessage(ValidationExceptionException exception, TRequest request)
+        private string ConstructErrorLogMessage(Exceptions.ValidationException exception, TRequest request)
         {
             var message = new StringBuilder();
             message.AppendLine(

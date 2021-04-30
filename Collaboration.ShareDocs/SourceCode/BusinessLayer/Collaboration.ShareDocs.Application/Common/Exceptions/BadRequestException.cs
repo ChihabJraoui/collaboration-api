@@ -2,9 +2,9 @@
 
 namespace Collaboration.ShareDocs.Application.Common.Exceptions
 {
-    public class BusinessRuleException: Exception
+    public class BadRequestException: Exception
     {
-        public BusinessRuleException(string message)
+        public BadRequestException(string message)
             :base(message)
         {
 
