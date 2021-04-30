@@ -17,7 +17,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces.Dto
         public bool BookMark { get; set; }
         public bool IsPrivate { get; set; }
 
-        public void Mapping(Profile profile)
+        public virtual void Mapping(Profile profile)
         {
             profile.CreateMap<Workspace, WorkspaceDto>();
         }
