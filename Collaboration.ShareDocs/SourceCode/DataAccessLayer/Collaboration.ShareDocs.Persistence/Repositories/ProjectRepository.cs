@@ -22,8 +22,8 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
 
         public async Task<Project> CreateAsync(Project project, CancellationToken cancellationToken)
         {
-            var newProject = await _context.AddAsync(project);
-            await _context.SaveChangesAsync(cancellationToken);
+            var newProject = await base.InsertAsync(project,cancellationToken);
+
             return newProject.Entity;
         }
 
