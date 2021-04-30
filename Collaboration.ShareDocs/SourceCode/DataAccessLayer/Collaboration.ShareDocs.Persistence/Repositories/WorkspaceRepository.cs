@@ -29,9 +29,7 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
 
         public bool Delete(Workspace workspace)
         {
-            base.Remove(workspace);
-
-            return true;
+            return base.Delete(workspace);
         }
 
         public async Task<List<Workspace>> GetAllAsync(CancellationToken cancellationToken)

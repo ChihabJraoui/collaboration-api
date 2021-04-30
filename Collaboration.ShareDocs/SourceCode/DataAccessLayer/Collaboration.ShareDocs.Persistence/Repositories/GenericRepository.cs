@@ -68,9 +68,10 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
             return await dbSet.AddAsync(entity, cancellation);
         }
 
-        public virtual void Delete(TEntity entity)
+        public virtual bool Delete(TEntity entity)
         {
             dbSet.Remove(entity);
+            return true; 
         }
 
 
