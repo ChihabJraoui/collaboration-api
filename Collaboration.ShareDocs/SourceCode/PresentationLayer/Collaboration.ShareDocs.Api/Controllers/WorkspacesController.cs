@@ -12,8 +12,8 @@ namespace Collaboration.ShareDocs.Api.Controllers
 {
 
     public class WorkspacesController : BaseController
-    { 
- 
+    {
+
         /// <summary>
         /// Create new Workspace
         /// </summary>
@@ -25,7 +25,7 @@ namespace Collaboration.ShareDocs.Api.Controllers
             var result = await this.Mediator.Send(command);
             return FormatResponseToActionResult(result);
         }
-       
+
         /// <summary>
         /// Update Workspace
         /// </summary>
@@ -48,6 +48,78 @@ namespace Collaboration.ShareDocs.Api.Controllers
             var result = await this.Mediator.Send(command);
             return FormatResponseToActionResult(result);
         }
+
+        /// <summary>
+        /// Get Workspace by Id
+        /// </summary>
+        /// <param name="WorkspaceId">GetWorkspaceCommand</param>
+        /// <returns></returns>
+        [HttpGet("id")]
+        public async Task<IActionResult> Get(Guid id)
+        {
+            var result = await this.Mediator.Send(new GetWorkspaceCommand { WorkspaceId = id });
+            return FormatResponseToActionResult(result);
+        }
+
+        /// <summary>
+        /// Get Workspaces
+        /// </summary>
+        /// <param name="">GetWorkspacesCommand</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await this.Mediator.Send(new GetWorkspacesCommand());
+            return FormatResponseToActionResult(result);
+        }
+        /// <summary>
+        /// Get Last Modified Workspace
+        /// </summary>
+        /// <param name="">GetLastModifiedWorkspace</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetLastModified()
+        {
+            var result = await this.Mediator.Send(new GetLastModifiedWorkspace());
+            return FormatResponseToActionResult(result);
+        }
+        /// <summary>
+        /// Get Last Modified Workspace
+        /// </summary>
+        /// <param name="">GetLastModifiedWorkspace</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetLastCreated()
+        {
+            var result = await this.Mediator.Send(new GetLastCreatedWorkspace());
+            return FormatResponseToActionResult(result);
+        }
+        /// <summary>
+        /// Get Workspace By keyword
+        /// </summary>
+        /// <param name="">GetWorkspaceByKeywordCommand</param>
+        /// <returns></returns>
+        [HttpGet("keyword")]
+        public async Task<IActionResult> GetByKeyword(string keyword)
+        {
+            var result = await this.Mediator.Send(new GetWorkspacesByKeyWordCommand() { Keyword = keyword});
+            return FormatResponseToActionResult(result);
+        }
+
+        /// <summary>
+        /// Get Number of workspaces
+        /// </summary>
+        /// <param name="">GetLastModifiedWorkspace</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetCount()
+        {
+            var result = await this.Mediator.Send(new GetWorkspacesCount());
+            return FormatResponseToActionResult(result);
+        }
+
+
+
 
 
 

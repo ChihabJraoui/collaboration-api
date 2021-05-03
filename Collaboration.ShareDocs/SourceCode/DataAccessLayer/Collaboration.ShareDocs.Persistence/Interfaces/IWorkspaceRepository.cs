@@ -36,14 +36,14 @@ namespace Collaboration.ShareDocs.Persistence.Interfaces
         /// </summary>
         /// <param name="keyWord">string</param>
         /// <returns>Workspaces</returns>
-        Task<List<Workspace>> GetByKeyWord(string keyWord);
+        Task<List<string>> GetByKeyWord(string keyWord, CancellationToken cancellationToken);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name=""></param>
         /// <returns>int</returns>
-        Task<int> GetCount();
+        Task<int> GetCount(CancellationToken cancellationToken);
 
     }
 }

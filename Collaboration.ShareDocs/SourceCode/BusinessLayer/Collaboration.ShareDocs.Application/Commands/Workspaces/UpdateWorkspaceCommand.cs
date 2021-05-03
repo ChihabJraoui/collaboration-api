@@ -40,7 +40,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
             public async Task<ApiResponseDetails> Handle(UpdateWorkspaceCommand request, CancellationToken cancellationToken)
             {
                 var workspace = await _unitOfWork.WorkspaceRepository.GetAsync(request.WorkspaceId, cancellationToken);
-
+                // R01 Workspace 
                 if (workspace == null)
                 {
                     return ApiCustomResponse.NotFound( $" The specified WorkspaceId '{request.WorkspaceId}' Not Found.");

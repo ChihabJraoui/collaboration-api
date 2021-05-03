@@ -45,25 +45,25 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
             return Workspace;
         }
 
-        public async Task<List<Workspace>> GetByKeyWord(string keyWord)
+        public async Task<List<string>> GetByKeyWord(string keyWord, CancellationToken cancellationToken)
         {
-            return await dbSet.Where(w => w.Name.Contains(keyWord)).ToListAsync();
+            return await dbSet.Where(w => w.Name.Contains(keyWord)).Select(x => x.Name).ToListAsync(cancellationToken);
         }
 
-        public async Task<int> GetCount()
+        public async Task<int> GetCount(CancellationToken cancellationToken)
         {
-            return await dbSet.CountAsync();
+            return await dbSet.CountAsync(cancellationToken);
         }
 
         public async Task<Workspace> GetLastAsync(CancellationToken cancellationToken)
         {
-            var lastWorkspace = await dbSet.OrderByDescending(w => w.Created).ToListAsync(cancellationToken);
+            var lastWorkspace = await dbSet.Where(x => x.Created != null).OrderByDescending(w => w.Created).ToListAsync(cancellationToken);
             return lastWorkspace.FirstOrDefault();
         }
 
         public async Task<Workspace> GetLastModifiedAsync(CancellationToken cancellationToken)
         {
-            var lastModifiedWorkspace = await dbSet.OrderByDescending(w => w.LastModified).ToListAsync(cancellationToken);
+            var lastModifiedWorkspace = await dbSet.Where(x=>x.LastModified != null).OrderByDescending(w => w.LastModified).ToListAsync(cancellationToken);
             return lastModifiedWorkspace.FirstOrDefault();
         }
 
