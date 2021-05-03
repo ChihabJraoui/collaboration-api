@@ -341,3 +341,4 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/Collaboration.ShareDocs/SourceCode/PresentationLayer/Collaboration.ShareDocs.Api/appesettings.json
