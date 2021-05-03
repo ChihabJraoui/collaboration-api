@@ -39,7 +39,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
 
                 var workspaceRepository = _unitOfWork.WorkspaceRepository;
                 // R01 Workspace label is unique
-                if (!await _methodesRepository.UniqueName(request.Name, cancellationToken))
+                if (!await _methodesRepository.UniqueName<Workspace>(request.Name, cancellationToken))
                 {
                     throw new BusinessRuleException($" The specified Name '{request.Name}' already exists.");
                 }
