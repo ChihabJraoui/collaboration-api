@@ -14,12 +14,25 @@ namespace Collaboration.ShareDocs.Application
     {
         public static IServiceCollection AddApplicationDependancy(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddPersistenceDependancy(configuration);
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());               
 
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+            var assemblies = new Assembly[]
+            {
+                Assembly.GetExecutingAssembly(), 
+                //typeof(LogParser.Profiles.TelemetryDataProfile).Assembly,
+                //typeof(RawTelemetryParser.Profiles.TelemetryDataProfile).Assembly
+            };
+            services.AddAutoMapper(assemblies);
+            //services.AddRawTelemetryParser();
+            services.AddMediatR(assemblies);
+            //services.AddLogParser();
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehaviour<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
+
+
+
+             
+
+
             return services;
         }
     }
