@@ -3,9 +3,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 .vs
-SourceCode/DataAccessLayer/Collaboration.ShareDocs.Persistence/bin/
-SourceCode/DataAccessLayer/Collaboration.ShareDocs.Persistence/obj/
-SourceCode/PresentationLayer/Collaboration.ShareDocs.Api/appsettings.json
+/Collaboration.ShareDocs/SourceCode/DataAccessLayer/Collaboration.ShareDocs.Persistence/bin/
+/Collaboration.ShareDocs/SourceCode/DataAccessLayer/Collaboration.ShareDocs.Persistence/obj/
+/Collaboration.ShareDocs/SourceCode/PresentationLayer/Collaboration.ShareDocs.Api/appsettings.json
 # User-specific files
 *.rsuser
 *.suo
