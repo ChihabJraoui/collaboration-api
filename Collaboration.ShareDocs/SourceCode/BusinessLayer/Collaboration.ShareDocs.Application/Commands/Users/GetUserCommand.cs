@@ -39,16 +39,11 @@ namespace Collaboration.ShareDocs.Application.Commands.Users
             public async Task<ApiResponseDetails> Handle( GetUserCommand request, CancellationToken cancellationToken )
             {
                 var user = await this._userManager.Users.SingleOrDefaultAsync(u => u.Id == request.Id, cancellationToken);
-
-
-
+                 
                 if (user == null)
-                {
-                    var message=  string.Format(Resource.Error_NotFound,"User",request.Id);
-                    return ApiCustomResponse.NotFound(message);
-                    
-                }
-
+                { 
+                    return ApiCustomResponse.NotFound("User", request.Id); 
+                } 
 
                 return null;
             }

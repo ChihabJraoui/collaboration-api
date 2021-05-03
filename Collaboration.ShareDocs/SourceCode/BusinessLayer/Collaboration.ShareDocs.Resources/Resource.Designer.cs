@@ -61,6 +61,15 @@ namespace Collaboration.ShareDocs.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The specified Name {0} already exists..
+        /// </summary>
+        public static string Error_NameExist {
+            get {
+                return ResourceManager.GetString("Error_NameExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The  {0} with Id {1} not found.
         /// </summary>
         public static string Error_NotFound {
