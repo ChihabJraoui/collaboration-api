@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Collaboration.ShareDocs.Loc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Collaboration.ShareDocs.Api", "Collaboration.ShareDocs\SourceCode\PresentationLayer\Collaboration.ShareDocs.Api\Collaboration.ShareDocs.Api.csproj", "{FD15A6EC-9320-4280-BA85-07E5CE5C8B76}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collaboration.ShareDocs.Resources", "Collaboration.ShareDocs\SourceCode\BusinessLayer\Collaboration.ShareDocs.Resources\Collaboration.ShareDocs.Resources.csproj", "{F8DB7CCD-7665-4588-B564-2CC06F788E1F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{FD15A6EC-9320-4280-BA85-07E5CE5C8B76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD15A6EC-9320-4280-BA85-07E5CE5C8B76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD15A6EC-9320-4280-BA85-07E5CE5C8B76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8DB7CCD-7665-4588-B564-2CC06F788E1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8DB7CCD-7665-4588-B564-2CC06F788E1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8DB7CCD-7665-4588-B564-2CC06F788E1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8DB7CCD-7665-4588-B564-2CC06F788E1F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +66,7 @@ Global
 		{4654E136-3602-4ED1-B7E5-B42E6AC71918} = {906BF491-AAB5-4EB4-A072-EC964368A720}
 		{BE391FDF-F553-496B-92B3-2ECC154B707D} = {906BF491-AAB5-4EB4-A072-EC964368A720}
 		{FD15A6EC-9320-4280-BA85-07E5CE5C8B76} = {906BF491-AAB5-4EB4-A072-EC964368A720}
+		{F8DB7CCD-7665-4588-B564-2CC06F788E1F} = {32461B79-303A-4677-AEF4-B5C1A2579F30}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {84758A7B-7734-4E01-A089-D452A6783EB3}

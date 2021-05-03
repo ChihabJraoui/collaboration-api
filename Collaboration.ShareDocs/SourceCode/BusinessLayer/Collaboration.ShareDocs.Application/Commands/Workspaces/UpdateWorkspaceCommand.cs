@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Collaboration.ShareDocs.Persistence.Entities;
 
 namespace Collaboration.ShareDocs.Application.Commands.Workspaces
 {
@@ -44,8 +45,8 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
                 {
                     return ApiCustomResponse.NotFound( $" The specified WorkspaceId '{request.WorkspaceId}' Not Found.");
                 }
-                // R02 Workspace label is unique
-                if (!await _unitOfWork.MethodRepository.UniqueName(request.Name, cancellationToken))
+                // R01 Workspace label is unique
+                if (!await _unitOfWork.MethodRepository.UniqueName<Workspace>(request.Name, cancellationToken))
                 {
                     return ApiCustomResponse.ValidationError(new Error("Name", $" The specified Name '{request.Name}' already exists."));
                 }

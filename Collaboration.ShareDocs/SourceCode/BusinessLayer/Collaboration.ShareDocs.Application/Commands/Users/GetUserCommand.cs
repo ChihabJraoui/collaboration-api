@@ -7,6 +7,7 @@ using AutoMapper;
 using Collaboration.ShareDocs.Application.Common.Response;
 using Collaboration.ShareDocs.Persistence.Entities;
 using Collaboration.ShareDocs.Persistence.Interfaces;
+using Collaboration.ShareDocs.Resources;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -38,15 +39,11 @@ namespace Collaboration.ShareDocs.Application.Commands.Users
             public async Task<ApiResponseDetails> Handle( GetUserCommand request, CancellationToken cancellationToken )
             {
                 var user = await this._userManager.Users.SingleOrDefaultAsync(u => u.Id == request.Id, cancellationToken);
-
-
-
+                 
                 if (user == null)
-                {
-                    return ApiCustomResponse.NotFound( "User with Id :"+request.Id+"not found");
-                    
-                }
-
+                { 
+                    return ApiCustomResponse.NotFound("User", request.Id); 
+                } 
 
                 return null;
             }

@@ -1,14 +1,12 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
-using Microsoft.Extensions.Logging;
-using System.Text; 
+using System.Text;
 using Collaboration.ShareDocs.Application.Common.Enumator;
-using Collaboration.ShareDocs.Application.Common.Exceptions;
+using Microsoft.Extensions.Logging;
 
 namespace Collaboration.ShareDocs.Application.Common.Behaviours
 {
@@ -37,7 +35,7 @@ namespace Collaboration.ShareDocs.Application.Common.Behaviours
             if (failures.Count != 0)
             {
                 var validationException = new Exceptions.ValidationException(failures);
-                _logger.LogError(ConstructErrorLogMessage(validationException, request));
+                //  _logger.LogError(ConstructErrorLogMessage(validationException, request));
                 throw validationException;
             }
 
