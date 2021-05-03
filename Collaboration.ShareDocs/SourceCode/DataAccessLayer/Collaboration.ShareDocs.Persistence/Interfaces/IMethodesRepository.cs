@@ -12,7 +12,7 @@ namespace Collaboration.ShareDocs.Persistence.Interfaces
         /// 
         /// </summary>
         /// <param name="name,cancellationToken">string,CancellationToken</param>
-        /// <returns>Boolean</returns>
-        Task<Boolean> UniqueName(string name, CancellationToken cancellationToken);
+        /// <returns>Boolean</returns> 
+        Task<bool> UniqueName<TEntity>( string name, CancellationToken cancellationToken ) where TEntity : class;
     }
 }

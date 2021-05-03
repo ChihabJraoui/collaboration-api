@@ -37,7 +37,6 @@
   <ItemGroup>
     <Folder Include="Commands\Users\Dto\" />
     <Folder Include="Commands\Users\Validators\" />
-    <Folder Include="Commands\Workspaces\Validators\" />
   </ItemGroup>
 
 </Project>
