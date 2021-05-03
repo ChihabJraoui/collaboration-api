@@ -7,6 +7,7 @@ using Collaboration.ShareDocs.Persistence.Interfaces;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using Collaboration.ShareDocs.Resources;
 
 namespace Collaboration.ShareDocs.Application.Commands.Workspaces
 {
@@ -42,8 +43,8 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
                 // R01 Workspace label is unique
                 if (!await _methodesRepository.UniqueName<Workspace>(request.Name, cancellationToken))
                 {
-                   // throw new BadRequestException($" The specified Name '{request.Name}' already exists.");
-                    return ApiCustomResponse.ValidationError(new Error("Name", $" The specified Name '{request.Name}' already exists."));
+                    var message = string.Format(Resource.Error_NameExist,request.Name);
+                    return ApiCustomResponse.ValidationError(new Error("Name", message));
                 }
 
                 var newWorkspace = new Workspace

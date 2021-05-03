@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Collaboration.ShareDocs.Application.Common.Exceptions;
+using Collaboration.ShareDocs.Resources;
 
 namespace Collaboration.ShareDocs.Application.Common.Response
 {
@@ -73,23 +74,35 @@ namespace Collaboration.ShareDocs.Application.Common.Response
                 }).ToList()
             };
         }
-
-     
-
-
+         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message">Message : string</param>
+        /// <returns></returns>
         public static ApiResponseDetails NotFound(string message)
         {
             var responseDetails = new ApiResponseDetails
             {
                 StatusCode = (int)HttpStatusCode.NotFound,
                 StatusName = HttpStatusCode.NotFound.ToString(),
-                Message = message
-
+                Message    = message
             };
 
             return responseDetails;
         }
-      
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entityName">entityName:String</param>
+        /// <param name="id"> entity id :Guid</param>
+        /// <returns></returns>
+        public static ApiResponseDetails NotFound(string entityName, Guid id)
+        {
+            var message = string.Format(Resource.Error_NotFound, entityName, id);
+
+            return NotFound(message);
+        }
 
         public static ApiResponseDetails Forbidden( string message = null)
         {
