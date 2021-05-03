@@ -7,6 +7,7 @@ using AutoMapper;
 using Collaboration.ShareDocs.Application.Common.Response;
 using Collaboration.ShareDocs.Persistence.Entities;
 using Collaboration.ShareDocs.Persistence.Interfaces;
+using Collaboration.ShareDocs.Resources;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -43,7 +44,8 @@ namespace Collaboration.ShareDocs.Application.Commands.Users
 
                 if (user == null)
                 {
-                    return ApiCustomResponse.NotFound( "User with Id :"+request.Id+"not found");
+                    var message=  string.Format(Resource.Error_NotFound,"User",request.Id);
+                    return ApiCustomResponse.NotFound(message);
                     
                 }
 
