@@ -10,7 +10,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces.Validators
         public CreateWorkspaceHandlerValidator()
         {
             this.RuleFor(x => x.Name).NotEmpty().MinimumLength(3)
-                .WithMessage("Name length should be at least three character");
+                .WithMessage("Name length rrrrrrrrrrrrrrrrrrr be at least three character");
 
         }
     }
