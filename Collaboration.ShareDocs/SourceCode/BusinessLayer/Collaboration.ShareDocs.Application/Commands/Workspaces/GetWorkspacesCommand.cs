@@ -2,6 +2,7 @@
 using Collaboration.ShareDocs.Application.Commands.Workspaces.Dto;
 using Collaboration.ShareDocs.Application.Common.Response;
 using Collaboration.ShareDocs.Persistence.Interfaces;
+using Collaboration.ShareDocs.Resources;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,8 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
                 var workspaces = await _unitOfWork.WorkspaceRepository.GetAllAsync(cancellationToken);
                 if(workspaces.Count == 0)
                 {
-                    return ApiCustomResponse.NotFound("There is no Data!");
+                    var message = string.Format(Resource.Error_NotFound);
+                    return ApiCustomResponse.NotFound(message);
                 }
                 var response = _mapper.Map<List<WorkspaceDto>>(workspaces);
                 return ApiCustomResponse.ReturnedObject(response);

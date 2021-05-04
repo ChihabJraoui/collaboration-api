@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Collaboration.ShareDocs.Application.Common.Response;
 using Collaboration.ShareDocs.Persistence.Interfaces;
+using Collaboration.ShareDocs.Resources;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -31,12 +32,14 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
             {
                 if(request.Keyword == null)
                 {
+                    //TODO
                     return ApiCustomResponse.NotValid(request.Keyword, "not empty", "");
                 }
                 var response = await _unitOfWork.WorkspaceRepository.GetByKeyWord(request.Keyword, cancellationToken);
                 if (response.Count == 0)
                 {
-                    return ApiCustomResponse.NotFound("There is no Data!");
+                    var message = string.Format(Resource.Error_NotFound, request);
+                    return ApiCustomResponse.NotFound(message);
                 }
                 return ApiCustomResponse.ReturnedObject(response);
 

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Collaboration.ShareDocs.Application.Common.Response;
 using Collaboration.ShareDocs.Persistence.Interfaces;
+using Collaboration.ShareDocs.Resources;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,8 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
 
                 if (workspace == null)
                 {
-                    return ApiCustomResponse.NotFound($" The specified WorkspaceId '{request.WorkspaceId}' Not Found.");
+                    var message = string.Format(Resource.Error_NotFound, request.WorkspaceId);
+                    return ApiCustomResponse.NotFound(message);
                 }
                 _unitOfWork.WorkspaceRepository.Delete(workspace);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
