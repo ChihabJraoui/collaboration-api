@@ -32,5 +32,17 @@ namespace Collaboration.ShareDocs.Api.Controllers
             var result = await this.Mediator.Send(command);
             return FormatResponseToActionResult(result);
         }
+
+        /// <summary>
+        /// Get Project by Id
+        /// </summary>
+        /// <param name="ProjectId">GetProjectCommand</param>
+        /// <returns></returns>
+        [HttpGet("id")]
+        public async Task<IActionResult> Get(Guid id)
+        {
+            var result = await this.Mediator.Send(new GetProjectCommand { ProjectId = id });
+            return FormatResponseToActionResult(result);
+        }
     }
 }
