@@ -52,11 +52,11 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
                 }
                
 
-                workspace.Name = workspace.Name;
-                workspace.Description = workspace.Description; 
-                workspace.Image = workspace.Image;
-                workspace.BookMark = workspace.BookMark;
-                workspace.IsPrivate = workspace.IsPrivate;
+                workspace.Name = request.Name;
+                workspace.Description = request.Description; 
+                workspace.Image = request.Image;
+                workspace.BookMark = request.BookMark;
+                workspace.IsPrivate = request.IsPrivate;
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
                 var response = _mapper.Map<WorkspaceDto>(workspace);
                 return ApiCustomResponse.ReturnedObject(response);
