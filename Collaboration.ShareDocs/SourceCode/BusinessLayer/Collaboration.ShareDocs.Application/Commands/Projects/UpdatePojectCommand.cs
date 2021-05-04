@@ -4,6 +4,7 @@ using Collaboration.ShareDocs.Application.Common.Exceptions;
 using Collaboration.ShareDocs.Application.Common.Response;
 using Collaboration.ShareDocs.Persistence.Entities;
 using Collaboration.ShareDocs.Persistence.Interfaces;
+using Collaboration.ShareDocs.Resources;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -42,12 +43,14 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
                 // R01 Workspace 
                 if (project == null)
                 {
-                    return ApiCustomResponse.NotFound($" The specified ProojectId '{request.ProjectId}' Not Found.");
+                    var message = string.Format(Resource.Error_NotFound, request.Label);
+                    return ApiCustomResponse.NotFound(message);
                 }
                 // R01 Workspace label is unique
                 if (!await _unitOfWork.MethodRepository.UniqueName<Project>(request.Label, cancellationToken))
                 {
-                    return ApiCustomResponse.ValidationError(new Error("Label", $" The specified Label '{request.Label}' already exists."));
+                    var message = string.Format(Resource.Error_NameExist, request.Label);
+                    return ApiCustomResponse.ValidationError(new Error("Label", message));
                 }
 
 
