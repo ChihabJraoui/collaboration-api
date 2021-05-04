@@ -12,35 +12,48 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
     public class MethodesRepository : IMethodesRepository
     {
         private readonly AppDbContext _context;
-        
+
 
         public MethodesRepository(AppDbContext context)
         {
             this._context = context;
         }
 
-        //public async Task<bool> UniqueName(string name, CancellationToken cancellationToken)
-        //{
-        //    return await _context.Workspaces
-        //        .AllAsync(n => n.Name != name,cancellationToken);
-        //}
-
-
-        public async Task<bool> UniqueName<TEntity>(string name, CancellationToken cancellationToken) where TEntity : class
+        
+        /// <summary>
+        /// Unique
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="name"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task<bool> Unique<TEntity>(string name, string propertyName, CancellationToken cancellationToken) where TEntity : class
         {
             var dbSet = _context.Set<TEntity>();
 
 
-            ParameterExpression argParam     = Expression.Parameter(typeof(TEntity), "s");
-            Expression          nameProperty = Expression.Property(argParam, "Name");
+            ParameterExpression argParam = Expression.Parameter(typeof(TEntity), "s");
+            Expression nameProperty = Expression.Property(argParam, propertyName);
 
-            var        val1 = Expression.Constant(name);
-            Expression e1   = Expression.NotEqual(nameProperty, val1);
+            var val1 = Expression.Constant(name);
+            Expression e1 = Expression.NotEqual(nameProperty, val1);
 
-            var lambda = Expression.Lambda<Func<TEntity, bool>>(e1, argParam); 
+            var lambda = Expression.Lambda<Func<TEntity, bool>>(e1, argParam);
 
 
             return await dbSet.AllAsync(lambda, cancellationToken);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="name"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task<bool> UniqueName<TEntity>(string name, CancellationToken cancellationToken) where TEntity : class
+        { 
+            return  await Unique<TEntity>(name, "Name", cancellationToken);
         }
     }
 }

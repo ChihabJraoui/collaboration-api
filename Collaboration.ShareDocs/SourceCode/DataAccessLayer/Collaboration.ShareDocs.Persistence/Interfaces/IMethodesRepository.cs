@@ -13,6 +13,18 @@ namespace Collaboration.ShareDocs.Persistence.Interfaces
         /// </summary>
         /// <param name="name,cancellationToken">string,CancellationToken</param>
         /// <returns>Boolean</returns> 
-        Task<bool> UniqueName<TEntity>( string name, CancellationToken cancellationToken ) where TEntity : class;
+        Task<bool> UniqueName<TEntity>(string name, CancellationToken cancellationToken) where TEntity : class;
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="name"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns> 
+        Task<bool> Unique<TEntity>( string name, string propertyName, CancellationToken cancellationToken )
+            where TEntity : class;
     }
 }
