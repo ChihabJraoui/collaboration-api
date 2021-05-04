@@ -17,10 +17,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Common\Behaviours\ValidationBehaviour.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
-    <PackageReference Include="FluentValidation" Version="10.0.4" />
-    <PackageReference Include="FluentValidation.AspNetCore" Version="10.0.4" />
+    <PackageReference Include="FluentValidation" Version="10.1.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="10.1.0" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.5">
@@ -31,7 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\DataAccessLayer\Collaboration.ShareDocs.Persistence\Collaboration.ShareDocs.Persistence.csproj" />
+    <ProjectReference Include="..\..\..\..\..\..\..\..\Dev_Work\CollabApp\New Structure\collaboration-api\Collaboration.ShareDocs\SourceCode\DataAccessLayer\Collaboration.ShareDocs.Persistence\Collaboration.ShareDocs.Persistence.csproj" />
     <ProjectReference Include="..\Collaboration.ShareDocs.Resources\Collaboration.ShareDocs.Resources.csproj" />
   </ItemGroup>
 

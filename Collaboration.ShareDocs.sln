@@ -13,15 +13,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PresentationLayer", "Presen
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Collaboration.ShareDocs.Application", "Collaboration.ShareDocs\SourceCode\BusinessLayer\Collaboration.ShareDocs.Application\Collaboration.ShareDocs.Application.csproj", "{366DCDCD-CF23-46B7-A69A-A77603922674}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Collaboration.ShareDocs.Persistence", "Collaboration.ShareDocs\SourceCode\DataAccessLayer\Collaboration.ShareDocs.Persistence\Collaboration.ShareDocs.Persistence.csproj", "{2CFCCEC0-AB98-42B2-B826-8D70E15708E9}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Collaboration.ShareDocs.Provision", "Collaboration.ShareDocs\SourceCode\PresentationLayer\Collaboration.ShareDocs.Provision\Collaboration.ShareDocs.Provision.csproj", "{4654E136-3602-4ED1-B7E5-B42E6AC71918}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Collaboration.ShareDocs.Localization", "Collaboration.ShareDocs\SourceCode\PresentationLayer\Collaboration.ShareDocs.Localization\Collaboration.ShareDocs.Localization.csproj", "{BE391FDF-F553-496B-92B3-2ECC154B707D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Collaboration.ShareDocs.Api", "Collaboration.ShareDocs\SourceCode\PresentationLayer\Collaboration.ShareDocs.Api\Collaboration.ShareDocs.Api.csproj", "{FD15A6EC-9320-4280-BA85-07E5CE5C8B76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collaboration.ShareDocs.Resources", "Collaboration.ShareDocs\SourceCode\BusinessLayer\Collaboration.ShareDocs.Resources\Collaboration.ShareDocs.Resources.csproj", "{F8DB7CCD-7665-4588-B564-2CC06F788E1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Collaboration.ShareDocs.Resources", "Collaboration.ShareDocs\SourceCode\BusinessLayer\Collaboration.ShareDocs.Resources\Collaboration.ShareDocs.Resources.csproj", "{F8DB7CCD-7665-4588-B564-2CC06F788E1F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Collaboration.ShareDocs.Persistence", "..\..\..\..\Dev_Work\CollabApp\New Structure\collaboration-api\Collaboration.ShareDocs\SourceCode\DataAccessLayer\Collaboration.ShareDocs.Persistence\Collaboration.ShareDocs.Persistence.csproj", "{238D7246-CFC8-48E7-87BD-70B6769D5F9F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +33,6 @@ Global
 		{366DCDCD-CF23-46B7-A69A-A77603922674}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{366DCDCD-CF23-46B7-A69A-A77603922674}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{366DCDCD-CF23-46B7-A69A-A77603922674}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2CFCCEC0-AB98-42B2-B826-8D70E15708E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2CFCCEC0-AB98-42B2-B826-8D70E15708E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2CFCCEC0-AB98-42B2-B826-8D70E15708E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2CFCCEC0-AB98-42B2-B826-8D70E15708E9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4654E136-3602-4ED1-B7E5-B42E6AC71918}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4654E136-3602-4ED1-B7E5-B42E6AC71918}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4654E136-3602-4ED1-B7E5-B42E6AC71918}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -53,6 +49,10 @@ Global
 		{F8DB7CCD-7665-4588-B564-2CC06F788E1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8DB7CCD-7665-4588-B564-2CC06F788E1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8DB7CCD-7665-4588-B564-2CC06F788E1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{238D7246-CFC8-48E7-87BD-70B6769D5F9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{238D7246-CFC8-48E7-87BD-70B6769D5F9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{238D7246-CFC8-48E7-87BD-70B6769D5F9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{238D7246-CFC8-48E7-87BD-70B6769D5F9F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,11 +62,11 @@ Global
 		{AE2A7087-F812-4439-94F6-297A13AE076F} = {00434E87-A1D4-4BC9-875C-B44FBCDCA984}
 		{906BF491-AAB5-4EB4-A072-EC964368A720} = {00434E87-A1D4-4BC9-875C-B44FBCDCA984}
 		{366DCDCD-CF23-46B7-A69A-A77603922674} = {32461B79-303A-4677-AEF4-B5C1A2579F30}
-		{2CFCCEC0-AB98-42B2-B826-8D70E15708E9} = {AE2A7087-F812-4439-94F6-297A13AE076F}
 		{4654E136-3602-4ED1-B7E5-B42E6AC71918} = {906BF491-AAB5-4EB4-A072-EC964368A720}
 		{BE391FDF-F553-496B-92B3-2ECC154B707D} = {906BF491-AAB5-4EB4-A072-EC964368A720}
 		{FD15A6EC-9320-4280-BA85-07E5CE5C8B76} = {906BF491-AAB5-4EB4-A072-EC964368A720}
 		{F8DB7CCD-7665-4588-B564-2CC06F788E1F} = {32461B79-303A-4677-AEF4-B5C1A2579F30}
+		{238D7246-CFC8-48E7-87BD-70B6769D5F9F} = {AE2A7087-F812-4439-94F6-297A13AE076F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {84758A7B-7734-4E01-A089-D452A6783EB3}

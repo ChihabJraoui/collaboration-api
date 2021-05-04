@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using FluentValidation.AspNetCore;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Collaboration.ShareDocs.Application;
+using Collaboration.ShareDocs.Persistence;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Collaboration.ShareDocs.Api.Middlwares;
 using Collaboration.ShareDocs.Application.Commands.Users;
-using Collaboration.ShareDocs.Application.Common.Behaviours;
-using Collaboration.ShareDocs.Persistence;
-using MediatR;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+
+using FluentValidation.AspNetCore;
 
 namespace Collaboration.ShareDocs.Api
 {
@@ -32,9 +35,7 @@ namespace Collaboration.ShareDocs.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddPersistenceDependancy(Configuration);
             services.AddApplicationDependancy(Configuration);
-
             services
                 .AddControllersWithViews()
                 .AddNewtonsoftJson()
@@ -44,12 +45,11 @@ namespace Collaboration.ShareDocs.Api
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
-
             services.AddControllers();
             services.AddWebDependancy();
             services.AddSwaggerSetup(this.Configuration);
             services.AddHttpContextAccessor();
-            
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,18 +59,13 @@ namespace Collaboration.ShareDocs.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-                app.UseHsts();
-            }
             app.UseCustomExceptionHandler();
             app.UseHttpsRedirection();
             app.UseRouting();
 
             app.UseAuthorization();
 
-
+ 
 
             app.UseSwaggerSetup(this.Configuration);
 
