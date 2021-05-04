@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Collaboration.ShareDocs.Api
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Collaboration.ShareDocs.Resources", "Collaboration.ShareDocs\SourceCode\BusinessLayer\Collaboration.ShareDocs.Resources\Collaboration.ShareDocs.Resources.csproj", "{F8DB7CCD-7665-4588-B564-2CC06F788E1F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Collaboration.ShareDocs.Persistence", "..\..\..\..\Dev_Work\CollabApp\New Structure\collaboration-api\Collaboration.ShareDocs\SourceCode\DataAccessLayer\Collaboration.ShareDocs.Persistence\Collaboration.ShareDocs.Persistence.csproj", "{238D7246-CFC8-48E7-87BD-70B6769D5F9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Collaboration.ShareDocs.Persistence", "Collaboration.ShareDocs\SourceCode\DataAccessLayer\Collaboration.ShareDocs.Persistence\Collaboration.ShareDocs.Persistence.csproj", "{238D7246-CFC8-48E7-87BD-70B6769D5F9F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

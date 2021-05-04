@@ -35,7 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\..\..\Dev_Work\CollabApp\New Structure\collaboration-api\Collaboration.ShareDocs\SourceCode\DataAccessLayer\Collaboration.ShareDocs.Persistence\Collaboration.ShareDocs.Persistence.csproj" />
+    <ProjectReference Include="..\..\DataAccessLayer\Collaboration.ShareDocs.Persistence\Collaboration.ShareDocs.Persistence.csproj" />
     <ProjectReference Include="..\Collaboration.ShareDocs.Resources\Collaboration.ShareDocs.Resources.csproj" />
   </ItemGroup>
 
