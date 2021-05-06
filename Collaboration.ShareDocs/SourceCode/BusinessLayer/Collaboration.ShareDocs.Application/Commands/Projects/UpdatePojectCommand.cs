@@ -4,6 +4,7 @@ using Collaboration.ShareDocs.Application.Common.Exceptions;
 using Collaboration.ShareDocs.Application.Common.Response;
 using Collaboration.ShareDocs.Persistence.Entities;
 using Collaboration.ShareDocs.Persistence.Interfaces;
+using Collaboration.ShareDocs.Resources;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -38,17 +39,24 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
             }
             public async Task<ApiResponseDetails> Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
             {
+              
                 var project = await _unitOfWork.ProjectRepository.GetAsync(request.ProjectId, cancellationToken);
                 // R01 Workspace 
                 if (project == null)
                 {
-                    return ApiCustomResponse.NotFound($" The specified ProojectId '{request.ProjectId}' Not Found.");
+                    var message = string.Format(Resource.Error_NotFound, request.Label);
+                    return ApiCustomResponse.NotFound(message);
                 }
                 // R01 Workspace label is unique
-                if (!await _unitOfWork.MethodRepository.UniqueName<Project>(request.Label, cancellationToken))
+                while(request != null && request.Label != project.Label)
                 {
-                    return ApiCustomResponse.ValidationError(new Error("Label", $" The specified Label '{request.Label}' already exists."));
+                    if (!await _unitOfWork.MethodRepository.Unique<Project>(request.Label, "Label", cancellationToken))
+                    {
+                        var message = string.Format(Resource.Error_NameExist, request.Label);
+                        return ApiCustomResponse.ValidationError(new Error("Label", message));
+                    }
                 }
+               
 
 
                 project.Label = request.Label;

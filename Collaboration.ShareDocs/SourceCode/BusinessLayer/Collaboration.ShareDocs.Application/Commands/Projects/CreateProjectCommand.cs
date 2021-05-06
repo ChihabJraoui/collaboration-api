@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Collaboration.ShareDocs.Application.Commands.Projects.Dto;
+using Collaboration.ShareDocs.Application.Common.Exceptions;
 using Collaboration.ShareDocs.Application.Common.Response;
 using Collaboration.ShareDocs.Persistence.Entities;
 using Collaboration.ShareDocs.Persistence.Interfaces;
+using Collaboration.ShareDocs.Resources;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -40,7 +42,14 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
                 var workspace = await _unitOfWork.WorkspaceRepository.GetAsync(request.WorkspaceId, cancellationToken);
                 if(workspace == null)
                 {
-                    return ApiCustomResponse.NotFound($" The specified workspace id '{request.WorkspaceId}' doesn't exists.");
+                    var message = string.Format(Resource.Error_NotFound, request.Label);
+                    return ApiCustomResponse.NotFound(message);
+                }
+                
+                if (!await _methodesRepository.Unique<Project>(request.Label,"Label", cancellationToken))
+                {
+                    var message = string.Format(Resource.Error_NameExist, request.Label);
+                    return ApiCustomResponse.ValidationError(new Error("Label", message));
                 }
                 var newProject = new Project()
                 {

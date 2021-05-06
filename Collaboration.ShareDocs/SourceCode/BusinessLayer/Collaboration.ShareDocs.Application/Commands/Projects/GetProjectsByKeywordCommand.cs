@@ -9,40 +9,35 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Collaboration.ShareDocs.Application.Commands.Workspaces
+namespace Collaboration.ShareDocs.Application.Commands.Projects
 {
-    public class GetWorkspacesByKeyWordCommand : IRequest<ApiResponseDetails>
+    public class GetProjectsByKeywordCommand:IRequest<ApiResponseDetails>
     {
         public string Keyword { get; set; }
 
-        public class Handler : IRequestHandler<GetWorkspacesByKeyWordCommand, ApiResponseDetails>
+        public class Handler : IRequestHandler<GetProjectsByKeywordCommand, ApiResponseDetails>
         {
             private readonly IUnitOfWork _unitOfWork;
-            private readonly ICurrentUserService _currentUserService;
             private readonly IMapper _mapper;
-            public Handler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService, IMapper mapper)
+            public Handler(IUnitOfWork unitOfWork, IMapper mapper)
             {
-                _unitOfWork = unitOfWork;
-                _currentUserService = currentUserService;
+                this._unitOfWork = unitOfWork;
                 _mapper = mapper;
-
             }
-
-            public async Task<ApiResponseDetails> Handle(GetWorkspacesByKeyWordCommand request, CancellationToken cancellationToken)
+            public async Task<ApiResponseDetails> Handle(GetProjectsByKeywordCommand request, CancellationToken cancellationToken)
             {
-                if(request.Keyword == null)
+                if (request.Keyword == null)
                 {
                     var message = string.Format(Resource.Error_NotValid, request);
                     return ApiCustomResponse.NotValid(request.Keyword, message, "");
                 }
-                var response = await _unitOfWork.WorkspaceRepository.GetByKeyWord(request.Keyword, cancellationToken);
+                var response = await _unitOfWork.ProjectRepository.GetByKeyWordAsync(request.Keyword, cancellationToken);
                 if (response.Count == 0)
                 {
                     var message = string.Format(Resource.Error_NotFound, request);
                     return ApiCustomResponse.NotFound(message);
                 }
                 return ApiCustomResponse.ReturnedObject(response);
-
             }
         }
     }

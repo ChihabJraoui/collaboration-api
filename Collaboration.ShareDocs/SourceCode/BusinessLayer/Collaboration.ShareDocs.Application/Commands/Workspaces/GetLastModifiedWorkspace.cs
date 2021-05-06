@@ -2,6 +2,7 @@
 using Collaboration.ShareDocs.Application.Commands.Workspaces.Dto;
 using Collaboration.ShareDocs.Application.Common.Response;
 using Collaboration.ShareDocs.Persistence.Interfaces;
+using Collaboration.ShareDocs.Resources;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,8 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
                 var workspace = await _unitOfWork.WorkspaceRepository.GetLastModifiedAsync(cancellationToken);
                 if(workspace == null)
                 {
-                    return ApiCustomResponse.NotFound("There is no updated workspace!");
+                    var message = string.Format(Resource.Error_NotFound);
+                    return ApiCustomResponse.NotFound(message);
                 }
                 var response = _mapper.Map<WorkspaceDto>(workspace);
                 return ApiCustomResponse.ReturnedObject(response);

@@ -77,5 +77,14 @@ namespace Collaboration.ShareDocs.Resources {
                 return ResourceManager.GetString("Error_NotFound", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The type value is not valid.
+        /// </summary>
+        public static string Error_NotValid {
+            get {
+                return ResourceManager.GetString("Error_NotValid", resourceCulture);
+            }
+        }
     }
 }
