@@ -59,6 +59,14 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
 
             return Folder;
         }
+        public async Task<List<Folder>> GetByProjectIdAsync(Guid projectId, CancellationToken cancellationToken)
+        {
+            return await dbSet.Where(w => w.Project.Id == projectId).ToListAsync(cancellationToken);
+        }
+        public async Task<List<Folder>> GetByCreatedAsync(Guid userId, CancellationToken cancellationToken)
+        {
+            return await dbSet.Where(w => new Guid(w.CreatedBy) == userId).ToListAsync(cancellationToken);
+        }
         public async Task<Folder> GetQueryAsync(Guid FolderID)
         {
             var Folder = await dbSet.Where(w => w.FolderId == FolderID).Include(y => y.Components).Include(y => y.Files).SingleOrDefaultAsync();

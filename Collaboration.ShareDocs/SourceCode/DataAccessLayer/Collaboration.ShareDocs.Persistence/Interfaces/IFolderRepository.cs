@@ -29,5 +29,8 @@ namespace Collaboration.ShareDocs.Persistence.Interfaces
         /// <param name="request,cancellationToken">GetAllFoldersQuery,CancellationToken</param>
         /// <returns>GetFoldersDtoLists</returns>
         Task<string> RenameAsync(Folder folder, string name, CancellationToken cancellationToken);
+
+        Task<List<Folder>> GetByProjectIdAsync(Guid projectId, CancellationToken cancellationToken);
+        Task<List<Folder>> GetByCreatedAsync(Guid userId, CancellationToken cancellationToken);
     }
 }
