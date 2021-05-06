@@ -41,13 +41,13 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
             {
               
                 var project = await _unitOfWork.ProjectRepository.GetAsync(request.ProjectId, cancellationToken);
-                // R01 Workspace 
+                // R01 Project 
                 if (project == null)
                 {
                     var message = string.Format(Resource.Error_NotFound, request.Label);
                     return ApiCustomResponse.NotFound(message);
                 }
-                // R01 Workspace label is unique
+                // R01 Project label is unique
                 while(request != null && request.Label != project.Label)
                 {
                     if (!await _unitOfWork.MethodRepository.Unique<Project>(request.Label, "Label", cancellationToken))

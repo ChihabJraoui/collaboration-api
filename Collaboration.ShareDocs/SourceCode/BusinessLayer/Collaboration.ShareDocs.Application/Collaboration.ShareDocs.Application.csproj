@@ -40,7 +40,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\Folders\Dto\" />
     <Folder Include="Commands\Folders\Validators\" />
     <Folder Include="Commands\Users\Dto\" />
     <Folder Include="Commands\Users\Validators\" />

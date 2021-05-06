@@ -1,76 +1,81 @@
-﻿using MediatR;
+﻿using Collaboration.ShareDocs.Application.Commands.Folders;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Collaboration.ShareDocs.Api.Controllers
 {
-    public class FoldersController:ApiController
+    public class FoldersController:BaseController
     {
-        private IMediator _mediator;
-
-        public FoldersController(IMediator mediator)
+        /// <summary>
+        /// Create new Folder
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateFolderCommand command)
         {
-            _mediator = mediator;
+            var result = await this.Mediator.Send(command);
+            return FormatResponseToActionResult(result);
         }
 
         /// <summary>
-        /// Create new Project
+        /// Rename folder
         /// </summary>
-        /// <param name="command"> CreateProjectCommand </param>
-        /// <returns>string</returns>
-        //[HttpPost("create")]
-        //public async Task<ActionResult<Folder>> Create(AddFolderCommand command)
-        //{
-        //    var result = await this._mediator.Send(command);
-        //    return result;
-        //}
-        /// <summary>
-        /// Get Project
-        /// </summary>
-        /// <param name="query"> GetProjectByIdQuery</param>
-        /// <returns>Project</returns>
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<Folder>> Get(Guid id)
-        //{
-        //    var result = await this._mediator.Send(new GetFolderQuery {FolderId=id});
-        //    return result;
-        //}
-
-        /// <summary>
-        /// Get all Folders
-        /// </summary>
-        /// <param name="query">GetAllFoldersQuery</param>
-        /// <returns>GetFoldersDtoLists</returns>
-        //[HttpGet("getAll")]
-        //public async Task<ActionResult<GetFoldersDtoLists>> GetAll([FromQuery] GetAllFoldersQuery query)
-        //{
-        //    var result = await this._mediator.Send(query);
-        //    return result;
-        //}
-
-        /// <summary>Rename Folder
-        /// </summary>
-        /// <param name="command"> </param>
+        /// <param name="command"></param>
         /// <returns></returns>
-        //[HttpPut]
-        //public async Task<ActionResult<string>> Update(RenameFolderCommand command)
-        //{
-        //    var result = await this._mediator.Send(command);
-        //    return result;
-        //}
+        [HttpPut]
+        public async Task<IActionResult> Rename(UpdateFolderCommand command)
+        {
+            var result = await this.Mediator.Send(command);
+            return FormatResponseToActionResult(result);
+        }
+        /// <summary>
+        /// Rename folder
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        public async Task<IActionResult> Delete(DeleteFolderCommand command)
+        {
+            var result = await this.Mediator.Send(command);
+            return FormatResponseToActionResult(result);
+        }
+        /// <summary>
+        /// Get Folder by Id
+        /// </summary>
+        /// <param name="FolderId">GetFolderCommand</param>
+        /// <returns></returns>
+        [HttpGet("id")]
+        public async Task<IActionResult> Get(Guid id)
+        {
+            var result = await this.Mediator.Send(new GetFolderCommand { FolderId = id });
+            return FormatResponseToActionResult(result);
+        }
 
         /// <summary>
-        /// Delete Folder
+        /// Get Folder by Id
         /// </summary>
-        /// <param name="command"> Delete </param>
-        /// <returns>DeleteFolderDto</returns>
-        //[HttpDelete("{id}")]
-        //public async Task<ActionResult<DeleteFolderDto>> Delete(Guid id)
-        //{
-        //    var result = await this._mediator.Send(new DeleteFolderCommand {FolderId=id });
-        //    return result;
-        //}
-
+        /// <param name="FolderId">GetFolderCommand</param>
+        /// <returns></returns>
+        [HttpGet("id")]
+        public async Task<IActionResult> GetByProjectId(Guid id)
+        {
+            var result = await this.Mediator.Send(new GetFoldersByProjectId { ProjectId = id });
+            return FormatResponseToActionResult(result);
+        }
+        /// <summary>
+        /// Get Folder by UserId
+        /// </summary>
+        /// <param name="UserId">GetFolderByUserIdCommand</param>
+        /// <returns></returns>
+        [HttpGet("id")]
+        public async Task<IActionResult> GetByUserId(Guid id)
+        {
+            var result = await this.Mediator.Send(new GetFoldersByCreatedUserCommand { UserId = id });
+            return FormatResponseToActionResult(result);
+        }
     }
 }

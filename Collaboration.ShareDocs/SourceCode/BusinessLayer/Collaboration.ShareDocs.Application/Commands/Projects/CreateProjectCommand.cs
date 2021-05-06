@@ -23,18 +23,11 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
         public class Handler : IRequestHandler<CreateProjectCommand, ApiResponseDetails>
         {
             private readonly IUnitOfWork _unitOfWork;
-            private readonly ICurrentUserService _currentUserService;
-            private readonly IMethodesRepository _methodesRepository;
             private readonly IMapper _mapper;
             public Handler(IUnitOfWork unitOfWork,
-                                         ICurrentUserService currentUserService,
-                                         IMethodesRepository methodesRepository,
                                          IMapper mapper)
             {
                 this._unitOfWork = unitOfWork;
-
-                this._currentUserService = currentUserService;
-                this._methodesRepository = methodesRepository;
                 _mapper = mapper;
             }
             public async Task<ApiResponseDetails> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
@@ -46,7 +39,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
                     return ApiCustomResponse.NotFound(message);
                 }
                 
-                if (!await _methodesRepository.Unique<Project>(request.Label,"Label", cancellationToken))
+                if (!await _unitOfWork.MethodRepository.Unique<Project>(request.Label,"Label", cancellationToken))
                 {
                     var message = string.Format(Resource.Error_NameExist, request.Label);
                     return ApiCustomResponse.ValidationError(new Error("Label", message));
