@@ -39,6 +39,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
             }
             public async Task<ApiResponseDetails> Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
             {
+              
                 var project = await _unitOfWork.ProjectRepository.GetAsync(request.ProjectId, cancellationToken);
                 // R01 Workspace 
                 if (project == null)
@@ -47,11 +48,15 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
                     return ApiCustomResponse.NotFound(message);
                 }
                 // R01 Workspace label is unique
-                if (!await _unitOfWork.MethodRepository.UniqueName<Project>(request.Label, cancellationToken))
+                while(request != null && request.Label != project.Label)
                 {
-                    var message = string.Format(Resource.Error_NameExist, request.Label);
-                    return ApiCustomResponse.ValidationError(new Error("Label", message));
+                    if (!await _unitOfWork.MethodRepository.Unique<Project>(request.Label, "Label", cancellationToken))
+                    {
+                        var message = string.Format(Resource.Error_NameExist, request.Label);
+                        return ApiCustomResponse.ValidationError(new Error("Label", message));
+                    }
                 }
+               
 
 
                 project.Label = request.Label;

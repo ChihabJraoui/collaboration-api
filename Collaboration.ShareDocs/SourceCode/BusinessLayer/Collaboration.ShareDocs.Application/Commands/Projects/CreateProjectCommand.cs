@@ -46,7 +46,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
                     return ApiCustomResponse.NotFound(message);
                 }
                 
-                if (!await _methodesRepository.UniqueName<Project>(request.Label, cancellationToken))
+                if (!await _methodesRepository.Unique<Project>(request.Label,"Label", cancellationToken))
                 {
                     var message = string.Format(Resource.Error_NameExist, request.Label);
                     return ApiCustomResponse.ValidationError(new Error("Label", message));
