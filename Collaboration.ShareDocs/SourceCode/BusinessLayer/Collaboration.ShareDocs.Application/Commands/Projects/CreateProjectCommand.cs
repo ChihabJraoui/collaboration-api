@@ -33,6 +33,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
             public async Task<ApiResponseDetails> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
             {
                 var workspace = await _unitOfWork.WorkspaceRepository.GetAsync(request.WorkspaceId, cancellationToken);
+                
                 if(workspace == null)
                 {
                     var message = string.Format(Resource.Error_NotFound, request.Label);
@@ -44,12 +45,14 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
                     var message = string.Format(Resource.Error_NameExist, request.Label);
                     return ApiCustomResponse.ValidationError(new Error("Label", message));
                 }
+
                 var newProject = new Project()
                 {
                     Label = request.Label,
                     Description = request.Description,
                     Workspace = workspace
                 };
+
                 await _unitOfWork.ProjectRepository.CreateAsync(newProject, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
                 var response = _mapper.Map<ProjectDto>(newProject);

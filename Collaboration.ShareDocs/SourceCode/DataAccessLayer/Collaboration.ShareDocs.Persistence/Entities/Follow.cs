@@ -5,13 +5,23 @@ using System.Text;
 namespace Collaboration.ShareDocs.Persistence.Entities
 {
     public class Follow
-    {
-        public Guid id { get; set; }
-        //public int EstimateStatusId { get; set; }
-        //public ApplicationUser EstimateStatus { get; set; }
+    { 
+        public Guid FollowerId { get; set; }
+        public ApplicationUser Follower { get; set; }
 
-        //public int SubsequentStatusId { get; set; }
-        //public ApplicationUser SubsequentStatus { get; set; }
+        public Guid FollowingId { get; set; }
+        public ApplicationUser following { get; set; }
 
+
+        public Follow(Guid followerId, Guid followingId)
+        {
+            FollowerId = followerId;
+            FollowingId = followingId;
+            
+        }
+        public Follow()
+        {
+
+        }
     }
-}
+} 

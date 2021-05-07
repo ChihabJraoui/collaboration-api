@@ -85,6 +85,20 @@ namespace Collaboration.ShareDocs.Persistence
             }
         }
 
+        private IFollowRepository _followRepository;
+        public IFollowRepository FollowRepository
+        {
+            get
+            {
+
+                if (_followRepository == null)
+                {
+                    this._followRepository = new FollowRepository(_context);
+                }
+                return _followRepository;
+            }
+        }
+
         public void Save()
         {
             _context.SaveChanges();

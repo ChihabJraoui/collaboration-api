@@ -221,11 +221,15 @@ namespace Collaboration.ShareDocs.Persistence.Migrations
 
             modelBuilder.Entity("Collaboration.ShareDocs.Persistence.Entities.Follow", b =>
                 {
-                    b.Property<Guid>("id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<Guid>("FollowerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("id");
+                    b.Property<Guid>("FollowingId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("FollowerId", "FollowingId");
+
+                    b.HasIndex("FollowingId");
 
                     b.ToTable("Follows");
                 });
@@ -469,6 +473,25 @@ namespace Collaboration.ShareDocs.Persistence.Migrations
                     b.Navigation("Project");
                 });
 
+            modelBuilder.Entity("Collaboration.ShareDocs.Persistence.Entities.Follow", b =>
+                {
+                    b.HasOne("Collaboration.ShareDocs.Persistence.Entities.ApplicationUser", "Follower")
+                        .WithMany("Followers")
+                        .HasForeignKey("FollowerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Collaboration.ShareDocs.Persistence.Entities.ApplicationUser", "following")
+                        .WithMany("Followings")
+                        .HasForeignKey("FollowingId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Follower");
+
+                    b.Navigation("following");
+                });
+
             modelBuilder.Entity("Collaboration.ShareDocs.Persistence.Entities.Project", b =>
                 {
                     b.HasOne("Collaboration.ShareDocs.Persistence.Entities.Workspace", "Workspace")
@@ -550,6 +573,10 @@ namespace Collaboration.ShareDocs.Persistence.Migrations
 
             modelBuilder.Entity("Collaboration.ShareDocs.Persistence.Entities.ApplicationUser", b =>
                 {
+                    b.Navigation("Followers");
+
+                    b.Navigation("Followings");
+
                     b.Navigation("Projects");
                 });
 
