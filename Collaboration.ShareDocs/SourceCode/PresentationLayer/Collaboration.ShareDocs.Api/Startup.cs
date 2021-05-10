@@ -62,7 +62,7 @@ namespace Collaboration.ShareDocs.Api
             app.UseCustomExceptionHandler();
             app.UseHttpsRedirection();
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
  

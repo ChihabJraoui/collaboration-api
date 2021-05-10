@@ -61,6 +61,15 @@ namespace Collaboration.ShareDocs.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email {0}is not confirmed.
+        /// </summary>
+        public static string Error_EmailNotConfirmed {
+            get {
+                return ResourceManager.GetString("Error_EmailNotConfirmed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The specified Name {0} already exists..
         /// </summary>
         public static string Error_NameExist {
@@ -84,6 +93,15 @@ namespace Collaboration.ShareDocs.Resources {
         public static string Error_NotValid {
             get {
                 return ResourceManager.GetString("Error_NotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email {0} form is not valid.
+        /// </summary>
+        public static string Error_NotValid_EmailForm {
+            get {
+                return ResourceManager.GetString("Error_NotValid_EmailForm", resourceCulture);
             }
         }
     }

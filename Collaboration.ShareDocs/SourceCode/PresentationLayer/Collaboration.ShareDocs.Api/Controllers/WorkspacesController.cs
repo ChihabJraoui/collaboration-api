@@ -10,7 +10,7 @@ using Collaboration.ShareDocs.Application.Commands.Workspaces.Dto;
 
 namespace Collaboration.ShareDocs.Api.Controllers
 {
-
+    [Authorize]
     public class WorkspacesController : BaseController
     {
 
