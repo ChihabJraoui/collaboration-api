@@ -1,8 +1,6 @@
 ﻿using Collaboration.ShareDocs.Application.Commands.Projects;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Collaboration.ShareDocs.Api.Controllers
