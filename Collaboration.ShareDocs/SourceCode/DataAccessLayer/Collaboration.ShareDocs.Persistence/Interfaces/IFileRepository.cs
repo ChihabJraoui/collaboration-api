@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Collaboration.ShareDocs.Persistence.Interfaces
@@ -11,9 +12,9 @@ namespace Collaboration.ShareDocs.Persistence.Interfaces
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="Filename,FolderPath"></param>
+        /// <param name="File"></param>
         /// <returns>File</returns>
-        Task<File> AddAsync(string FileName,string pathFile,Folder folder);
+        Task<File> AddAsync(File file, CancellationToken cancellationToken);
 
         /// <summary>
         /// 
@@ -22,6 +23,8 @@ namespace Collaboration.ShareDocs.Persistence.Interfaces
         /// <returns></returns>
       
 
-        Task<File> GetAsync(Guid fileId);
+        Task<File> GetAsync(Guid fileId, CancellationToken cancellationToken);
+
+        Task<List<File>> GetByFolderIdAsync(Guid folderId, CancellationToken cancellationToken);
     }
 }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Collaboration.ShareDocs.Persistence.Repositories
@@ -17,24 +18,23 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
         {
             _context = context;
         }
-        public async Task<File> AddAsync(string FileName, string pathFile, Folder folder)
-        {
-            var file = new File(FileName)
-            {
-                Parent = folder,
-                FilePath = pathFile
-            };
+        
 
-            //folder.FolderId
-            await _context.Files.AddAsync(file);
-            await _context.SaveChangesAsync();
+        public async Task<File> AddAsync(File file, CancellationToken cancellationToken)
+        {
+            await base.InsertAsync(file, cancellationToken);
 
             return file;
         }
 
-        public async Task<File> GetAsync(Guid fileId)
+        public async Task<File> GetAsync(Guid fileId, CancellationToken cancellationToken)
         {
-            return await _context.Files.Where(f => f.FileId == fileId).FirstOrDefaultAsync();
+            return await _context.Files.Where(f => f.FileId == fileId).FirstOrDefaultAsync(cancellationToken);
+        }
+
+        public async Task<List<File>> GetByFolderIdAsync(Guid folderId,CancellationToken cancellationToken)
+        {
+            return await dbSet.Where(w => w.Parent.FolderId == folderId).ToListAsync(cancellationToken);
         }
     }
 }

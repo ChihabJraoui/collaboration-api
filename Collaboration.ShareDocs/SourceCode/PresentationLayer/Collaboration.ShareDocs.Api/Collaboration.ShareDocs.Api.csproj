@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\BusinessLayer\Collaboration.ShareDocs.Application\Collaboration.ShareDocs.Application.csproj" />
     <ProjectReference Include="..\Collaboration.ShareDocs.Provision\Collaboration.ShareDocs.Provision.csproj" />
   </ItemGroup>
 
