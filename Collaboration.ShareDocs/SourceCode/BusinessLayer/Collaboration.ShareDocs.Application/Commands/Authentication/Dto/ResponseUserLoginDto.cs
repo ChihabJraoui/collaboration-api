@@ -25,6 +25,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Authentication.Dto
         public string RefreshToken { get; set; }
 
         public string PhoneNumber { get; set; }
+        public bool IsActive { get; set; }
 
         public string EmailConfirmed { get; set; }
 

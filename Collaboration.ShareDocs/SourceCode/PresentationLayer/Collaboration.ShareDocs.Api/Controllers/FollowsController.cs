@@ -20,5 +20,16 @@ namespace Collaboration.ShareDocs.Api.Controllers
             var result = await this.Mediator.Send(command);
             return FormatResponseToActionResult(result);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpGet("userId")]
+        public async Task<IActionResult> IsFollowing(Guid userId)
+        {
+            var result = await this.Mediator.Send(new IsFollowingCommand() {UserId=userId } );
+            return FormatResponseToActionResult(result);
+        }
     }
 }

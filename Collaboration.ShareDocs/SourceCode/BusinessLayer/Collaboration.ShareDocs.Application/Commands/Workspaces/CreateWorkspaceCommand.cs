@@ -31,7 +31,6 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
                                           IMapper mapper)
             {
                 this._unitOfWork = unitOfWork;
-
                 this._currentUserService = currentUserService;
                 this._methodesRepository = methodesRepository;
                 _mapper = mapper;
@@ -55,7 +54,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
                 };
 
                 var workspace = await workspaceRepository.CreateAsync(newWorkspace, cancellationToken);
-                await _unitOfWork.SaveChangesAsync(cancellationToken);
+                var res = await _unitOfWork.SaveChangesAsync(cancellationToken);
 
                 var response = _mapper.Map<WorkspaceDto>(workspace);
                 return ApiCustomResponse.ReturnedObject(response);

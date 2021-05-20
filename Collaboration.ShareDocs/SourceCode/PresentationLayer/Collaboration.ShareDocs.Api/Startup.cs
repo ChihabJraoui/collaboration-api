@@ -20,6 +20,7 @@ using Collaboration.ShareDocs.Api.Middlwares;
 using Collaboration.ShareDocs.Application.Commands.Users;
 
 using FluentValidation.AspNetCore;
+using Collaboration.ShareDocs.Api.Services;
 
 namespace Collaboration.ShareDocs.Api
 {
@@ -35,6 +36,19 @@ namespace Collaboration.ShareDocs.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "AllowAll",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:5000",
+                                       "https://localhost:4200"
+                                       )
+                                       .AllowAnyHeader()
+                                       .AllowAnyMethod();
+                    });
+            });
+            services.AddWebDependancy();
             services.AddApplicationDependancy(Configuration);
             services
                 .AddControllersWithViews()
@@ -46,7 +60,7 @@ namespace Collaboration.ShareDocs.Api
                 options.SuppressModelStateInvalidFilter = true;
             });
             services.AddControllers();
-            services.AddWebDependancy();
+         
             services.AddSwaggerSetup(this.Configuration);
             services.AddHttpContextAccessor();
            

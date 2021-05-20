@@ -17,7 +17,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Users
 {
     public class GetUserCommand : IRequest<ApiResponseDetails>
     {
-        public Guid UserId { get; set; }
+        public string Username { get; set; }
 
         public class Handler : IRequestHandler<GetUserCommand, ApiResponseDetails>
         {
@@ -39,16 +39,16 @@ namespace Collaboration.ShareDocs.Application.Commands.Users
 
             public async Task<ApiResponseDetails> Handle( GetUserCommand request, CancellationToken cancellationToken )
             {
-                var user = await this._userManager.Users.SingleOrDefaultAsync(u => u.Id == request.UserId, cancellationToken);
+                var user = await this._userManager.Users.SingleOrDefaultAsync(u => u.UserName == request.Username, cancellationToken);
         
                  
                 if (user == null)
                 {
-                    var message = string.Format(Resource.Error_NotFound, request.UserId);
+                    var message = string.Format(Resource.Error_NotFound, request.Username);
                     return ApiCustomResponse.NotFound(message);
                 }
 
-                var response = _mapper.Map<UserDto>(user);
+                var response = _mapper.Map<UserProfileDto>(user);
                 return ApiCustomResponse.ReturnedObject(response);
             }
         }

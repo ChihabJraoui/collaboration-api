@@ -12,7 +12,7 @@ namespace Collaboration.ShareDocs.Api.Configurations
     {
         public static IServiceCollection AddWebDependancy(this IServiceCollection services)
         {
-            services.AddSingleton<ICurrentUserService, CurrentUserService>();
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
             return services;
         }
     }

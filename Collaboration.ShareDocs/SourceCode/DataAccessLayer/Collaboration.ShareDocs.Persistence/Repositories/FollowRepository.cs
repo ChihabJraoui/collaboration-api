@@ -1,7 +1,9 @@
 ﻿using Collaboration.ShareDocs.Persistence.Entities;
 using Collaboration.ShareDocs.Persistence.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,14 +18,12 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
         {
             _context = context;
         }
-        public Task AddAsync(Follow follow)
-        {
-            throw new NotImplementedException();
-        }
 
-        public Task<Follow> CreateAsync(Follow obj, CancellationToken cancellationToken)
+        public async Task<Follow> CreateAsync(Follow obj, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            await base.InsertAsync(obj, cancellationToken);
+
+            return obj;
         }
 
         public Task<Follow> Delete(Follow follower)
@@ -49,6 +49,11 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
         public Task<Follow> GetFollowerById(Guid id)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<Follow> IsFollowing(Guid id,string currentUserId)
+        {
+            return await dbSet.Where(w => w.FollowerId == new Guid(currentUserId) && w.FollowingId == id).FirstOrDefaultAsync();
         }
 
         public Task<Follow> UpdateAsync(Follow obj, CancellationToken cancellationToken)

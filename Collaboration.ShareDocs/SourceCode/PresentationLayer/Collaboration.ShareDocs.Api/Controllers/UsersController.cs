@@ -10,14 +10,25 @@ namespace Collaboration.ShareDocs.Api.Controllers
     public class UsersController:BaseController
     {
         /// <summary>
-        /// Get User by Id
+        /// Get User by username
         /// </summary>
-        /// <param name="UserId">GetUserCommand</param>
+        /// <param name="Username">GetUserCommand</param>
         /// <returns></returns>
-        [HttpGet("id")]
-        public async Task<IActionResult> Get(Guid id)
+        [HttpGet("username")]
+        public async Task<IActionResult> Get(string username)
         {
-            var result = await this.Mediator.Send(new GetUserCommand { UserId = id });
+            var result = await this.Mediator.Send(new GetUserCommand { Username = username });
+            return FormatResponseToActionResult(result);
+        }
+        /// <summary>
+        /// Get Users by keyword
+        /// </summary>
+        /// <param name="UserId">GetUsersCommand</param>
+        /// <returns>string</returns>
+        [HttpGet("keyword")]
+        public async Task<IActionResult> GetByKyword(string keyword)
+        {
+            var result = await this.Mediator.Send(new GetUsersByKeyWordCommand { Keyword = keyword });
             return FormatResponseToActionResult(result);
         }
 
