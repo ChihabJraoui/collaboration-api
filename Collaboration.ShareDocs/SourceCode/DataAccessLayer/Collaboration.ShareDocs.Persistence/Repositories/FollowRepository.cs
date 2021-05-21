@@ -61,9 +61,9 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        bool IRepositoryBase<Follow>.Delete(Follow obj)
+         bool IRepositoryBase<Follow>.Delete(Follow obj)
         {
-            throw new NotImplementedException();
+            return base.Delete(obj);
         }
     }
 }
