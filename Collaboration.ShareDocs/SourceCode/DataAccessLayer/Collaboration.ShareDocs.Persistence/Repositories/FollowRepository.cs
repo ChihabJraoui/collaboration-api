@@ -51,6 +51,7 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
             throw new NotImplementedException();
         }
 
+       
         public async Task<Follow> IsFollowing(Guid id,string currentUserId)
         {
             return await dbSet.Where(w => w.FollowerId == new Guid(currentUserId) && w.FollowingId == id).FirstOrDefaultAsync();

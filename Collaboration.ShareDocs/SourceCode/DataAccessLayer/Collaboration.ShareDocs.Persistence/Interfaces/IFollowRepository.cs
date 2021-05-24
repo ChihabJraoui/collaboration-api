@@ -20,5 +20,6 @@ namespace Collaboration.ShareDocs.Persistence.Interfaces
         Task<Follow> GetFollowerById(Guid id);
         Task<Follow> IsFollowing(Guid id,string currentUserId);
         
+
     }
 }

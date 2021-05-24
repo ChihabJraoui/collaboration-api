@@ -78,8 +78,9 @@ namespace Collaboration.ShareDocs.Api
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseCors("AllowAll");
 
- 
+
 
             app.UseSwaggerSetup(this.Configuration);
 
