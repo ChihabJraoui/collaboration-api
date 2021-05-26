@@ -21,6 +21,10 @@ using Collaboration.ShareDocs.Application.Commands.Users;
 
 using FluentValidation.AspNetCore;
 using Collaboration.ShareDocs.Api.Services;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace Collaboration.ShareDocs.Api
 {
@@ -60,7 +64,14 @@ namespace Collaboration.ShareDocs.Api
                 options.SuppressModelStateInvalidFilter = true;
             });
             services.AddControllers();
-         
+            //upload file
+            services.Configure<FormOptions>(o =>
+            {
+                o.ValueLengthLimit = int.MaxValue;
+                o.MultipartBodyLengthLimit = int.MaxValue;
+                o.MemoryBufferThreshold = int.MaxValue;
+            });
+
             services.AddSwaggerSetup(this.Configuration);
             services.AddHttpContextAccessor();
            
@@ -79,6 +90,13 @@ namespace Collaboration.ShareDocs.Api
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseCors("AllowAll");
+
+            //file section
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
+                RequestPath = new PathString("/Resources")
+            });
 
 
 

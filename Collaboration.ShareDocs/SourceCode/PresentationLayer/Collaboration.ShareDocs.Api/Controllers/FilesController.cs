@@ -23,7 +23,7 @@ namespace Collaboration.ShareDocs.Api.Controllers
             return FormatResponseToActionResult(result);
         }
         [HttpPost]
-        public IActionResult UploadFile()
+        public async Task<IActionResult> UploadFile()
         {
 
             try
@@ -37,11 +37,12 @@ namespace Collaboration.ShareDocs.Api.Controllers
                     var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
                     var fullPath = Path.Combine(pathToSave, fileName);
                     var dbPath = Path.Combine(folderName, fileName);
-                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    var stream = new FileStream(fullPath, FileMode.Create);
+                    using (stream) 
                     {
-                        file.CopyTo(stream);
+                        await file.CopyToAsync(stream);
                     }
-                    return Ok(new { dbPath });
+                    return  Ok( new { dbPath });
                 }
                 else
                 {
