@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 namespace Collaboration.ShareDocs.Api.Services
 {
     public class CurrentUserService : ICurrentUserService
-    {
-        private IHeaderDictionary _headers;
+    { 
+
         private ClaimsPrincipal _claimsPrincipal;
         public CurrentUserService(IHttpContextAccessor httpContextAccessor)
         {
 
-            _claimsPrincipal = httpContextAccessor.HttpContext.User;
+            _claimsPrincipal = httpContextAccessor?.HttpContext?.User;
             //.FindFirst("nameid").Value; 
         }
 
