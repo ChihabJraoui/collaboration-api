@@ -21,5 +21,6 @@ namespace Collaboration.ShareDocs.Persistence.Entities
 
         }
         public string FilePath { get; set; }
+        public string Extension { get; set; }
     }
 }

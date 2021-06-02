@@ -20,5 +20,38 @@ namespace Collaboration.ShareDocs.Api.Controllers
             var result = await this.Mediator.Send(command);
             return FormatResponseToActionResult(result);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpGet("userId")]
+        public async Task<IActionResult> IsFollowing(Guid userId)
+        {
+            var result = await this.Mediator.Send(new IsFollowingCommand() {UserId=userId } );
+            return FormatResponseToActionResult(result);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpDelete("followingId")]
+        public async Task<IActionResult> Unfollow(Guid followingId)
+        {
+            var result = await this.Mediator.Send(new UnfollowCommand() { FollowingId= followingId });
+            return FormatResponseToActionResult(result);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpGet("user")]
+        public async Task<IActionResult> Followers(Guid userId)
+        {
+            var result = await this.Mediator.Send(new GetFollowingCommand { UserId = userId});
+            return FormatResponseToActionResult(result);
+        }
     }
 }

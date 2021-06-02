@@ -71,7 +71,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Authentication
                 var user = new ApplicationUser
                 {
                     Email          = request.Email,
-                    UserName       = request.Email,
+                    UserName       = "@"+request.FirstName+request.LastName,
                     FirstName      = request.FirstName,
                     LastName       = request.LastName,
                     PhoneNumber    = request.PhoneNumber

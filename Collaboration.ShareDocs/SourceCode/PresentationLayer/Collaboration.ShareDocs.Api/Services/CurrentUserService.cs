@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Collaboration.ShareDocs.Api.Services
@@ -10,16 +11,51 @@ namespace Collaboration.ShareDocs.Api.Services
     public class CurrentUserService : ICurrentUserService
     {
         private IHeaderDictionary _headers;
+        private ClaimsPrincipal _claimsPrincipal;
         public CurrentUserService(IHttpContextAccessor httpContextAccessor)
         {
-            _headers = httpContextAccessor.HttpContext?.Request?.Headers;
+
+            _claimsPrincipal = httpContextAccessor.HttpContext.User;
+            //.FindFirst("nameid").Value; 
         }
 
-        public string UserId { get { return !string.IsNullOrEmpty(_headers?["userId"]) ? (string)_headers?["userId"] : Guid.Empty.ToString(); } }
 
-        public string[] Permissions { get { return !string.IsNullOrEmpty((string)_headers?["permissions"]) ? _headers?["permissions"].ToString().Split(',') : new string[0]; } }
 
-        public bool IsAuthenticated { get { return !string.IsNullOrEmpty((string)_headers?["userId"]); } }
-        
+
+        private object GetPrincipipal()
+        {
+            if (_claimsPrincipal != null)
+            {
+                var firstClaims = _claimsPrincipal.FindFirst("nameid");
+                if (firstClaims != null)
+                {
+                    var claimValue = firstClaims.Value;
+                    if (claimValue != null)
+                    {
+                        return claimValue;
+                    }
+                }
+            }
+            return null;
+        }
+        public string UserId
+        {
+            get
+            {
+                var userId = GetPrincipipal();
+                return (userId != null ? userId : Guid.Empty).ToString();
+            }
+        }
+        // testi o9ray l message li sift lik
+        //public string[] Permissions { get { return !string.IsNullOrEmpty((string)_headers?["permissions"]) ? _headers?["permissions"].ToString().Split(',') : new string[0]; } }
+
+        public bool IsAuthenticated
+        {
+            get
+            {
+                return GetPrincipipal() != null; 
+            }
+        }
+
     }
 }

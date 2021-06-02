@@ -41,7 +41,6 @@
 
   <ItemGroup>
     <Folder Include="Commands\Authentication\Validators\" />
-    <Folder Include="Commands\Files\Dto\" />
     <Folder Include="Commands\Files\Validators\" />
     <Folder Include="Commands\Folders\Validators\" />
     <Folder Include="Commands\Follows\Validators\" />

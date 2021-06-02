@@ -50,8 +50,10 @@ namespace Collaboration.ShareDocs.Application.Commands.Follows
                     FollowerId = new Guid(_currentUserService.UserId),
                     FollowingId = user.Id
                 };
-
+                var me = await this._userManager.Users.SingleOrDefaultAsync(u => u.Id == new Guid(_currentUserService.UserId), cancellationToken);
+                
                 var follower = await _unitOfWork.FollowRepository.CreateAsync(follow,cancellationToken);
+                me.Followers.Add(follower);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
                 var response = _mapper.Map<FollowDto>(follower);
                 return ApiCustomResponse.ReturnedObject(response);

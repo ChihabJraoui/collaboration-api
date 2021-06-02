@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
@@ -23,7 +24,7 @@ namespace Collaboration.ShareDocs.Api.Controllers
             return FormatResponseToActionResult(result);
         }
         [HttpPost]
-        public IActionResult UploadFile()
+        public async Task<IActionResult> UploadFile()
         {
 
             try
@@ -37,11 +38,13 @@ namespace Collaboration.ShareDocs.Api.Controllers
                     var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
                     var fullPath = Path.Combine(pathToSave, fileName);
                     var dbPath = Path.Combine(folderName, fileName);
-                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    var extension = System.IO.Path.GetExtension(file.FileName);
+                    var stream = new FileStream(fullPath, FileMode.Create);
+                    using (stream) 
                     {
-                        file.CopyTo(stream);
+                        await file.CopyToAsync(stream);
                     }
-                    return Ok(new { dbPath });
+                    return  Ok( new { dbPath , extension});
                 }
                 else
                 {
@@ -64,6 +67,29 @@ namespace Collaboration.ShareDocs.Api.Controllers
         {
             var result = await this.Mediator.Send(new GetFilesByFolderId { FolderParentId = id });
             return FormatResponseToActionResult(result);
+        }
+
+
+        [HttpGet("userId")]
+        public async Task<IActionResult> GetByCreatedBy(Guid userId)
+        {
+            var result = await this.Mediator.Send(new GetFilesCreatedBy { UserId = userId });
+            return FormatResponseToActionResult(result);
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetfollowingFiles()
+        {
+            var result = await this.Mediator.Send(new GetFollowingFiles());
+            return FormatResponseToActionResult(result);
+        }
+        [HttpGet]
+        public ActionResult DownloadDocument(string filePath,string fileName)
+        {
+
+            byte[] fileBytes = System.IO.File.ReadAllBytes(filePath);
+
+            return File(fileBytes, "application/force-download", fileName);
+
         }
     }
 }
