@@ -32,6 +32,11 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
             return await _context.Files.Where(f => f.FileId == fileId).FirstOrDefaultAsync(cancellationToken);
         }
 
+        public async Task<List<File>> GetByCreatedByAsync(Guid userId, CancellationToken cancellationToken)
+        {
+            return await dbSet.Where(w => w.CreatedBy == userId.ToString()).OrderByDescending(w=>w.Created).ToListAsync(cancellationToken);
+        }
+
         public async Task<List<File>> GetByFolderIdAsync(Guid folderId,CancellationToken cancellationToken)
         {
             return await dbSet.Where(w => w.Parent.FolderId == folderId).ToListAsync(cancellationToken);

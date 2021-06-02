@@ -20,6 +20,12 @@ namespace Collaboration.ShareDocs.Api.Controllers
             var result = await this.Mediator.Send(new GetUserCommand { Username = username });
             return FormatResponseToActionResult(result);
         }
+        [HttpGet("userId")]
+        public async Task<IActionResult> GetById(Guid userId)
+        {
+            var result = await this.Mediator.Send(new GetUserById { UserId = userId});
+            return FormatResponseToActionResult(result);
+        }
         /// <summary>
         /// Get Users by keyword
         /// </summary>

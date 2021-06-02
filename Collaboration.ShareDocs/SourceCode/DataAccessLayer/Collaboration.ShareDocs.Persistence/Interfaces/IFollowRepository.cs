@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Collaboration.ShareDocs.Persistence.Interfaces
@@ -19,7 +20,7 @@ namespace Collaboration.ShareDocs.Persistence.Interfaces
         Task<string> GetCurrentUser();
         Task<Follow> GetFollowerById(Guid id);
         Task<Follow> IsFollowing(Guid id,string currentUserId);
-        
+        Task<List<Guid>> GetFollowing(Guid userId, CancellationToken cancellationToken);
 
     }
 }

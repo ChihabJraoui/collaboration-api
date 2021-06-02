@@ -26,5 +26,7 @@ namespace Collaboration.ShareDocs.Persistence.Interfaces
         Task<File> GetAsync(Guid fileId, CancellationToken cancellationToken);
 
         Task<List<File>> GetByFolderIdAsync(Guid folderId, CancellationToken cancellationToken);
+
+        Task<List<File>> GetByCreatedByAsync(Guid userId, CancellationToken cancellationToken);
     }
 }

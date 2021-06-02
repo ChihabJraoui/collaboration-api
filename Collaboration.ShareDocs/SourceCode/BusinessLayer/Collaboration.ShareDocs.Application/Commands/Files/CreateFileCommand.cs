@@ -18,6 +18,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Files
         public string Name { get; set; }
         public Guid FolderParentId { get; set; }
         public string PathFile { get; set; }
+        public string Extension { get; set; }
 
         public class Handler : IRequestHandler<CreateFileCommand, ApiResponseDetails>
         {
@@ -40,7 +41,8 @@ namespace Collaboration.ShareDocs.Application.Commands.Files
                 {
                     Name = request.Name,
                     FilePath = request.PathFile,
-                    Parent = folder
+                    Parent = folder,
+                    Extension=request.Extension
                 };
                 var file = await _unitOfWork.FileRepository.AddAsync(newFile, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
