@@ -25,10 +25,10 @@ namespace Collaboration.ShareDocs.Persistence
             services.AddIdentity<ApplicationUser, ApplicationRole>(config =>
                     {
                         config.SignIn.RequireConfirmedEmail      = false;
-                        config.Password.RequireDigit             = true;
-                        config.Password.RequireLowercase         = true;
-                        config.Password.RequireUppercase         = true;
-                        config.Password.RequireNonAlphanumeric   = true;
+                        config.Password.RequireDigit             = false;
+                        config.Password.RequireLowercase         = false;
+                        config.Password.RequireUppercase         = false;
+                        config.Password.RequireNonAlphanumeric   = false;
                         config.Password.RequiredLength           = 8;
                         config.User.RequireUniqueEmail           = true;
                     })
@@ -68,6 +68,7 @@ namespace Collaboration.ShareDocs.Persistence
             services.AddScoped<IFileRepository, FileRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IFollowRepository, FollowRepository>();
+            services.AddTransient<INotificationRepository, NotificationRepository>();
             //services.AddScoped<IRepositoryBase<Folder>, FolderRepository>();
             return services;
         }

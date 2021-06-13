@@ -46,6 +46,11 @@ namespace Collaboration.ShareDocs.Application.Commands.Files
                 };
                 var file = await _unitOfWork.FileRepository.AddAsync(newFile, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
+                var notification = new Notification
+                {
+                    Text = "new file added by someone"
+
+                };
                 var response = _mapper.Map<FileDto>(file);
                 return ApiCustomResponse.ReturnedObject(response);
 

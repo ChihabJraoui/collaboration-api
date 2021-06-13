@@ -1,5 +1,7 @@
-﻿using Collaboration.ShareDocs.Persistence.Interfaces;
+﻿using Collaboration.ShareDocs.Persistence.Hubs;
+using Collaboration.ShareDocs.Persistence.Interfaces;
 using Collaboration.ShareDocs.Persistence.Repositories;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,10 +12,12 @@ namespace Collaboration.ShareDocs.Persistence
     {
 
         private readonly AppDbContext _context;
+        private readonly IHubContext<NotificationHub> _hubContext;
 
-        public UnitOfWork(AppDbContext appDbContext)
+        public UnitOfWork(AppDbContext appDbContext, IHubContext<NotificationHub> hubContext)
         {
             _context = appDbContext;
+            _hubContext = hubContext;
         }
 
         private IFolderRepository _folderRepository;
@@ -96,6 +100,20 @@ namespace Collaboration.ShareDocs.Persistence
                     this._followRepository = new FollowRepository(_context);
                 }
                 return _followRepository;
+            }
+        }
+        private INotificationRepository _notificationRepository;
+       
+
+        public INotificationRepository NotificationRepository
+        {
+            get
+            {
+                if(_notificationRepository == null)
+                {
+                    this._notificationRepository = new NotificationRepository(_context, _followRepository,_hubContext);
+                }
+                return _notificationRepository;
             }
         }
 

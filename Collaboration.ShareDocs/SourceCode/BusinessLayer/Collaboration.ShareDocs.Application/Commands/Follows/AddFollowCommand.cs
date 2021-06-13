@@ -25,15 +25,19 @@ namespace Collaboration.ShareDocs.Application.Commands.Follows
             private readonly ICurrentUserService _currentUserService;
             private readonly IMapper _mapper;
             private readonly UserManager<ApplicationUser> _userManager;
+            private readonly INotificationRepository _notificationRepository;
+
             public Handler(IUnitOfWork unitOfWork,
                 UserManager<ApplicationUser> userManager,
                 ICurrentUserService currentUserService,
+                INotificationRepository notificationRepository,
                 IMapper mapper)
             {
                 this._unitOfWork = unitOfWork;
                 this._currentUserService = currentUserService;
                 _mapper = mapper;
                 this._userManager = userManager;
+                this._notificationRepository = notificationRepository;
             }
             public async Task<ApiResponseDetails> Handle(AddFollowCommand request, CancellationToken cancellationToken)
             {
@@ -54,8 +58,17 @@ namespace Collaboration.ShareDocs.Application.Commands.Follows
                 
                 var follower = await _unitOfWork.FollowRepository.CreateAsync(follow,cancellationToken);
                 me.Followers.Add(follower);
+
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
                 var response = _mapper.Map<FollowDto>(follower);
+
+                var notification = new Notification
+                {
+                    Text = "${ _currentUserService.UserId} has followed {user.UserId}"
+                };
+                await _unitOfWork.NotificationRepository.Create(notification, new Guid(_currentUserService.UserId), cancellationToken);
+
+                
                 return ApiCustomResponse.ReturnedObject(response);
             }
         }

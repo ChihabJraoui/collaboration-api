@@ -4,14 +4,16 @@ using Collaboration.ShareDocs.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Collaboration.ShareDocs.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210608111438_fix NotificationModel")]
+    partial class fixNotificationModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -239,40 +241,22 @@ namespace Collaboration.ShareDocs.Persistence.Migrations
 
             modelBuilder.Entity("Collaboration.ShareDocs.Persistence.Entities.Notification", b =>
                 {
-                    b.Property<Guid>("NotificationId")
+                    b.Property<Guid>("NotificationID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Text")
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("NotificationId");
-
-                    b.ToTable("Notifications");
-                });
-
-            modelBuilder.Entity("Collaboration.ShareDocs.Persistence.Entities.NotificationApplicationUser", b =>
-                {
-                    b.Property<Guid>("NotificationId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<Guid?>("ApplicationUserId1")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Category")
-                        .HasColumnType("int");
 
                     b.Property<bool>("IsRead")
                         .HasColumnType("bit");
 
-                    b.HasKey("NotificationId", "ApplicationUserId");
+                    b.HasKey("NotificationID");
 
-                    b.HasIndex("ApplicationUserId1");
-
-                    b.ToTable("UserNotifications");
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("Collaboration.ShareDocs.Persistence.Entities.Project", b =>
@@ -533,23 +517,6 @@ namespace Collaboration.ShareDocs.Persistence.Migrations
                     b.Navigation("following");
                 });
 
-            modelBuilder.Entity("Collaboration.ShareDocs.Persistence.Entities.NotificationApplicationUser", b =>
-                {
-                    b.HasOne("Collaboration.ShareDocs.Persistence.Entities.ApplicationUser", "ApplicationUser")
-                        .WithMany("NotificationApplicationUsers")
-                        .HasForeignKey("ApplicationUserId1");
-
-                    b.HasOne("Collaboration.ShareDocs.Persistence.Entities.Notification", "Notification")
-                        .WithMany("NotificationApplicationUsers")
-                        .HasForeignKey("NotificationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ApplicationUser");
-
-                    b.Navigation("Notification");
-                });
-
             modelBuilder.Entity("Collaboration.ShareDocs.Persistence.Entities.Project", b =>
                 {
                     b.HasOne("Collaboration.ShareDocs.Persistence.Entities.Workspace", "Workspace")
@@ -635,8 +602,6 @@ namespace Collaboration.ShareDocs.Persistence.Migrations
 
                     b.Navigation("Followings");
 
-                    b.Navigation("NotificationApplicationUsers");
-
                     b.Navigation("Projects");
                 });
 
@@ -645,11 +610,6 @@ namespace Collaboration.ShareDocs.Persistence.Migrations
                     b.Navigation("Components");
 
                     b.Navigation("Files");
-                });
-
-            modelBuilder.Entity("Collaboration.ShareDocs.Persistence.Entities.Notification", b =>
-                {
-                    b.Navigation("NotificationApplicationUsers");
                 });
 
             modelBuilder.Entity("Collaboration.ShareDocs.Persistence.Entities.Project", b =>

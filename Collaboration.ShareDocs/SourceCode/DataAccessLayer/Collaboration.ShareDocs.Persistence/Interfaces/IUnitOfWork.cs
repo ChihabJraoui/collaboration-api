@@ -15,6 +15,7 @@ namespace Collaboration.ShareDocs.Persistence.Interfaces
         IWorkspaceRepository WorkspaceRepository { get; }
         IMethodesRepository MethodRepository { get; }
         IFollowRepository FollowRepository { get; }
+        INotificationRepository NotificationRepository { get; }
 
         void Save();
 

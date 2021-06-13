@@ -4,14 +4,16 @@ using Collaboration.ShareDocs.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Collaboration.ShareDocs.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210609163708_add Notification Application User")]
+    partial class addNotificationApplicationUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -239,14 +241,14 @@ namespace Collaboration.ShareDocs.Persistence.Migrations
 
             modelBuilder.Entity("Collaboration.ShareDocs.Persistence.Entities.Notification", b =>
                 {
-                    b.Property<Guid>("NotificationId")
+                    b.Property<Guid>("NotificationID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("NotificationId");
+                    b.HasKey("NotificationID");
 
                     b.ToTable("Notifications");
                 });
