@@ -26,7 +26,7 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPost("notificationId")]
         public async Task<IActionResult> ReadNotification(Guid notificationId)
         {
             var result = await this.Mediator.Send(new ReadNotificationCommand() { NotificationId = notificationId});

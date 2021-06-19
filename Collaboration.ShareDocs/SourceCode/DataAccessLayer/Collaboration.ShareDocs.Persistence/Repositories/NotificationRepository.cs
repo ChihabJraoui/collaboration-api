@@ -1,6 +1,7 @@
 ﻿using Collaboration.ShareDocs.Persistence.Entities;
 using Collaboration.ShareDocs.Persistence.Hubs;
 using Collaboration.ShareDocs.Persistence.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -15,14 +16,18 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
     public class NotificationRepository:INotificationRepository
     {
         private readonly AppDbContext _context;
-        private readonly IFollowRepository _followRepository;
         private readonly IHubContext<NotificationHub> _hubContext;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public NotificationRepository(AppDbContext context,IFollowRepository followRepository, IHubContext<NotificationHub> hubContext)
+        public NotificationRepository(AppDbContext context,
+           
+            IHubContext<NotificationHub> hubContext,
+            UserManager<ApplicationUser> userManager)
+            
         {
             _context = context;
-            _followRepository = followRepository;
             _hubContext = hubContext;
+            _userManager = userManager;
         }
 
         public async Task Create(Notification notification, Guid currentUserid,CancellationToken cancellationToken)
@@ -30,17 +35,7 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
             await _context.Notifications.AddAsync(notification);
             //TODO: save changes with unit of work
            //await _context.SaveChangesAsync();
-            //TODO:Aassign notification to the user 
-            var followingUsers = await _followRepository.GetFollowing(currentUserid, cancellationToken);
-            foreach (var following in followingUsers)
-            {
-                var userNotification = new NotificationApplicationUser();
-                userNotification.ApplicationUserId = following.ToString();
-                userNotification.NotificationId = notification.NotificationId;
-
-                await _context.UserNotifications.AddAsync(userNotification);
-                _context.SaveChanges();
-            }
+           
             //todo: add hub
             await _hubContext.Clients.All.SendAsync("displayNotification", cancellationToken);
 
@@ -52,21 +47,59 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
                                                    .Include(n => n.Notification).ToListAsync();
             return response;
         }
-
-        public  bool ReadNotification(Guid notificationId, string userId)
+        //public async Task<Notification> GetUserNotification(Ge userId, CancellationToken cancellationToken)
+        //{
+        //    var response = await _context.UserNotifications.Where(u => u.ApplicationUserId.Equals(userId) && !u.IsRead)
+        //                                           .Include(n => n.Notification).ToListAsync();
+        //    return response;
+        //}
+        public async Task<NotificationApplicationUser> GetNotification( Guid notificationId, string userId)
         {
-            var notification =  _context.UserNotifications
-                                       .FirstOrDefault(n => n.ApplicationUserId.Equals(userId)
+             var notification = await _context.UserNotifications
+                                       .FirstOrDefaultAsync(n => n.ApplicationUserId.Equals(userId) && !n.IsRead
                                        && n.NotificationId == notificationId);
+            return notification;
+        }
+
+        public  bool ReadNotification(NotificationApplicationUser notification)
+        {
+            
             notification.IsRead = true;
              _context.UserNotifications.Update(notification);
              _context.SaveChangesAsync();
             return notification.IsRead;
         }
+        public async Task AssignNotificationToTheUsers(Notification notification,List<Guid> followingUsers , CancellationToken cancellationToken)
+        {
+            //TODO:Aassign notification to the user 
+           
+            if (followingUsers!= null)
+            {
+                foreach (var following in followingUsers)
+                {
+                    var userNotification = new NotificationApplicationUser();
+                    userNotification.ApplicationUserId = following.ToString();
+                    userNotification.NotificationId = notification.NotificationId;
 
-       
+                    await _context.UserNotifications.AddAsync(userNotification);
+                    await _context.SaveChangesAsync();
+                }
+            }
+           
+            
+
+        }
         
-              
-        
+        public async Task AssignNotificationToTheUser(Notification notification,string followedId, CancellationToken cancellationToken)
+        {
+            var userNotification = new NotificationApplicationUser();
+            userNotification.ApplicationUserId = followedId;
+            userNotification.NotificationId = notification.NotificationId;
+
+            await _context.UserNotifications.AddAsync(userNotification);
+            await _context.SaveChangesAsync();
+        }
+
+
     }
 }

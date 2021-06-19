@@ -24,10 +24,13 @@ namespace Collaboration.ShareDocs.Application.Commands.Files
         {
             private readonly IUnitOfWork _unitOfWork;
             private readonly IMapper _mapper;
-            public Handler(IUnitOfWork unitOfWork, IMapper mapper)
+            private readonly ICurrentUserService _currentUserService;
+
+            public Handler(IUnitOfWork unitOfWork, IMapper mapper, ICurrentUserService currentUserService)
             {
                 this._unitOfWork = unitOfWork;
                 _mapper = mapper;
+                _currentUserService = currentUserService;
             }
             public async Task<ApiResponseDetails> Handle(CreateFileCommand request, CancellationToken cancellationToken)
             {
@@ -46,11 +49,23 @@ namespace Collaboration.ShareDocs.Application.Commands.Files
                 };
                 var file = await _unitOfWork.FileRepository.AddAsync(newFile, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+                //
+                
                 var notification = new Notification
                 {
-                    Text = "new file added by someone"
-
+                    Text = "${ _currentUserService.UserId} has shared {file.Id}",
+                    Category = Persistence.Enums.Category.newFile
                 };
+                //followingUsers
+                var followingUsers = await _unitOfWork.FollowRepository.GetFollowing(new Guid(_currentUserService.UserId), cancellationToken);
+                if (followingUsers == null)
+                {
+                    var message = string.Format(Resource.Error_NotFound, _currentUserService.UserId);
+                    return ApiCustomResponse.NotFound(message);
+                }
+                await _unitOfWork.NotificationRepository.Create(notification, new Guid(_currentUserService.UserId), cancellationToken);
+                await _unitOfWork.NotificationRepository.AssignNotificationToTheUsers( notification, followingUsers, cancellationToken);
                 var response = _mapper.Map<FileDto>(file);
                 return ApiCustomResponse.ReturnedObject(response);
 

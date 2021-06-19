@@ -16,6 +16,9 @@ namespace Collaboration.ShareDocs.Persistence.Interfaces
         /// <returns></returns>
         Task<List<NotificationApplicationUser>> GetUserNotifications(string userId, CancellationToken cancellationToken);
         Task Create(Notification notification, Guid id, CancellationToken cancellationToken);
-        bool ReadNotification(Guid notificationId, string userId);
+        bool ReadNotification(NotificationApplicationUser notification);
+        Task AssignNotificationToTheUser(Notification notification,string followedId, CancellationToken cancellationToken);
+        Task AssignNotificationToTheUsers(Notification notification, List<Guid> followingUsers, CancellationToken cancellationToken);
+        Task<NotificationApplicationUser> GetNotification(Guid notificationId, string userId);
     }
 }

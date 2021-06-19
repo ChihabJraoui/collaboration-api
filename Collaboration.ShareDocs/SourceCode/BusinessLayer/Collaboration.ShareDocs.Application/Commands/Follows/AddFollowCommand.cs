@@ -48,6 +48,11 @@ namespace Collaboration.ShareDocs.Application.Commands.Follows
                     var message = string.Format(Resource.Error_NotFound, request.UserId);
                     return ApiCustomResponse.NotFound(message);
                 }
+                if (await _unitOfWork.FollowRepository.IsFollowing(user.Id, _currentUserService.UserId) != null)
+                {
+                    var message = string.Format(Resource.Error_NotValid, request.UserId);
+                    return ApiCustomResponse.NotFound(message);
+                }
 
                 var follow = new Follow()
                 {
@@ -64,11 +69,13 @@ namespace Collaboration.ShareDocs.Application.Commands.Follows
 
                 var notification = new Notification
                 {
-                    Text = "${ _currentUserService.UserId} has followed {user.UserId}"
+                    Text = "${ _currentUserService.UserId} has followed {user.UserId}",
+                    Category = Persistence.Enums.Category.FollowEvent
                 };
                 await _unitOfWork.NotificationRepository.Create(notification, new Guid(_currentUserService.UserId), cancellationToken);
+                await _unitOfWork.NotificationRepository.AssignNotificationToTheUser(notification, user.Id.ToString(), cancellationToken);
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-                
                 return ApiCustomResponse.ReturnedObject(response);
             }
         }

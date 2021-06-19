@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Collaboration.ShareDocs.Application.Common.Response;
 using Collaboration.ShareDocs.Persistence.Interfaces;
+using Collaboration.ShareDocs.Resources;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,18 @@ namespace Collaboration.ShareDocs.Application.Commands.Notifications
             }
             public async Task<ApiResponseDetails> Handle(ReadNotificationCommand request, CancellationToken cancellationToken)
             {
-               var isRead =  _notificationRepository.ReadNotification(request.NotificationId, _currentUserService.UserId);
+               if(request == null)
+                {
+                    var message = string.Format(Resource.Error_NotValid, request.NotificationId);
+                    return ApiCustomResponse.NotFound(message);
+                }
+                var notification = await _notificationRepository.GetNotification(request.NotificationId, _currentUserService.UserId);
+                if (notification == null)
+                {
+                    var message = string.Format(Resource.Error_NotFound, request.NotificationId);
+                    return ApiCustomResponse.NotFound(message);
+                }
+                var isRead =  _notificationRepository.ReadNotification(notification);
 
                 return ApiCustomResponse.ReturnedObject(isRead);
             }

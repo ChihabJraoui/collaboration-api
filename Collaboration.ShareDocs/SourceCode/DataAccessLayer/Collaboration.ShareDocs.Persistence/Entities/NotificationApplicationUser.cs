@@ -12,6 +12,6 @@ namespace Collaboration.ShareDocs.Persistence.Entities
         public string ApplicationUserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
         public bool IsRead { get; set; } = false;
-        public Category Category { get; set; }
+        
     }
 }
