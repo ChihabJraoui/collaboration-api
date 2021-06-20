@@ -60,7 +60,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
                 var notification = new Notification
                 {
-                    Text = $"{ _currentUserService.UserId} has shared {newProject.Label} in the {newProject.Workspace.Name}",
+                    Text = $"{ _currentUserService.UserName} has shared {newProject.Label} in the {newProject.Workspace.Name}",
                     Category = Persistence.Enums.Category.project
                 };
                 //followingUsers

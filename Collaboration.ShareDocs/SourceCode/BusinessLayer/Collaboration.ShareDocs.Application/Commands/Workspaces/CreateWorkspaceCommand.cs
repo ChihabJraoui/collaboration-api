@@ -58,7 +58,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
                 var res = await _unitOfWork.SaveChangesAsync(cancellationToken);
                 var notification = new Notification
                 {
-                    Text = $"{workspace.Name} has created by { _currentUserService.UserId} ",
+                    Text = $"{workspace.Name} has created by { _currentUserService.UserName} ",
                     Category = Persistence.Enums.Category.newFile
                 };
                 //followingUsers

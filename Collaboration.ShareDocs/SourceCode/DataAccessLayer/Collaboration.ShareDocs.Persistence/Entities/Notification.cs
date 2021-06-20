@@ -15,5 +15,6 @@ namespace Collaboration.ShareDocs.Persistence.Entities
         //[JsonIgnore]
         //public virtual List<NotificationApplicationUser> NotificationApplicationUsers { get; set; }
         public Category Category { get; set; }
+        public DateTime Created { get; set; } = DateTime.Now;
     }
 }

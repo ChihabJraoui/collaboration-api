@@ -54,7 +54,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Files
                 
                 var notification = new Notification
                 {
-                    Text = $"{ _currentUserService.UserId} has shared {file.Name}",
+                    Text = $"{ _currentUserService.UserName} has shared {file.Name}",
                     Category = Persistence.Enums.Category.newFile
                 };
                 //followingUsers
