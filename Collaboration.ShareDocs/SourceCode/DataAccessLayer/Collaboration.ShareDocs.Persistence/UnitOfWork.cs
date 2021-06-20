@@ -14,10 +14,10 @@ namespace Collaboration.ShareDocs.Persistence
     {
 
         private readonly AppDbContext _context;
-        private readonly IHubContext<NotificationHub> _hubContext;
+        private readonly IHubContext<NotificationHub,IHubClient> _hubContext;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public UnitOfWork(AppDbContext appDbContext, IHubContext<NotificationHub> hubContext,UserManager<ApplicationUser> userManager)
+        public UnitOfWork(AppDbContext appDbContext, IHubContext<NotificationHub,IHubClient> hubContext,UserManager<ApplicationUser> userManager)
         {
             _context = appDbContext;
             _hubContext = hubContext;

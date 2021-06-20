@@ -15,12 +15,12 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
 {
     public class UserNotificationRepository : GenericRepository<NotificationApplicationUser>, INotificationApplicationUser
     {
-        private readonly IHubContext<NotificationHub> _hubContext;
+        private readonly IHubContext<NotificationHub,IHubClient> _hubContext;
         private readonly AppDbContext _context;
        
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public UserNotificationRepository(AppDbContext context, IHubContext<NotificationHub> hubContext,
+        public UserNotificationRepository(AppDbContext context, IHubContext<NotificationHub,IHubClient> hubContext,
             UserManager<ApplicationUser> userManager) : base(context)
 
         {
@@ -56,7 +56,7 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
             base.Update(notification);
 
 
-            _hubContext.Clients.All.SendAsync("displayNotification");
+            _hubContext.Clients.All.BroadcastMessage();
 
             return notification.IsRead;
         }

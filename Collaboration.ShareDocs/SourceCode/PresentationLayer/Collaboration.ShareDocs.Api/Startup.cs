@@ -113,7 +113,8 @@ namespace Collaboration.ShareDocs.Api
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<NotificationHub>("SignalService");
+                endpoints.MapHub<NotificationHub>("/SignalService");
+                endpoints.MapHub<MessageHub>("/messages");
                 endpoints.MapControllers();
                 
             });

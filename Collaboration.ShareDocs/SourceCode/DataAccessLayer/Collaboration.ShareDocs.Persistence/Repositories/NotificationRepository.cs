@@ -16,12 +16,12 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
     public class NotificationRepository: GenericRepository<Notification>,INotificationRepository
     {
         private readonly AppDbContext _context;
-        private readonly IHubContext<NotificationHub> _hubContext;
+        private readonly IHubContext<NotificationHub,IHubClient> _hubContext;
         private readonly UserManager<ApplicationUser> _userManager;
 
         public NotificationRepository(AppDbContext context,
            
-            IHubContext<NotificationHub> hubContext,
+            IHubContext<NotificationHub,IHubClient> hubContext,
             UserManager<ApplicationUser> userManager) : base(context)
 
         {
@@ -34,10 +34,10 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
         {
             await base.InsertAsync(notification, cancellationToken);
             //TODO: save changes with unit of work
-           
-           
+            await _context.SaveChangesAsync();
+
             //todo: add hub
-            await _hubContext.Clients.All.SendAsync("displayNotification", cancellationToken);
+            await _hubContext.Clients.All.BroadcastMessage();
 
         }
 
