@@ -8,6 +8,7 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 using Collaboration.ShareDocs.Resources;
+using System;
 
 namespace Collaboration.ShareDocs.Application.Commands.Workspaces
 {
@@ -55,7 +56,21 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
 
                 var workspace = await workspaceRepository.CreateAsync(newWorkspace, cancellationToken);
                 var res = await _unitOfWork.SaveChangesAsync(cancellationToken);
-
+                var notification = new Notification
+                {
+                    Text = $"{workspace.Name} has created by { _currentUserService.UserId} ",
+                    Category = Persistence.Enums.Category.newFile
+                };
+                //followingUsers
+                var followingUsers = await _unitOfWork.FollowRepository.GetFollowing(new Guid(_currentUserService.UserId), cancellationToken);
+                if (followingUsers == null)
+                {
+                    var message = string.Format(Resource.Error_NotFound, _currentUserService.UserId);
+                    return ApiCustomResponse.NotFound(message);
+                }
+                await _unitOfWork.NotificationRepository.Create(notification, new Guid(_currentUserService.UserId), cancellationToken);
+                await _unitOfWork.UserNotificationRepository.AssignNotificationToTheUsers(notification, followingUsers, cancellationToken);
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
                 var response = _mapper.Map<WorkspaceDto>(workspace);
                 return ApiCustomResponse.ReturnedObject(response);
             }

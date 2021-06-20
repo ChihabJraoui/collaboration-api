@@ -69,11 +69,11 @@ namespace Collaboration.ShareDocs.Application.Commands.Follows
 
                 var notification = new Notification
                 {
-                    Text = "${ _currentUserService.UserId} has followed {user.UserId}",
+                    Text = $"you had followed by {_currentUserService.UserId}",
                     Category = Persistence.Enums.Category.FollowEvent
                 };
                 await _unitOfWork.NotificationRepository.Create(notification, new Guid(_currentUserService.UserId), cancellationToken);
-                await _unitOfWork.NotificationRepository.AssignNotificationToTheUser(notification, user.Id.ToString(), cancellationToken);
+                await _unitOfWork.UserNotificationRepository.AssignNotificationToTheUser(notification, user.Id.ToString(), cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
 
                 return ApiCustomResponse.ReturnedObject(response);

@@ -54,7 +54,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Files
                 
                 var notification = new Notification
                 {
-                    Text = "${ _currentUserService.UserId} has shared {file.Id}",
+                    Text = $"{ _currentUserService.UserId} has shared {file.Name}",
                     Category = Persistence.Enums.Category.newFile
                 };
                 //followingUsers
@@ -65,7 +65,8 @@ namespace Collaboration.ShareDocs.Application.Commands.Files
                     return ApiCustomResponse.NotFound(message);
                 }
                 await _unitOfWork.NotificationRepository.Create(notification, new Guid(_currentUserService.UserId), cancellationToken);
-                await _unitOfWork.NotificationRepository.AssignNotificationToTheUsers( notification, followingUsers, cancellationToken);
+                await _unitOfWork.UserNotificationRepository.AssignNotificationToTheUsers( notification, followingUsers, cancellationToken);
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
                 var response = _mapper.Map<FileDto>(file);
                 return ApiCustomResponse.ReturnedObject(response);
 

@@ -120,6 +120,18 @@ namespace Collaboration.ShareDocs.Persistence
                 return _notificationRepository;
             }
         }
+        private INotificationApplicationUser _userNotificationRepository;
+        public INotificationApplicationUser UserNotificationRepository
+        {
+            get
+            {
+                if (_userNotificationRepository == null)
+                {
+                    this._userNotificationRepository = new UserNotificationRepository(_context, _hubContext, _userManager);
+                }
+                return _userNotificationRepository;
+            }
+        }
 
         public void Save()
         {

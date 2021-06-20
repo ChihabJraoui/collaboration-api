@@ -23,11 +23,13 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
         public class Handler : IRequestHandler<CreateProjectCommand, ApiResponseDetails>
         {
             private readonly IUnitOfWork _unitOfWork;
+            private readonly ICurrentUserService _currentUserService;
             private readonly IMapper _mapper;
-            public Handler(IUnitOfWork unitOfWork,
+            public Handler(IUnitOfWork unitOfWork,ICurrentUserService currentUserService,
                                          IMapper mapper)
             {
                 this._unitOfWork = unitOfWork;
+                this._currentUserService = currentUserService;
                 _mapper = mapper;
             }
             public async Task<ApiResponseDetails> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
@@ -54,6 +56,22 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
                 };
 
                 await _unitOfWork.ProjectRepository.CreateAsync(newProject, cancellationToken);
+                
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
+                var notification = new Notification
+                {
+                    Text = $"{ _currentUserService.UserId} has shared {newProject.Label} in the {newProject.Workspace.Name}",
+                    Category = Persistence.Enums.Category.project
+                };
+                //followingUsers
+                var followingUsers = await _unitOfWork.FollowRepository.GetFollowing(new Guid(_currentUserService.UserId), cancellationToken);
+                if (followingUsers == null)
+                {
+                    var message = string.Format(Resource.Error_NotFound, _currentUserService.UserId);
+                    return ApiCustomResponse.NotFound(message);
+                }
+                await _unitOfWork.NotificationRepository.Create(notification, new Guid(_currentUserService.UserId), cancellationToken);
+                await _unitOfWork.UserNotificationRepository.AssignNotificationToTheUsers(notification, followingUsers, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
                 var response = _mapper.Map<ProjectDto>(newProject);
                 return ApiCustomResponse.ReturnedObject(response);

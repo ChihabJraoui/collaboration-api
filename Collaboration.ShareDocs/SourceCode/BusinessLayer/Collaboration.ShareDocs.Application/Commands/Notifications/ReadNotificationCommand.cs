@@ -38,13 +38,14 @@ namespace Collaboration.ShareDocs.Application.Commands.Notifications
                     var message = string.Format(Resource.Error_NotValid, request.NotificationId);
                     return ApiCustomResponse.NotFound(message);
                 }
-                var notification = await _notificationRepository.GetNotification(request.NotificationId, _currentUserService.UserId);
+                var notification = await _unitOfWork.UserNotificationRepository.GetNotification(request.NotificationId, _currentUserService.UserId);
                 if (notification == null)
                 {
                     var message = string.Format(Resource.Error_NotFound, request.NotificationId);
                     return ApiCustomResponse.NotFound(message);
                 }
-                var isRead =  _notificationRepository.ReadNotification(notification);
+                var isRead =  _unitOfWork.UserNotificationRepository.ReadNotification(notification);
+                await _unitOfWork.SaveChangesAsync();
 
                 return ApiCustomResponse.ReturnedObject(isRead);
             }
