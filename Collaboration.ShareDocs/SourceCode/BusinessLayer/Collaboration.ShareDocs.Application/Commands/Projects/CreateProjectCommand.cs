@@ -6,6 +6,7 @@ using Collaboration.ShareDocs.Persistence.Entities;
 using Collaboration.ShareDocs.Persistence.Interfaces;
 using Collaboration.ShareDocs.Resources;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -23,12 +24,16 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
         public class Handler : IRequestHandler<CreateProjectCommand, ApiResponseDetails>
         {
             private readonly IUnitOfWork _unitOfWork;
+            private readonly ICurrentUserService _currentUserService;
             private readonly IMapper _mapper;
-            public Handler(IUnitOfWork unitOfWork,
-                                         IMapper mapper)
+            private readonly UserManager<ApplicationUser> _userManager;
+            public Handler(IUnitOfWork unitOfWork,ICurrentUserService currentUserService,
+                                         IMapper mapper, UserManager<ApplicationUser> userManager)
             {
                 this._unitOfWork = unitOfWork;
+                this._currentUserService = currentUserService;
                 _mapper = mapper;
+                _userManager = userManager;
             }
             public async Task<ApiResponseDetails> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
             {
@@ -54,6 +59,23 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
                 };
 
                 await _unitOfWork.ProjectRepository.CreateAsync(newProject, cancellationToken);
+                
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
+                var username = await this._userManager.FindByIdAsync(_currentUserService.UserId);
+                var notification = new Notification
+                {
+                    Text = $"{username.UserName} has shared {newProject.Label} in the {newProject.Workspace.Name}",
+                    Category = Persistence.Enums.Category.project
+                };
+                //followingUsers
+                var followingUsers = await _unitOfWork.FollowRepository.GetFollowing(new Guid(_currentUserService.UserId), cancellationToken);
+                if (followingUsers == null)
+                {
+                    var message = string.Format(Resource.Error_NotFound, _currentUserService.UserId);
+                    return ApiCustomResponse.NotFound(message);
+                }
+                await _unitOfWork.NotificationRepository.Create(notification, new Guid(_currentUserService.UserId), cancellationToken);
+                await _unitOfWork.UserNotificationRepository.AssignNotificationToTheUsers(notification, followingUsers, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
                 var response = _mapper.Map<ProjectDto>(newProject);
                 return ApiCustomResponse.ReturnedObject(response);

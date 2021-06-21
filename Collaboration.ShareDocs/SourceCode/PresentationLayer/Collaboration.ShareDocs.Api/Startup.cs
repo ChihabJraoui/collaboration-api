@@ -25,6 +25,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.AspNetCore.Http.Features;
+using Collaboration.ShareDocs.Persistence.Hubs;
 
 namespace Collaboration.ShareDocs.Api
 {
@@ -74,7 +75,8 @@ namespace Collaboration.ShareDocs.Api
 
             services.AddSwaggerSetup(this.Configuration);
             services.AddHttpContextAccessor();
-           
+            services.AddSignalR();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -90,6 +92,7 @@ namespace Collaboration.ShareDocs.Api
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseCors("AllowAll");
+            
 
             //file section
             app.UseStaticFiles(new StaticFileOptions
@@ -102,9 +105,18 @@ namespace Collaboration.ShareDocs.Api
 
             app.UseSwaggerSetup(this.Configuration);
 
+            //SignalR
+            //app.UseSignalR(route =>
+            //{
+            //    route.MapHub<NotificationHub>("SignalService");
+            //});
+
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<NotificationHub>("/SignalService");
+                endpoints.MapHub<MessageHub>("/messages");
                 endpoints.MapControllers();
+                
             });
         }
     }

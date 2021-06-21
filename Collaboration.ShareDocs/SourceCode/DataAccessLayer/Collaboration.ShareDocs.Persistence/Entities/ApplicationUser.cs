@@ -15,6 +15,7 @@ namespace Collaboration.ShareDocs.Persistence.Entities
         public ICollection<UserProject> Projects { get; set; }
         public ICollection<Follow> Followers { get; set; }
         public ICollection<Follow> Followings{ get; set; }
+        public List<NotificationApplicationUser> NotificationApplicationUsers { get; set; }
 
     }
 }

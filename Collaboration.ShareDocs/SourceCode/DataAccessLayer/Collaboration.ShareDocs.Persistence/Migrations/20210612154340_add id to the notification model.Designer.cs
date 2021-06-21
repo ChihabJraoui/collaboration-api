@@ -4,14 +4,16 @@ using Collaboration.ShareDocs.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Collaboration.ShareDocs.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210612154340_add id to the notification model")]
+    partial class addidtothenotificationmodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -243,12 +245,6 @@ namespace Collaboration.ShareDocs.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Category")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
 
@@ -267,6 +263,9 @@ namespace Collaboration.ShareDocs.Persistence.Migrations
 
                     b.Property<Guid?>("ApplicationUserId1")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsRead")
                         .HasColumnType("bit");
@@ -543,7 +542,7 @@ namespace Collaboration.ShareDocs.Persistence.Migrations
                         .HasForeignKey("ApplicationUserId1");
 
                     b.HasOne("Collaboration.ShareDocs.Persistence.Entities.Notification", "Notification")
-                        .WithMany()
+                        .WithMany("NotificationApplicationUsers")
                         .HasForeignKey("NotificationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -648,6 +647,11 @@ namespace Collaboration.ShareDocs.Persistence.Migrations
                     b.Navigation("Components");
 
                     b.Navigation("Files");
+                });
+
+            modelBuilder.Entity("Collaboration.ShareDocs.Persistence.Entities.Notification", b =>
+                {
+                    b.Navigation("NotificationApplicationUsers");
                 });
 
             modelBuilder.Entity("Collaboration.ShareDocs.Persistence.Entities.Project", b =>

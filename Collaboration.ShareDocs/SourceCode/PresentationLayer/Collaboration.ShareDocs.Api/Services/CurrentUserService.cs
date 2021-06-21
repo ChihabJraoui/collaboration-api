@@ -38,12 +38,21 @@ namespace Collaboration.ShareDocs.Api.Services
             }
             return null;
         }
+       
         public string UserId
         {
             get
             {
                 var userId = GetPrincipipal();
                 return (userId != null ? userId : Guid.Empty).ToString();
+            }
+        }
+        public string UserName
+        {
+            get
+            {
+                var userName = GetPrincipipal();
+                return (userName != null ? userName : UserName).ToString();
             }
         }
         // testi o9ray l message li sift lik

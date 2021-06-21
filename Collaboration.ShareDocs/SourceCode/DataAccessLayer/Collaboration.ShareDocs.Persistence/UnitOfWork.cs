@@ -1,5 +1,9 @@
-﻿using Collaboration.ShareDocs.Persistence.Interfaces;
+﻿using Collaboration.ShareDocs.Persistence.Entities;
+using Collaboration.ShareDocs.Persistence.Hubs;
+using Collaboration.ShareDocs.Persistence.Interfaces;
 using Collaboration.ShareDocs.Persistence.Repositories;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,10 +14,14 @@ namespace Collaboration.ShareDocs.Persistence
     {
 
         private readonly AppDbContext _context;
+        private readonly IHubContext<NotificationHub,IHubClient> _hubContext;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public UnitOfWork(AppDbContext appDbContext)
+        public UnitOfWork(AppDbContext appDbContext, IHubContext<NotificationHub,IHubClient> hubContext,UserManager<ApplicationUser> userManager)
         {
             _context = appDbContext;
+            _hubContext = hubContext;
+            _userManager = userManager;
         }
 
         private IFolderRepository _folderRepository;
@@ -96,6 +104,32 @@ namespace Collaboration.ShareDocs.Persistence
                     this._followRepository = new FollowRepository(_context);
                 }
                 return _followRepository;
+            }
+        }
+        private INotificationRepository _notificationRepository;
+       
+
+        public INotificationRepository NotificationRepository
+        {
+            get
+            {
+                if(_notificationRepository == null)
+                {
+                    this._notificationRepository = new NotificationRepository(_context,_hubContext, _userManager);
+                }
+                return _notificationRepository;
+            }
+        }
+        private INotificationApplicationUser _userNotificationRepository;
+        public INotificationApplicationUser UserNotificationRepository
+        {
+            get
+            {
+                if (_userNotificationRepository == null)
+                {
+                    this._userNotificationRepository = new UserNotificationRepository(_context, _hubContext, _userManager);
+                }
+                return _userNotificationRepository;
             }
         }
 
