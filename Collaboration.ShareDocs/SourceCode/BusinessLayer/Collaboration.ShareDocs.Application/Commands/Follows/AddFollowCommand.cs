@@ -66,10 +66,10 @@ namespace Collaboration.ShareDocs.Application.Commands.Follows
 
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
                 var response = _mapper.Map<FollowDto>(follower);
-
+                var username = await this._userManager.FindByIdAsync(_currentUserService.UserId);
                 var notification = new Notification
                 {
-                    Text = $"you had followed by {_currentUserService.UserName}",
+                    Text = $"you had followed by {username.UserName}",
                     Category = Persistence.Enums.Category.FollowEvent
                 };
                 await _unitOfWork.NotificationRepository.Create(notification, new Guid(_currentUserService.UserId), cancellationToken);

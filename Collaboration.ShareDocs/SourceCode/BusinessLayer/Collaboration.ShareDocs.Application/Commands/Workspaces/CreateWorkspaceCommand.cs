@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Collaboration.ShareDocs.Resources;
 using System;
+using Microsoft.AspNetCore.Identity;
 
 namespace Collaboration.ShareDocs.Application.Commands.Workspaces
 {
@@ -25,8 +26,9 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
             private readonly ICurrentUserService _currentUserService;
             private readonly IMethodesRepository _methodesRepository;
             private readonly IMapper _mapper;
+            private readonly UserManager<ApplicationUser> _userManager;
 
-            public Handler(IUnitOfWork unitOfWork,
+            public Handler(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager,
                                           ICurrentUserService currentUserService,
                                           IMethodesRepository methodesRepository,
                                           IMapper mapper)
@@ -35,6 +37,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
                 this._currentUserService = currentUserService;
                 this._methodesRepository = methodesRepository;
                 _mapper = mapper;
+                _userManager = userManager;
             }
             public async Task<ApiResponseDetails> Handle(CreateWorkspaceCommand request, CancellationToken cancellationToken)
             {
@@ -56,9 +59,10 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
 
                 var workspace = await workspaceRepository.CreateAsync(newWorkspace, cancellationToken);
                 var res = await _unitOfWork.SaveChangesAsync(cancellationToken);
+                var username = await this._userManager.FindByIdAsync(_currentUserService.UserId);
                 var notification = new Notification
                 {
-                    Text = $"{workspace.Name} has created by { _currentUserService.UserName} ",
+                    Text = $"{workspace.Name} has created by { username.UserName} ",
                     Category = Persistence.Enums.Category.newFile
                 };
                 //followingUsers

@@ -5,6 +5,7 @@ using Collaboration.ShareDocs.Persistence.Entities;
 using Collaboration.ShareDocs.Persistence.Interfaces;
 using Collaboration.ShareDocs.Resources;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -25,12 +26,14 @@ namespace Collaboration.ShareDocs.Application.Commands.Files
             private readonly IUnitOfWork _unitOfWork;
             private readonly IMapper _mapper;
             private readonly ICurrentUserService _currentUserService;
+            private readonly UserManager<ApplicationUser> _userManager;
 
-            public Handler(IUnitOfWork unitOfWork, IMapper mapper, ICurrentUserService currentUserService)
+            public Handler(IUnitOfWork unitOfWork, IMapper mapper, ICurrentUserService currentUserService, UserManager<ApplicationUser> userManager)
             {
                 this._unitOfWork = unitOfWork;
                 _mapper = mapper;
                 _currentUserService = currentUserService;
+                _userManager = userManager;
             }
             public async Task<ApiResponseDetails> Handle(CreateFileCommand request, CancellationToken cancellationToken)
             {
@@ -51,10 +54,12 @@ namespace Collaboration.ShareDocs.Application.Commands.Files
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
 
                 //
-                
+                var username = await this._userManager.FindByIdAsync(_currentUserService.UserId);
+
+
                 var notification = new Notification
                 {
-                    Text = $"{ _currentUserService.UserName} has shared {file.Name}",
+                    Text = $"{username.UserName} has shared {file.Name}",
                     Category = Persistence.Enums.Category.newFile
                 };
                 //followingUsers

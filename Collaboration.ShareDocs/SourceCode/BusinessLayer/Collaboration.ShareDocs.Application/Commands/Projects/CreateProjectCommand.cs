@@ -6,6 +6,7 @@ using Collaboration.ShareDocs.Persistence.Entities;
 using Collaboration.ShareDocs.Persistence.Interfaces;
 using Collaboration.ShareDocs.Resources;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -25,12 +26,14 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
             private readonly IUnitOfWork _unitOfWork;
             private readonly ICurrentUserService _currentUserService;
             private readonly IMapper _mapper;
+            private readonly UserManager<ApplicationUser> _userManager;
             public Handler(IUnitOfWork unitOfWork,ICurrentUserService currentUserService,
-                                         IMapper mapper)
+                                         IMapper mapper, UserManager<ApplicationUser> userManager)
             {
                 this._unitOfWork = unitOfWork;
                 this._currentUserService = currentUserService;
                 _mapper = mapper;
+                _userManager = userManager;
             }
             public async Task<ApiResponseDetails> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
             {
@@ -58,9 +61,10 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
                 await _unitOfWork.ProjectRepository.CreateAsync(newProject, cancellationToken);
                 
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
+                var username = await this._userManager.FindByIdAsync(_currentUserService.UserId);
                 var notification = new Notification
                 {
-                    Text = $"{ _currentUserService.UserName} has shared {newProject.Label} in the {newProject.Workspace.Name}",
+                    Text = $"{username.UserName} has shared {newProject.Label} in the {newProject.Workspace.Name}",
                     Category = Persistence.Enums.Category.project
                 };
                 //followingUsers
