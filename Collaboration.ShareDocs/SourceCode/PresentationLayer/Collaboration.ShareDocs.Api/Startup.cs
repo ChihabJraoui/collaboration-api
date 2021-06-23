@@ -41,18 +41,15 @@ namespace Collaboration.ShareDocs.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // CORS
             services.AddCors(options =>
             {
-                options.AddPolicy(name: "AllowAll",
-                    builder =>
-                    {
-                        builder.WithOrigins("http://localhost:5000",
-                                       "https://localhost:4200"
-                                       )
-                                       .AllowAnyHeader()
-                                       .AllowAnyMethod();
-                    });
+                options.AddPolicy("CorsPolicy", builder =>
+                {
+                    builder.AllowAnyMethod().AllowAnyHeader().AllowCredentials().SetIsOriginAllowed(origin => true);
+                });
             });
+
             services.AddWebDependancy();
             services.AddApplicationDependancy(Configuration);
             services
@@ -86,12 +83,15 @@ namespace Collaboration.ShareDocs.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
             app.UseCustomExceptionHandler();
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseCors("AllowAll");
+
+            // CORS
+            app.UseCors("CorsPolicy");
             
 
             //file section
@@ -100,8 +100,6 @@ namespace Collaboration.ShareDocs.Api
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
                 RequestPath = new PathString("/Resources")
             });
-
-
 
             app.UseSwaggerSetup(this.Configuration);
 
