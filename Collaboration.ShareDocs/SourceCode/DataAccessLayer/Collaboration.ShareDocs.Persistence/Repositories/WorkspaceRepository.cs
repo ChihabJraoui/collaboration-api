@@ -19,6 +19,26 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
             _context = context;
         }
 
+        public async Task<List<Workspace>> GetAllAsync(CancellationToken cancellationToken)
+        {
+            return await dbSet.OrderByDescending(n => n.Created).ToListAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get workspace details
+        /// </summary>
+        /// <param name="workspaceId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task<Workspace> GetAsync(Guid workspaceId, CancellationToken cancellationToken)
+        {
+            var query = dbSet.Where(w => w.Id == workspaceId)
+                .Include(w => w.Projects)
+                .OrderBy(n => n.Created);
+
+            return await query.FirstOrDefaultAsync(cancellationToken);
+        }
+
         public async Task<Workspace> CreateAsync(Workspace workspace, CancellationToken cancellationToken)
         {
             var newWorkspace = await InsertAsync(workspace, cancellationToken);
@@ -30,19 +50,6 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
         public bool Delete(Workspace workspace)
         {
             return base.Delete(workspace);
-        }
-
-        public async Task<List<Workspace>> GetAllAsync(CancellationToken cancellationToken)
-        {
-            return await dbSet.OrderByDescending(n => n.Created).ToListAsync(cancellationToken);
-        }
-
-        public async Task<Workspace> GetAsync(Guid workspaceId, CancellationToken cancellationToken)
-        {
-            var query = dbSet.Where(w => w.Id == workspaceId)
-               .Include(w => w.Projects).OrderBy(n => n.Created);
-            var Workspace = await query.FirstOrDefaultAsync(cancellationToken);
-            return Workspace;
         }
 
         public async Task<List<string>> GetByKeyWord(string keyWord, CancellationToken cancellationToken)
@@ -67,6 +74,12 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
             return lastModifiedWorkspace.FirstOrDefault();
         }
 
+        /// <summary>
+        /// Update one workspace
+        /// </summary>
+        /// <param name="workspace"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<Workspace> UpdateAsync(Workspace workspace, CancellationToken cancellationToken)
         {
 
@@ -77,11 +90,11 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
             workspaceData.Image = workspace.Image;
             workspaceData.BookMark = workspace.BookMark;
             workspaceData.IsPrivate = workspace.IsPrivate;
+
             //LastModifiedBy TO DO ?!
             await this._context.SaveChangesAsync(cancellationToken);
 
             return workspaceData;
         }
-
     }
 }

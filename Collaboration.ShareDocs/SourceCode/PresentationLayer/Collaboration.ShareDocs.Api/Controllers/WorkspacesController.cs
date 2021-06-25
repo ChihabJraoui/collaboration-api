@@ -11,8 +11,35 @@ using Collaboration.ShareDocs.Application.Commands.Workspaces.Dto;
 namespace Collaboration.ShareDocs.Api.Controllers
 {
     [Authorize]
+    [Route("api/workspaces")]
     public class WorkspacesController : BaseController
     {
+
+        /// <summary>
+        /// Get many workspaces
+        /// </summary>
+        /// <param name="">GetWorkspacesCommand</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("")]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await this.Mediator.Send(new GetWorkspacesCommand());
+            return FormatResponseToActionResult(result);
+        }
+
+        /// <summary>
+        /// Get Workspace by Id
+        /// </summary>
+        /// <param name="WorkspaceId">GetWorkspaceCommand</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("{workspaceId:Guid}")]
+        public async Task<IActionResult> Get([FromRoute] Guid workspaceId)
+        {
+            var result = await this.Mediator.Send(new GetWorkspaceCommand { WorkspaceId = workspaceId });
+            return FormatResponseToActionResult(result);
+        }
 
         /// <summary>
         /// Create new Workspace
@@ -20,6 +47,7 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// <param name="command"></param>
         /// <returns></returns>
         [HttpPost]
+        [Route("")]
         public async Task<IActionResult> Create(CreateWorkspaceCommand command)
         {
             var result = await this.Mediator.Send(command);
@@ -32,44 +60,24 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// <param name="command"> new </param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IActionResult> Update(UpdateWorkspaceCommand command)
+        [Route("{workspaceId:Guid}")]
+        public async Task<IActionResult> Update([FromRoute] Guid workspaceId, UpdateWorkspaceCommand command)
         {
             var result = await this.Mediator.Send(command);
+
             return FormatResponseToActionResult(result);
         }
+
         /// <summary>
         /// Delete Workspace
         /// </summary>
         /// <param name="command">  </param>
         /// <returns></returns>
         [HttpDelete]
+        [Route("")]
         public async Task<IActionResult> Delete(DeleteWorkspaceCommand command)
         {
             var result = await this.Mediator.Send(command);
-            return FormatResponseToActionResult(result);
-        }
-
-        /// <summary>
-        /// Get Workspace by Id
-        /// </summary>
-        /// <param name="WorkspaceId">GetWorkspaceCommand</param>
-        /// <returns></returns>
-        [HttpGet("id")]
-        public async Task<IActionResult> Get(Guid id)
-        {
-            var result = await this.Mediator.Send(new GetWorkspaceCommand { WorkspaceId = id });
-            return FormatResponseToActionResult(result);
-        }
-
-        /// <summary>
-        /// Get Workspaces
-        /// </summary>
-        /// <param name="">GetWorkspacesCommand</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var result = await this.Mediator.Send(new GetWorkspacesCommand());
             return FormatResponseToActionResult(result);
         }
         /// <summary>
@@ -78,6 +86,7 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// <param name="">GetLastModifiedWorkspace</param>
         /// <returns></returns>
         [HttpGet]
+        [Route("last-modified")]
         public async Task<IActionResult> GetLastModified()
         {
             var result = await this.Mediator.Send(new GetLastModifiedWorkspace());
@@ -89,6 +98,8 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// <param name="">GetLastModifiedWorkspace</param>
         /// <returns></returns>
         [HttpGet]
+
+        [Route("last-created")]
         public async Task<IActionResult> GetLastCreated()
         {
             var result = await this.Mediator.Send(new GetLastCreatedWorkspace());
@@ -99,7 +110,8 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// </summary>
         /// <param name="">GetWorkspaceByKeywordCommand</param>
         /// <returns></returns>
-        [HttpGet("keyword")]
+        [HttpGet]
+        [Route("by-keyword")]
         public async Task<IActionResult> GetByKeyword(string keyword)
         {
             var result = await this.Mediator.Send(new GetWorkspacesByKeyWordCommand() { Keyword = keyword});
@@ -112,6 +124,7 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// <param name="">GetLastModifiedWorkspace</param>
         /// <returns></returns>
         [HttpGet]
+        [Route("count")]
         public async Task<IActionResult> GetCount()
         {
             var result = await this.Mediator.Send(new GetWorkspacesCount());

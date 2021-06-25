@@ -36,6 +36,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
                     var responseEmpty = new List<Workspace>();
                     return ApiCustomResponse.ReturnedObject(responseEmpty);
                 }
+
                 var response = _mapper.Map<List<WorkspaceDto>>(workspaces);
                 return ApiCustomResponse.ReturnedObject(response);
 

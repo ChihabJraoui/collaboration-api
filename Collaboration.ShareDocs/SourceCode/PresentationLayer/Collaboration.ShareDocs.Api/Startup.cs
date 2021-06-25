@@ -42,13 +42,7 @@ namespace Collaboration.ShareDocs.Api
         public void ConfigureServices(IServiceCollection services)
         {
             // CORS
-            services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy", builder =>
-                {
-                    builder.AllowAnyMethod().AllowAnyHeader().AllowCredentials().SetIsOriginAllowed(origin => true);
-                });
-            });
+            services.AddCors();
 
             services.AddWebDependancy();
             services.AddApplicationDependancy(Configuration);
@@ -91,8 +85,12 @@ namespace Collaboration.ShareDocs.Api
             app.UseAuthorization();
 
             // CORS
-            app.UseCors("CorsPolicy");
-            
+            app.UseCors(builder => builder
+            //.WithOrigins("http://localhost:4200")
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+
 
             //file section
             app.UseStaticFiles(new StaticFileOptions
