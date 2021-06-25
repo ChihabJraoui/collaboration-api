@@ -10,6 +10,7 @@ namespace Collaboration.ShareDocs.Persistence.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public bool IsActive { get; set; }
+        public string Image { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public ICollection<UserProject> Projects { get; set; }

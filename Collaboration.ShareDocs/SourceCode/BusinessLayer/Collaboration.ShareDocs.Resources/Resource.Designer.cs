@@ -79,6 +79,15 @@ namespace Collaboration.ShareDocs.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No data found .
+        /// </summary>
+        public static string Error_NoDataFound {
+            get {
+                return ResourceManager.GetString("Error_NoDataFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The  {0} with Id {1} not found.
         /// </summary>
         public static string Error_NotFound {

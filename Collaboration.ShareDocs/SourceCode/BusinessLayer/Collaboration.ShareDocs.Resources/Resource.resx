@@ -123,6 +123,9 @@
   <data name="Error_NameExist" xml:space="preserve">
     <value>The specified Name {0} already exists.</value>
   </data>
+  <data name="Error_NoDataFound" xml:space="preserve">
+    <value>No data found </value>
+  </data>
   <data name="Error_NotFound" xml:space="preserve">
     <value>The  {0} with Id {1} not found</value>
   </data>

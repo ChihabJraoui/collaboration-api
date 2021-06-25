@@ -74,7 +74,8 @@ namespace Collaboration.ShareDocs.Application.Commands.Authentication
                     UserName       = "@"+request.FirstName+request.LastName,
                     FirstName      = request.FirstName,
                     LastName       = request.LastName,
-                    PhoneNumber    = request.PhoneNumber
+                    PhoneNumber    = request.PhoneNumber,
+                    Image = "https://ui-avatars.com/api/?background=random&name="+request.FirstName+"+"+request.LastName
                 };
 
                 var result = await this._userManager.CreateAsync( user, request.Password );

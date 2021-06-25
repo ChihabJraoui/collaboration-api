@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Collaboration.ShareDocs.Application.Commands.Workspaces.Dto;
 using Collaboration.ShareDocs.Application.Common.Response;
+using Collaboration.ShareDocs.Persistence.Entities;
 using Collaboration.ShareDocs.Persistence.Interfaces;
 using Collaboration.ShareDocs.Resources;
 using MediatR;
@@ -29,10 +30,11 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
             public async Task<ApiResponseDetails> Handle(GetWorkspacesCommand request, CancellationToken cancellationToken)
             {
                 var workspaces = await _unitOfWork.WorkspaceRepository.GetAllAsync(cancellationToken);
+
                 if(workspaces.Count == 0)
                 {
-                    var message = string.Format(Resource.Error_NotFound);
-                    return ApiCustomResponse.NotFound(message);
+                    var responseEmpty = new List<Workspace>();
+                    return ApiCustomResponse.ReturnedObject(responseEmpty);
                 }
                 var response = _mapper.Map<List<WorkspaceDto>>(workspaces);
                 return ApiCustomResponse.ReturnedObject(response);
