@@ -20,21 +20,27 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
         {
             private readonly IUnitOfWork _unitOfWork;
             private readonly IMapper _mapper;
+
             public Handler(IUnitOfWork unitOfWork, IMapper mapper)
             {
                 this._unitOfWork = unitOfWork;
                 _mapper = mapper;
             }
+
             public async Task<ApiResponseDetails> Handle(GetProjectsCommandByWorkspaceId request, CancellationToken cancellationToken)
             {
                 var workspace = await _unitOfWork.WorkspaceRepository.GetAsync(request.WorkspaceId, cancellationToken);
+
                 if(workspace == null)
                 {
                     var message = string.Format(Resource.Error_NotFound, request);
                     return ApiCustomResponse.NotFound(message);
                 }
+
                 var projects = await _unitOfWork.ProjectRepository.GetByWorkspaceIdAsync(request.WorkspaceId, cancellationToken);
+
                 var response = _mapper.Map<List<ProjectDto>>(projects);
+
                 return ApiCustomResponse.ReturnedObject(response);
             }
         }
