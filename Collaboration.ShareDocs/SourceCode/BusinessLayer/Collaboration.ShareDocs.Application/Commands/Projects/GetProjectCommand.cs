@@ -40,7 +40,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
                 var project = await _unitOfWork.ProjectRepository.GetAsync(request.ProjectId, cancellationToken);
                 if(project == null)
                 {
-                    var message = string.Format(Resource.Error_NotFound, request.ProjectId);
+                    var message = string.Format(Resource.Error_NotFound,project, request.ProjectId);
                     return ApiCustomResponse.NotFound(message);
                 }
                 var response = _mapper.Map<ProjectDto>(project);

@@ -15,6 +15,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects.Dto
         public string Icon { get; set; }
         public DateTime CreatedAt { get; set; }
         public string CreatedBy { get; set; }
+        public List<ApplicationUser> Users { get; set; }
         public virtual void Mapping(Profile profile)
         {
             profile.CreateMap<Project, ProjectDto>();
