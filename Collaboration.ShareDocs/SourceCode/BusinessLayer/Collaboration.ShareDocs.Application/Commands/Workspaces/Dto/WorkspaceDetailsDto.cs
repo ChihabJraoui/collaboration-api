@@ -7,7 +7,7 @@ using Collaboration.ShareDocs.Application.Commands.Projects.Dto;
 
 namespace Collaboration.ShareDocs.Application.Commands.Workspaces.Dto
 {
-    public class WorkspaceDto : IMapForm<Workspace>
+    public class WorkspaceDetailsDto : IMapForm<Workspace>
     {
         public Guid Id { get; set; }
 
@@ -24,6 +24,8 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces.Dto
         public bool IsPrivate { get; set; }
 
         public DateTime Created { get; set; }
+        
+        public ICollection<ProjectDto> Projects { get; set; }
 
         public virtual void Mapping(Profile profile)
         {

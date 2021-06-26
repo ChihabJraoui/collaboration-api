@@ -7,18 +7,25 @@ using System.Text.Json.Serialization;
 
 namespace Collaboration.ShareDocs.Persistence.Entities
 {
-    public class Workspace:AuditableEntity
+    public class Workspace : AuditableEntity
     {
         public Workspace()
         {
             Projects = new Collection<Project>();
         }
+
         public Guid Id { get; set; }
+
         public string Name { get; set; }
+
         public string Description { get; set; }
+
         public string Image { get; set; }
+
         public string Owner { get; set; }
+
         public bool BookMark { get; set; }
+
         public bool IsPrivate { get; set; }
         [JsonIgnore]
         public virtual ICollection<Project> Projects { get; set; }

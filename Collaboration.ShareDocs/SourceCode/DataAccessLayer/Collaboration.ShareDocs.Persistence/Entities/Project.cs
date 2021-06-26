@@ -7,12 +7,13 @@ using System.Text.Json.Serialization;
 
 namespace Collaboration.ShareDocs.Persistence.Entities
 {
-    public class Project:AuditableEntity
+    public class Project : AuditableEntity
     {
         public Project()
         {
             Folders = new Collection<Folder>();
         }
+
         public Guid Id { get; set; }
         public string Label { get; set; }
         public string Description { get; set; }

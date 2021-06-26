@@ -21,25 +21,25 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
             private readonly IUnitOfWork _unitOfWork;
             private readonly ICurrentUserService _currentUserService;
             private readonly IMapper _mapper;
+
             public Handler(IUnitOfWork unitOfWork,ICurrentUserService currentUserService,IMapper mapper)
             {
                 _unitOfWork = unitOfWork;
                 _currentUserService = currentUserService;
                 _mapper = mapper;
             }
+
             public async Task<ApiResponseDetails> Handle(GetWorkspaceCommand request, CancellationToken cancellationToken)
             {
-                if(request.WorkspaceId == null)
-                {
-                    return ApiCustomResponse.IncompleteRequest();
-                }
-                var workspace =await _unitOfWork.WorkspaceRepository.GetAsync(request.WorkspaceId, cancellationToken);
+                var workspace = await _unitOfWork.WorkspaceRepository.GetAsync(request.WorkspaceId, cancellationToken);
+
                 if (workspace == null)
                 {
                     var message = string.Format(Resource.Error_NotFound, request.WorkspaceId);
                     return ApiCustomResponse.NotFound(message);
                 }
-                var response = _mapper.Map<WorkspaceDto>(workspace);
+
+                var response = _mapper.Map<WorkspaceDetailsDto>(workspace);
                 return ApiCustomResponse.ReturnedObject(response);
             }
         }

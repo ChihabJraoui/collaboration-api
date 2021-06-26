@@ -28,10 +28,11 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
             private readonly IMapper _mapper;
             private readonly UserManager<ApplicationUser> _userManager;
 
-            public Handler(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager,
-                                          ICurrentUserService currentUserService,
-                                          IMethodesRepository methodesRepository,
-                                          IMapper mapper)
+            public Handler(IUnitOfWork unitOfWork,
+                UserManager<ApplicationUser> userManager,
+                ICurrentUserService currentUserService,
+                IMethodesRepository methodesRepository,
+                IMapper mapper)
             {
                 this._unitOfWork = unitOfWork;
                 this._currentUserService = currentUserService;
@@ -39,10 +40,9 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
                 _mapper = mapper;
                 _userManager = userManager;
             }
+
             public async Task<ApiResponseDetails> Handle(CreateWorkspaceCommand request, CancellationToken cancellationToken)
             {
-
-                var workspaceRepository = _unitOfWork.WorkspaceRepository;
                 // R01 Workspace label is unique
                 if (!await _methodesRepository.UniqueName<Workspace>(request.Name, cancellationToken))
                 {
@@ -57,25 +57,33 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
                     Image = request.Image
                 };
 
-                var workspace = await workspaceRepository.CreateAsync(newWorkspace, cancellationToken);
-                var res = await _unitOfWork.SaveChangesAsync(cancellationToken);
-                var username = await this._userManager.FindByIdAsync(_currentUserService.UserId);
+                var workspace = await _unitOfWork.WorkspaceRepository.CreateAsync(newWorkspace, cancellationToken);
+
+                var currentUser = await this._userManager.FindByIdAsync(_currentUserService.UserId);
+
                 var notification = new Notification
                 {
-                    Text = $"{workspace.Name} has created by { username.UserName} ",
+                    Text = $"{workspace.Name} has created by { currentUser.UserName}",
                     Category = Persistence.Enums.Category.newFile
                 };
-                //followingUsers
-                var followingUsers = await _unitOfWork.FollowRepository.GetFollowing(new Guid(_currentUserService.UserId), cancellationToken);
-                if (followingUsers == null)
-                {
-                    var message = string.Format(Resource.Error_NotFound, _currentUserService.UserId);
-                    return ApiCustomResponse.NotFound(message);
-                }
+
+                // Create notification
                 await _unitOfWork.NotificationRepository.Create(notification, new Guid(_currentUserService.UserId), cancellationToken);
-                await _unitOfWork.UserNotificationRepository.AssignNotificationToTheUsers(notification, followingUsers, cancellationToken);
+
+                // Get followers
+                var followingUsers = await _unitOfWork.FollowRepository.GetFollowing(new Guid(_currentUserService.UserId), cancellationToken);
+
+                if (followingUsers.Count > 0)
+                {
+                    // Send notifications to followers
+                    await _unitOfWork.UserNotificationRepository.AssignNotificationToTheUsers(notification, followingUsers, cancellationToken);
+                }
+
+                // Save changes
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
+
                 var response = _mapper.Map<WorkspaceDto>(workspace);
+
                 return ApiCustomResponse.ReturnedObject(response);
             }
         }

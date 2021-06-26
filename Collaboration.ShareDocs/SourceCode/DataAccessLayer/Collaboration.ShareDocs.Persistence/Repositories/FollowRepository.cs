@@ -51,10 +51,10 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<List<Guid>> GetFollowing(Guid userId,CancellationToken cancellationToken)
+        public async Task<List<Guid>> GetFollowing(Guid userId, CancellationToken cancellationToken)
         {
             //userid is the currentuser
-            var result= await dbSet.Where(w => w.Follower.Id == userId).Select(w => w.following.Id).ToListAsync(cancellationToken);
+            var result = await dbSet.Where(w => w.Follower.Id == userId).Select(w => w.following.Id).ToListAsync(cancellationToken);
             return result;
         }
 
