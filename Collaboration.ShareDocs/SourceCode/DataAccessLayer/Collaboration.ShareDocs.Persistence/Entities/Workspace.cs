@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Collaboration.ShareDocs.Persistence.Entities
 {
@@ -19,6 +20,7 @@ namespace Collaboration.ShareDocs.Persistence.Entities
         public string Owner { get; set; }
         public bool BookMark { get; set; }
         public bool IsPrivate { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Project> Projects { get; set; }
 
     }

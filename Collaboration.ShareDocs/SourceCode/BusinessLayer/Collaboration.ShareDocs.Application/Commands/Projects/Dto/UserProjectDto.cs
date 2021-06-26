@@ -7,7 +7,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects.Dto
 {
     public class UserProjectDto
     {
-        public UsersProjectDto UserId { get; set; }
+       
         public UserProfileDto UserProfile { get; set; }
     }
 }

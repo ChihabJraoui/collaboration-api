@@ -32,7 +32,7 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
         public async Task<Project> GetAsync(Guid projectId, CancellationToken cancellationToken)
         {
             var project = await  dbSet.Where(w => w.Id == projectId)
-                .Include(w => w.Folders).Include(x => x.Workspace ).Include(x => x.Users).OrderBy(n => n.Created).SingleOrDefaultAsync(cancellationToken);
+                .Include(x => x.Users).OrderBy(n => n.Created).SingleOrDefaultAsync(cancellationToken);
             return project;
         }
 

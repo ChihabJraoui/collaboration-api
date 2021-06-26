@@ -27,7 +27,6 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
                 {
                     Project = project,
                     User = user,
-
                 };
            
             
