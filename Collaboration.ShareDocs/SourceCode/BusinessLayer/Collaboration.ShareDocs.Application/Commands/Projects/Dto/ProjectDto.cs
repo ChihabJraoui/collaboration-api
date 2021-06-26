@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Collaboration.ShareDocs.Application.Commands.Users.Dto;
 using Collaboration.ShareDocs.Application.Common.Mapping;
 using Collaboration.ShareDocs.Persistence.Entities;
 using System;
@@ -20,7 +21,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects.Dto
         public DateTime CreatedAt { get; set; }
 
         public string CreatedBy { get; set; }
-        public virtual  ICollection<UserProject> Users { get; set; }
+        public virtual  ICollection<UserProfileDto> Users { get; set; }
         public virtual void Mapping(Profile profile)
         {
             profile.CreateMap<Project, ProjectDto>();

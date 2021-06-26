@@ -105,16 +105,6 @@ namespace Collaboration.ShareDocs.Api.Controllers
             return FormatResponseToActionResult(result);
         }
 
-        /// <summary>
-        /// Get Projects By Created User
-        /// </summary>
-        /// <param name="">GetProjectsByCreatedUserCommand</param>
-        /// <returns></returns>
-        [HttpGet("projectId")]
-        public async Task<IActionResult> GetUsersProject(Guid projectId)
-        {
-            var result = await this.Mediator.Send(new GetUsersProjectCommand() { ProjectId = projectId });
-            return FormatResponseToActionResult(result);
-        }
+       
     }
 }

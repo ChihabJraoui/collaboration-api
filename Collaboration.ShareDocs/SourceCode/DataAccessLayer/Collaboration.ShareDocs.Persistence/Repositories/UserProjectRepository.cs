@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Collaboration.ShareDocs.Persistence.Repositories
 {
 
-    public class UserProjectRepository : GenericRepository<UserProject>,IUserProjectRepository
+    public class UserProjectRepository : GenericRepository<UserProject>, IUserProjectRepository
     {
         private readonly AppDbContext _context;
 
@@ -28,25 +28,28 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
                     Project = project,
                     User = user,
                 };
-           
-            
+
+
 
             await dbSet.AddAsync(userProject, cancellationToken);
         }
 
-        public async Task<List<UserProject>> GetUsers( Project project, CancellationToken cancellationToken)
+        public async Task<List<UserProject>> GetUsers(Project project, CancellationToken cancellationToken)
         {
-            return await dbSet.Where(w => w.ProjectId==project.Id).Include(u=>u.User)
+            return await dbSet.Where(w => w.ProjectId == project.Id).Include(u => u.User)
                 .ToListAsync(cancellationToken);
         }
 
         public async Task<UserProject> UserProject(ApplicationUser user, Project project, CancellationToken cancellationToken)
         {
-           var response= await dbSet.Where(w => w.UserId == user.Id && w.ProjectId == project.Id)
-              .SingleOrDefaultAsync(cancellationToken);
+            var response = await dbSet.Where(w => w.UserId == user.Id && w.ProjectId == project.Id)
+               .SingleOrDefaultAsync(cancellationToken);
             return response;
         }
 
-
+        Task<List<ApplicationUser>> IUserProjectRepository.GetUsers(Guid projectId, CancellationToken cancellationToken)
+        {
+            return dbSet.Where(x => x.ProjectId == projectId).Include(u => u.User).Select(x => x.User).ToListAsync(cancellationToken); ;
+        }
     }
 }

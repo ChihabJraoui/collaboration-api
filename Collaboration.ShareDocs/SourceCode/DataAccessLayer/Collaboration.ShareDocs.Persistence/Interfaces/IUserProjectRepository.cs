@@ -9,7 +9,8 @@ namespace Collaboration.ShareDocs.Persistence.Interfaces
 {
     public interface IUserProjectRepository
     {
-        Task<List<UserProject>> GetUsers( Project project, CancellationToken cancellationToken);
+        Task<List<UserProject>> GetUsers(Project project, CancellationToken cancellationToken);
+        Task<List<ApplicationUser>> GetUsers(Guid projectId, CancellationToken cancellationToken);
         Task<UserProject> UserProject(ApplicationUser user, Project project, CancellationToken cancellationToken);
         Task AddMemberToProject(ApplicationUser user, Project project, CancellationToken cancellationToken);
     }
