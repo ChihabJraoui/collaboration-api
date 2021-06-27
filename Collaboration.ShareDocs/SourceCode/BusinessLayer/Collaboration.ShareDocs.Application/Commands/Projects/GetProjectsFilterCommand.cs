@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace Collaboration.ShareDocs.Application.Commands.Projects
 {
-    public class GetProjectsCommandByWorkspaceId:IRequest<ApiResponseDetails>
+    public class GetProjectsFilterCommand : IRequest<ApiResponseDetails>
     {
-        public Guid WorkspaceId { get; set; }
+        public Guid? WorkspaceId { get; set; }
 
-        public class Handler : IRequestHandler<GetProjectsCommandByWorkspaceId, ApiResponseDetails>
+        public class Handler : IRequestHandler<GetProjectsFilterCommand, ApiResponseDetails>
         {
             private readonly IUnitOfWork _unitOfWork;
             private readonly IMapper _mapper;
@@ -27,17 +27,10 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
                 _mapper = mapper;
             }
 
-            public async Task<ApiResponseDetails> Handle(GetProjectsCommandByWorkspaceId request, CancellationToken cancellationToken)
+            public async Task<ApiResponseDetails> Handle(GetProjectsFilterCommand request, CancellationToken cancellationToken)
             {
-                var workspace = await _unitOfWork.WorkspaceRepository.GetAsync(request.WorkspaceId, cancellationToken);
 
-                if(workspace == null)
-                {
-                    var message = string.Format(Resource.Error_NotFound, request);
-                    return ApiCustomResponse.NotFound(message);
-                }
-
-                var projects = await _unitOfWork.ProjectRepository.GetByWorkspaceIdAsync(request.WorkspaceId, cancellationToken);
+                var projects = await _unitOfWork.ProjectRepository.FilterAsync(request.WorkspaceId, cancellationToken);
 
                 var response = _mapper.Map<List<ProjectDto>>(projects);
 
