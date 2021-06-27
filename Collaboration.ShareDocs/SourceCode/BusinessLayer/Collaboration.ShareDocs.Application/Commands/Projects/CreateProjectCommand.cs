@@ -15,10 +15,12 @@ using System.Threading.Tasks;
 
 namespace Collaboration.ShareDocs.Application.Commands.Projects
 {
-    public class CreateProjectCommand:IRequest<ApiResponseDetails>
+    public class CreateProjectCommand : IRequest<ApiResponseDetails>
     {
         public string Label { get; set; }
+
         public string Description { get; set; }
+        
         public Guid WorkspaceId { get; set; }
 
         public class Handler : IRequestHandler<CreateProjectCommand, ApiResponseDetails>
@@ -27,6 +29,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
             private readonly ICurrentUserService _currentUserService;
             private readonly IMapper _mapper;
             private readonly UserManager<ApplicationUser> _userManager;
+
             public Handler(IUnitOfWork unitOfWork,ICurrentUserService currentUserService,
                                          IMapper mapper, UserManager<ApplicationUser> userManager)
             {
@@ -35,6 +38,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
                 _mapper = mapper;
                 _userManager = userManager;
             }
+
             public async Task<ApiResponseDetails> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
             {
                 var workspace = await _unitOfWork.WorkspaceRepository.GetAsync(request.WorkspaceId, cancellationToken);
