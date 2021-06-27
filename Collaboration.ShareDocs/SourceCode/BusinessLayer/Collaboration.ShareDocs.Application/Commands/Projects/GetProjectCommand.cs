@@ -38,6 +38,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
                 {
                     return ApiCustomResponse.IncompleteRequest();
                 }
+
                 var project = await _unitOfWork.ProjectRepository.GetAsync(request.ProjectId, cancellationToken);
                 var users = await _unitOfWork.UserProjectRepository.GetUsers(request.ProjectId, cancellationToken);
 
