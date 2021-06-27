@@ -20,6 +20,25 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
             _context = context;
         }
 
+        /// <summary>
+        /// Get many projects
+        /// (supports filter)
+        /// </summary>
+        /// <param name="workspaceId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task<List<Project>> FilterAsync(Guid? workspaceId, CancellationToken cancellationToken)
+        {
+            var query = dbSet.OrderBy(e => e.Created).AsQueryable();
+
+            if (workspaceId != null)
+            {
+                query = query.Where(w => w.Workspace.Id == workspaceId);
+            }
+
+            return await query.ToListAsync(cancellationToken);
+        }
+
         public async Task<Project> CreateAsync(Project project, CancellationToken cancellationToken)
         {
             var newProject = await base.InsertAsync(project,cancellationToken);
@@ -55,11 +74,6 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
         public async Task<List<string>> GetByKeyWordAsync(string keyWord,CancellationToken cancellationToken)
         {
             return await dbSet.Where(w => w.Label.Contains(keyWord)).Select(x => x.Label).ToListAsync(cancellationToken);
-        }
-
-        public async Task<List<Project>> GetByWorkspaceIdAsync(Guid workspaceId, CancellationToken cancellationToken)
-        {
-            return await dbSet.Where(w => w.Workspace.Id == workspaceId).ToListAsync(cancellationToken);
         }
 
         public async Task<List<Project>> GetByCreatedAsync(Guid userId, CancellationToken cancellationToken)
