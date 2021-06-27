@@ -10,9 +10,9 @@ namespace Collaboration.ShareDocs.Persistence.Configurations
         {
             builder.Property(x => x.Label)
                   .IsRequired()
-                  .HasMaxLength(15);
+                  .HasMaxLength(255);
             builder.Property(x => x.Description)
-                   .HasMaxLength(30);
+                   .HasMaxLength(255);
 
         }
     }

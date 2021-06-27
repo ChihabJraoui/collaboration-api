@@ -132,6 +132,18 @@ namespace Collaboration.ShareDocs.Persistence
                 return _userNotificationRepository;
             }
         }
+        private IUserProjectRepository _userProjectRepository;
+        public IUserProjectRepository UserProjectRepository
+        {
+            get
+            {
+                if (_userProjectRepository == null)
+                {
+                    this._userProjectRepository = new UserProjectRepository(_context);
+                }
+                return _userProjectRepository;
+            }
+        }
 
         public void Save()
         {
