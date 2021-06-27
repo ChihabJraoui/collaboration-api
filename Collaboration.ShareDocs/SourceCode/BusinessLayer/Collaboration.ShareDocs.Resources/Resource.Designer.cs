@@ -70,6 +70,15 @@ namespace Collaboration.ShareDocs.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This object is alerady exist.
+        /// </summary>
+        public static string Error_IsAleradyExist {
+            get {
+                return ResourceManager.GetString("Error_IsAleradyExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The specified Name {0} already exists..
         /// </summary>
         public static string Error_NameExist {

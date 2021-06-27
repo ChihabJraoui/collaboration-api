@@ -41,7 +41,7 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
 
         public async Task<Project> CreateAsync(Project project, CancellationToken cancellationToken)
         {
-            var newProject = await base.InsertAsync(project,cancellationToken);
+            var newProject = await base.InsertAsync(project, cancellationToken);
 
             return newProject.Entity;
         }
@@ -50,8 +50,9 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
 
         public async Task<Project> GetAsync(Guid projectId, CancellationToken cancellationToken)
         {
-            var project = await  dbSet.Where(w => w.Id == projectId)
-                .Include(w => w.Folders).Include(x => x.Workspace).OrderBy(n => n.Created).SingleOrDefaultAsync(cancellationToken);
+            var project = await dbSet.Where(w => w.Id == projectId)
+               .OrderBy(n => n.Created).SingleOrDefaultAsync(cancellationToken);
+
             return project;
         }
 
@@ -71,7 +72,7 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
             await _context.SaveChangesAsync(cancellationToken);
             return project;
         }
-        public async Task<List<string>> GetByKeyWordAsync(string keyWord,CancellationToken cancellationToken)
+        public async Task<List<string>> GetByKeyWordAsync(string keyWord, CancellationToken cancellationToken)
         {
             return await dbSet.Where(w => w.Label.Contains(keyWord)).Select(x => x.Label).ToListAsync(cancellationToken);
         }
@@ -80,5 +81,7 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
         {
             return await dbSet.Where(w => new Guid(w.CreatedBy) == userId).ToListAsync(cancellationToken);
         }
+
+
     }
 }

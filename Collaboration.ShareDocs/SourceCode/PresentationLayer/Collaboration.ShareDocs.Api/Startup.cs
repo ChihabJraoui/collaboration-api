@@ -26,6 +26,8 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.AspNetCore.Http.Features;
 using Collaboration.ShareDocs.Persistence.Hubs;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace Collaboration.ShareDocs.Api
 {
@@ -48,7 +50,13 @@ namespace Collaboration.ShareDocs.Api
             services.AddApplicationDependancy(Configuration);
             services
                 .AddControllersWithViews()
-                .AddNewtonsoftJson()
+                .AddNewtonsoftJson(options =>
+                {
+                    // Use the default property (Pascal) casing
+
+                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                })
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<GetUserCommand>());
             // Customise default API behaviour
             services.Configure<ApiBehaviorOptions>(options =>

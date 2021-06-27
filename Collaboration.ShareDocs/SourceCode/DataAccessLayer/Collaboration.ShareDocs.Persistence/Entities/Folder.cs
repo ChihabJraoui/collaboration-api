@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Collaboration.ShareDocs.Persistence.Entities
 {
@@ -15,7 +16,9 @@ namespace Collaboration.ShareDocs.Persistence.Entities
             Files = new Collection<File>();
         }
         public List<Folder> Components { get; set; }
+        [JsonIgnore]
         public virtual Project Project { get; set; }
+        [JsonIgnore]
         public virtual ICollection<File> Files { get; set; }
 
     }

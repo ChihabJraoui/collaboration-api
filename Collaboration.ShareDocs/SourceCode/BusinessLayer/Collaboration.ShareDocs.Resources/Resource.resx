@@ -120,6 +120,9 @@
   <data name="Error_EmailNotConfirmed" xml:space="preserve">
     <value>Email {0}is not confirmed</value>
   </data>
+  <data name="Error_IsAleradyExist" xml:space="preserve">
+    <value>This object is alerady exist</value>
+  </data>
   <data name="Error_NameExist" xml:space="preserve">
     <value>The specified Name {0} already exists.</value>
   </data>

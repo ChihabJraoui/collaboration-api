@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Collaboration.ShareDocs.Application.Commands.Projects.Dto;
+using Collaboration.ShareDocs.Application.Commands.Users.Dto;
 using Collaboration.ShareDocs.Application.Common.Response;
 using Collaboration.ShareDocs.Persistence.Interfaces;
 using Collaboration.ShareDocs.Resources;
@@ -38,12 +39,16 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
                     return ApiCustomResponse.IncompleteRequest();
                 }
                 var project = await _unitOfWork.ProjectRepository.GetAsync(request.ProjectId, cancellationToken);
-                if(project == null)
+                var users = await _unitOfWork.UserProjectRepository.GetUsers(request.ProjectId, cancellationToken);
+
+                if (project == null)
                 {
-                    var message = string.Format(Resource.Error_NotFound, request.ProjectId);
+                    var message = string.Format(Resource.Error_NotFound,project, request.ProjectId);
                     return ApiCustomResponse.NotFound(message);
                 }
-                var response = _mapper.Map<ProjectDto>(project);
+                var response = _mapper.Map<ProjectDto>(project); 
+                response.Users = _mapper.Map<ICollection<UserProfileDto>>(users); 
+
                 return ApiCustomResponse.ReturnedObject(response);
 
 

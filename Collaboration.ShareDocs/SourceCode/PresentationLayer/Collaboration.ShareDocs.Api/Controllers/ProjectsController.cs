@@ -1,4 +1,5 @@
 ﻿using Collaboration.ShareDocs.Application.Commands.Projects;
+using Collaboration.ShareDocs.Application.Commands.Users;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -99,5 +100,20 @@ namespace Collaboration.ShareDocs.Api.Controllers
             var result = await this.Mediator.Send(new GetProjectsByCreatedUserCommand() { UserId = userId });
             return FormatResponseToActionResult(result);
         }
+
+
+        /// <summary>
+        /// Get Projects By Created User
+        /// </summary>
+        /// <param name="">GetProjectsByCreatedUserCommand</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> AddUsersToProject(AddUserToProject command)
+        {
+            var result = await this.Mediator.Send(command);
+            return FormatResponseToActionResult(result);
+        }
+
+       
     }
 }
