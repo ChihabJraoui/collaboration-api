@@ -29,7 +29,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces.Dto
 
         public virtual void Mapping(Profile profile)
         {
-            profile.CreateMap<Workspace, WorkspaceDto>();
+            profile.CreateMap<Workspace, WorkspaceDetailsDto>();
         }
     }
 }
