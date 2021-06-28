@@ -15,6 +15,7 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// <param name="command"></param>
         /// <returns></returns>
         [HttpPost]
+        [Route("")]
         public async Task<IActionResult> Create(AddFollowCommand command)
         {
             var result = await this.Mediator.Send(command);
@@ -25,7 +26,8 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpGet("userId")]
+        [HttpGet]
+        [Route("isFollowing{userId:Guid}")]
         public async Task<IActionResult> IsFollowing(Guid userId)
         {
             var result = await this.Mediator.Send(new IsFollowingCommand() {UserId=userId } );
@@ -36,7 +38,8 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpDelete("followingId")]
+        [HttpDelete]
+        [Route("{followingId:Guid}")]
         public async Task<IActionResult> Unfollow(Guid followingId)
         {
             var result = await this.Mediator.Send(new UnfollowCommand() { FollowingId= followingId });
@@ -47,7 +50,8 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpGet("user")]
+        [HttpGet]
+        [Route("{userId:Guid}")]
         public async Task<IActionResult> Followers(Guid userId)
         {
             var result = await this.Mediator.Send(new GetFollowingCommand { UserId = userId});

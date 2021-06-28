@@ -108,6 +108,7 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// <param name="">GetProjectsByCreatedUserCommand</param>
         /// <returns></returns>
         [HttpPost]
+        [Route("addUsers")]
         public async Task<IActionResult> AddUsersToProject(AddUserToProject command)
         {
             var result = await this.Mediator.Send(command);

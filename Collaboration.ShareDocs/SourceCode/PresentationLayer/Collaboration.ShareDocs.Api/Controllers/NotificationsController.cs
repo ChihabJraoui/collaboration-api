@@ -15,6 +15,7 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// <param name="command"></param>
         /// <returns></returns>
         [HttpGet]
+        [Route("")]
         public async Task<IActionResult> GetNotifications()
         {
             var result = await this.Mediator.Send(new GetNotificationCommand());
@@ -26,7 +27,8 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpPost("notificationId")]
+        [HttpPost]
+        [Route("{notificationId:Guid}")]
         public async Task<IActionResult> ReadNotification(Guid notificationId)
         {
             var result = await this.Mediator.Send(new ReadNotificationCommand() { NotificationId = notificationId});
