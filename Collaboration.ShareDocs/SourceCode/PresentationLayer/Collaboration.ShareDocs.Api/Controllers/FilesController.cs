@@ -1,4 +1,5 @@
 ﻿using Collaboration.ShareDocs.Application.Commands.Files;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,8 @@ using System.Threading.Tasks;
 
 namespace Collaboration.ShareDocs.Api.Controllers
 {
+    [Authorize]
+    [Route("api/files")]
     public class FilesController:BaseController
     {
         /// <summary>

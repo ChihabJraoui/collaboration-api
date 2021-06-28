@@ -1,4 +1,5 @@
 ﻿using Collaboration.ShareDocs.Application.Commands.Follows;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace Collaboration.ShareDocs.Api.Controllers
 {
+    [Authorize]
+    [Route("api/follows")]
     public class FollowsController:BaseController
     {
         /// <summary>
