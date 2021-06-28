@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Collaboration.ShareDocs.Api.Controllers
 {
+
     [Route("api/projects")]
     public class ProjectsController:BaseController
     {
@@ -108,6 +109,7 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// <param name="">GetProjectsByCreatedUserCommand</param>
         /// <returns></returns>
         [HttpPost]
+        [Route("addUsers")]
         public async Task<IActionResult> AddUsersToProject(AddUserToProject command)
         {
             var result = await this.Mediator.Send(command);

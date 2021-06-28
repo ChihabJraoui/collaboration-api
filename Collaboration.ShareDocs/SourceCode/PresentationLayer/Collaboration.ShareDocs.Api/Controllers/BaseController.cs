@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Collaboration.ShareDocs.Api.Controllers
 {
 
-    [ApiController, Route("api/[controller]/[action]")]
+    [ApiController, Route("api/[controller]")]
     public abstract class BaseController : ControllerBase
     {
         private IMediator _mediator;

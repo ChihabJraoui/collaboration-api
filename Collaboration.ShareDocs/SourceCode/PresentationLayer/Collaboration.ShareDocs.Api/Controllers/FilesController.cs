@@ -1,4 +1,5 @@
 ﻿using Collaboration.ShareDocs.Application.Commands.Files;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,8 @@ using System.Threading.Tasks;
 
 namespace Collaboration.ShareDocs.Api.Controllers
 {
+    [Authorize]
+    [Route("api/files")]
     public class FilesController:BaseController
     {
         /// <summary>
@@ -18,12 +21,14 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// <param name="command"></param>
         /// <returns></returns>
         [HttpPost]
+        [Route("")]
         public async Task<IActionResult> Create(CreateFileCommand command)
         {
             var result = await this.Mediator.Send(command);
             return FormatResponseToActionResult(result);
         }
         [HttpPost]
+        [Route("upload")]
         public async Task<IActionResult> UploadFile()
         {
 
@@ -62,7 +67,8 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// </summary>
         /// <param name="FolderId">GetFilesByFolderId</param>
         /// <returns></returns>
-        [HttpGet("id")]
+        [HttpGet]
+        [Route("{id:Guid}")]
         public async Task<IActionResult> GetByProjectId(Guid id)
         {
             var result = await this.Mediator.Send(new GetFilesByFolderId { FolderParentId = id });
@@ -70,19 +76,22 @@ namespace Collaboration.ShareDocs.Api.Controllers
         }
 
 
-        [HttpGet("userId")]
+        [HttpGet]
+        [Route("{userId:Guid}")]
         public async Task<IActionResult> GetByCreatedBy(Guid userId)
         {
             var result = await this.Mediator.Send(new GetFilesCreatedBy { UserId = userId });
             return FormatResponseToActionResult(result);
         }
         [HttpGet]
+        [Route("")]
         public async Task<IActionResult> GetfollowingFiles()
         {
             var result = await this.Mediator.Send(new GetFollowingFiles());
             return FormatResponseToActionResult(result);
         }
         [HttpGet]
+        [Route("{filePath}/{fileName}")]
         public ActionResult DownloadDocument(string filePath,string fileName)
         {
 

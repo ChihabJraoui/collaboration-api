@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Collaboration.ShareDocs.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/authentication")]
     public class AuthenticationController : BaseController
     {
         [
