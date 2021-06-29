@@ -22,9 +22,9 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] string? keyword )
         {
-            var result = await this.Mediator.Send(new GetWorkspacesCommand());
+            var result = await this.Mediator.Send(new GetWorkspacesCommand {Keyword = keyword });
             return FormatResponseToActionResult(result);
         }
 
@@ -63,6 +63,7 @@ namespace Collaboration.ShareDocs.Api.Controllers
         [Route("{workspaceId:Guid}")]
         public async Task<IActionResult> Update([FromRoute] Guid workspaceId, UpdateWorkspaceCommand command)
         {
+            command.WorkspaceId = workspaceId;
             var result = await this.Mediator.Send(command);
 
             return FormatResponseToActionResult(result);
@@ -74,10 +75,10 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// <param name="command">  </param>
         /// <returns></returns>
         [HttpDelete]
-        [Route("")]
-        public async Task<IActionResult> Delete(DeleteWorkspaceCommand command)
+        [Route("{workspaceId:Guid}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid workspaceId)
         {
-            var result = await this.Mediator.Send(command);
+            var result = await this.Mediator.Send(new DeleteWorkspaceCommand { WorkspaceId = workspaceId});
             return FormatResponseToActionResult(result);
         }
         /// <summary>
@@ -105,18 +106,7 @@ namespace Collaboration.ShareDocs.Api.Controllers
             var result = await this.Mediator.Send(new GetLastCreatedWorkspace());
             return FormatResponseToActionResult(result);
         }
-        /// <summary>
-        /// Get Workspace By keyword
-        /// </summary>
-        /// <param name="">GetWorkspaceByKeywordCommand</param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("by-keyword")]
-        public async Task<IActionResult> GetByKeyword(string keyword)
-        {
-            var result = await this.Mediator.Send(new GetWorkspacesByKeyWordCommand() { Keyword = keyword});
-            return FormatResponseToActionResult(result);
-        }
+       
 
         /// <summary>
         /// Get Number of workspaces

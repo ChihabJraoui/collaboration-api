@@ -24,6 +24,11 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
             return await dbSet.OrderByDescending(n => n.Created).ToListAsync(cancellationToken);
         }
 
+        public async Task<List<Workspace>> GetByKeyWord(string keyWord, CancellationToken cancellationToken)
+        {
+            return await dbSet.Where(w => w.Name.Contains(keyWord)).ToListAsync(cancellationToken);
+        }
+
         /// <summary>
         /// Get workspace details
         /// </summary>
@@ -50,11 +55,6 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
         public bool Delete(Workspace workspace)
         {
             return base.Delete(workspace);
-        }
-
-        public async Task<List<string>> GetByKeyWord(string keyWord, CancellationToken cancellationToken)
-        {
-            return await dbSet.Where(w => w.Name.Contains(keyWord)).Select(x => x.Name).ToListAsync(cancellationToken);
         }
 
         public async Task<int> GetCount(CancellationToken cancellationToken)
