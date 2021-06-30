@@ -116,6 +116,19 @@ namespace Collaboration.ShareDocs.Api.Controllers
             return FormatResponseToActionResult(result);
         }
 
-       
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("getUsers/{projectId:Guid}")]
+        public async Task<IActionResult> GetUsers([FromRoute]Guid projectId)
+        {
+            var result = await this.Mediator.Send(new GetUsersNotBelongsToProject { ProjectId = projectId});
+            return FormatResponseToActionResult(result);
+        }
+
+
     }
 }
