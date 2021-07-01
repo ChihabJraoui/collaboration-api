@@ -74,10 +74,10 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// <param name="command">  </param>
         /// <returns></returns>
         [HttpDelete]
-        [Route("")]
-        public async Task<IActionResult> Delete(DeleteWorkspaceCommand command)
+        [Route("{workspaceId:Guid}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid workspaceId)
         {
-            var result = await this.Mediator.Send(command);
+            var result = await this.Mediator.Send(new DeleteWorkspaceCommand { WorkspaceId = workspaceId });
             return FormatResponseToActionResult(result);
         }
         /// <summary>
