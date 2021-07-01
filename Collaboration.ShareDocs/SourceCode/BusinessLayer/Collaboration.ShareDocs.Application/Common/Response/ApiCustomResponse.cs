@@ -74,7 +74,31 @@ namespace Collaboration.ShareDocs.Application.Common.Response
                 }).ToList()
             };
         }
-         
+
+        public static ApiResponseDetails ExestingMultiple(Guid[] exestingUsers,
+            int idsCount, bool internalError = false)
+        {
+            if (exestingUsers.Length == idsCount)
+            {
+                return new ApiResponseDetails
+                {
+                    StatusCode = (int)HttpStatusCode.AlreadyReported,
+                    StatusName = HttpStatusCode.AlreadyReported.ToString(),
+                    Message = ""
+                };
+            }
+
+           
+            var statusCode = internalError ? HttpStatusCode.InternalServerError : HttpStatusCode.BadRequest;
+            return new ApiResponseDetails
+            {
+                StatusCode = (int)statusCode,
+                StatusName = statusCode.ToString(),
+                
+                
+            };
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -135,6 +159,18 @@ namespace Collaboration.ShareDocs.Application.Common.Response
                 StatusName = HttpStatusCode.BadRequest.ToString(),
                 Message = "Validation Errors",
                 Errors = errors
+            };
+
+            return responseDetails;
+        }
+        public static ApiResponseDetails ExestingError(string message)
+        {
+            var responseDetails = new ApiResponseDetails
+            {
+                StatusCode = (int)HttpStatusCode.AlreadyReported,
+                StatusName = HttpStatusCode.AlreadyReported.ToString(),
+                Message = message,
+                 
             };
 
             return responseDetails;

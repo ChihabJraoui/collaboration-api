@@ -15,21 +15,32 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
 {
     public class GetWorkspacesCommand:IRequest<ApiResponseDetails>
     {
-
+        public string Keyword { get; set; } 
         public class Handler : IRequestHandler<GetWorkspacesCommand, ApiResponseDetails>
         {
             private readonly IUnitOfWork _unitOfWork;
             private readonly ICurrentUserService _currentUserService;
             private readonly IMapper _mapper;
+
             public Handler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService, IMapper mapper)
             {
                 _unitOfWork = unitOfWork;
                 _currentUserService = currentUserService;
                 _mapper = mapper;
             }
+
             public async Task<ApiResponseDetails> Handle(GetWorkspacesCommand request, CancellationToken cancellationToken)
             {
-                var workspaces = await _unitOfWork.WorkspaceRepository.GetAllAsync(cancellationToken);
+                var workspaces =new List<Workspace>();
+                if(request.Keyword==null)
+                {
+                    workspaces = await _unitOfWork.WorkspaceRepository.GetAllAsync(cancellationToken);
+                }
+                else
+                {
+                    workspaces = await _unitOfWork.WorkspaceRepository.GetByKeyWord(request.Keyword,cancellationToken);
+                }
+                 
 
                 if(workspaces.Count == 0)
                 {
