@@ -55,7 +55,13 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
 
         public async Task<Folder> GetAsync(Guid id, CancellationToken cancellationToken)
         {
-            var Folder = await dbSet.Where(w => w.FolderId == id).Include(y => y.Parent).SingleOrDefaultAsync();
+            var Folder = await dbSet.Where(w => w.FolderId == id).Include(y => y.Parent).Include(y => y.Files).SingleOrDefaultAsync();
+
+            return Folder;
+        }
+        public async Task<List<Folder>> GetManyAsync(Guid id, CancellationToken cancellationToken)
+        {
+            var Folder = await dbSet.Where(w => w.FolderId == id || w.CreatedBy == id.ToString()).Include(y=>y.Files).ToListAsync();
 
             return Folder;
         }

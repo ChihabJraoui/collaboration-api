@@ -11,6 +11,9 @@ namespace Collaboration.ShareDocs.Application.Commands.Folders.Dto
     {
         public Guid FolderId { get; set; }
         public string Name { get; set; }
+        public  ICollection<File> Files { get; set; }
+        public DateTime Created { get; set; }
+        public string  CreatedBy { get; set; }
         //TODO add FolderId prop
         public virtual void Mapping(Profile profile)
         {

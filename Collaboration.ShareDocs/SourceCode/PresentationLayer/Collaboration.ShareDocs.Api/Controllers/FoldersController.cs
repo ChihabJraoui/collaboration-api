@@ -55,8 +55,8 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// <param name="FolderId">GetFolderCommand</param>
         /// <returns></returns>
         [HttpGet]
-        [Route("{folderid:Guid}")]
-        public async Task<IActionResult> Get(Guid folderid)
+        [Route("")]
+        public async Task<IActionResult> Get([FromQuery] Guid folderid)
         {
             var result = await this.Mediator.Send(new GetFolderCommand { FolderId = folderid });
             return FormatResponseToActionResult(result);
@@ -68,23 +68,12 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// <param name="FolderId">GetFolderCommand</param>
         /// <returns></returns>
         [HttpGet]
-        [Route("{projectid:Guid}")]
-        public async Task<IActionResult> GetByProjectId(Guid projectid)
+        [Route("filter")]
+        public async Task<IActionResult> GetByFilter([FromQuery] Guid id)
         {
-            var result = await this.Mediator.Send(new GetFoldersByProjectId { ProjectId = projectid });
+            var result = await this.Mediator.Send(new GetFolderFilterCommand { Proprety = id });
             return FormatResponseToActionResult(result);
         }
-        /// <summary>
-        /// Get Folder by UserId
-        /// </summary>
-        /// <param name="UserId">GetFolderByUserIdCommand</param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("{userid:Guid}")]
-        public async Task<IActionResult> GetByUserId(Guid userid)
-        {
-            var result = await this.Mediator.Send(new GetFoldersByCreatedUserCommand { UserId = userid });
-            return FormatResponseToActionResult(result);
-        }
+        
     }
 }
