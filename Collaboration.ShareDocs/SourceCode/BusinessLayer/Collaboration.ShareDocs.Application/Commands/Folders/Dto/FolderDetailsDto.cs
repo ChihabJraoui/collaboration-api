@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Collaboration.ShareDocs.Application.Commands.Folders.Dto
 {
-    public class FolderDto: IMapForm<Folder>
+    public class FolderDetailsDto: IMapForm<Folder>
     {
         public Guid FolderId { get; set; }
 
@@ -17,10 +17,12 @@ namespace Collaboration.ShareDocs.Application.Commands.Folders.Dto
 
         public string  CreatedBy { get; set; }
 
+        public ICollection<File> Files { get; set; }
+
         //TODO add FolderId prop
         public virtual void Mapping(Profile profile)
         {
-            profile.CreateMap<Folder, FolderDto>();
+            profile.CreateMap<Folder, FolderDetailsDto>();
         }
     }
 }
