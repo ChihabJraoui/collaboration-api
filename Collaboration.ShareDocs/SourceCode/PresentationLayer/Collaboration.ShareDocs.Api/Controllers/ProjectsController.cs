@@ -18,9 +18,22 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("")]
-        public async Task<IActionResult> GetByWorkspaceId([FromQuery] GetProjectsFilterCommand command)
+        public async Task<IActionResult> GetManyProjects([FromQuery] GetProjectsFilterCommand command)
         {
             var result = await this.Mediator.Send(command);
+            return FormatResponseToActionResult(result);
+        }
+
+        /// <summary>
+        /// Get Project by Id
+        /// </summary>
+        /// <param name="ProjectId">GetProjectCommand</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("{projectId:Guid}")]
+        public async Task<IActionResult> GetProjectDetails([FromRoute] Guid projectId)
+        {
+            var result = await this.Mediator.Send(new GetProjectCommand { ProjectId = projectId });
             return FormatResponseToActionResult(result);
         }
 
@@ -47,19 +60,6 @@ namespace Collaboration.ShareDocs.Api.Controllers
         public async Task<IActionResult> Update([FromRoute] Guid projectId, UpdateProjectCommand command)
         {
             var result = await this.Mediator.Send(command);
-            return FormatResponseToActionResult(result);
-        }
-
-        /// <summary>
-        /// Get Project by Id
-        /// </summary>
-        /// <param name="ProjectId">GetProjectCommand</param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("{projectId:Guid}")]
-        public async Task<IActionResult> Get([FromRoute] Guid projectId)
-        {
-            var result = await this.Mediator.Send(new GetProjectCommand { ProjectId = projectId });
             return FormatResponseToActionResult(result);
         }
 
