@@ -63,15 +63,20 @@ namespace Collaboration.ShareDocs.Application.Commands.Files
                     Category = Persistence.Enums.Category.newFile
                 };
                 //followingUsers
-                var followingUsers = await _unitOfWork.FollowRepository.GetFollowing(new Guid(_currentUserService.UserId), cancellationToken);
+                var followingUsers = await _unitOfWork.FollowRepository.GetFollowings(new Guid(_currentUserService.UserId), cancellationToken);
+                
                 if (followingUsers == null)
                 {
                     var message = string.Format(Resource.Error_NotFound, _currentUserService.UserId);
                     return ApiCustomResponse.NotFound(message);
                 }
+
                 await _unitOfWork.NotificationRepository.Create(notification, new Guid(_currentUserService.UserId), cancellationToken);
-                await _unitOfWork.UserNotificationRepository.AssignNotificationToTheUsers( notification, followingUsers, cancellationToken);
+
+                //await _unitOfWork.UserNotificationRepository.AssignNotificationToTheUsers( notification, followingUsers, cancellationToken);
+
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
+                
                 var response = _mapper.Map<FileDto>(file);
                 return ApiCustomResponse.ReturnedObject(response);
 

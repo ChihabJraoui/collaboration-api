@@ -23,6 +23,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Files
             private readonly ICurrentUserService _currentUserService;
             private readonly IMapper _mapper;
             private readonly UserManager<ApplicationUser> _userManager;
+
             public Handler(
                 IUnitOfWork unitOfWork,
                 UserManager<ApplicationUser> userManager,
@@ -35,21 +36,21 @@ namespace Collaboration.ShareDocs.Application.Commands.Files
                 _mapper = mapper;
                 this._userManager = userManager;
             }
+            
             public async Task<ApiResponseDetails> Handle(GetFollowingFiles request, CancellationToken cancellationToken)
             {
                 var timeLines = new List<TimeLineDto>();
                 var filesList = new List<File>();
                 var profiles = new List<ApplicationUser>();
-                var followings = await _unitOfWork.FollowRepository.GetFollowing(new Guid(_currentUserService.UserId), cancellationToken);
+                var followings = await _unitOfWork.FollowRepository.GetFollowings(new Guid(_currentUserService.UserId), cancellationToken);
 
-                foreach (var followingId in followings)
+                foreach (var following in followings)
                 {
-
-                    var profile = await _userManager.FindByIdAsync(followingId.ToString());
+                    var profile = await _userManager.FindByIdAsync(following.Id.ToString());
                     var userProfileDto = _mapper.Map<UserProfileDto>(profile);
 
+                    var files = await _unitOfWork.FileRepository.GetByCreatedByAsync(following.Id, cancellationToken);
 
-                    var files = await _unitOfWork.FileRepository.GetByCreatedByAsync(followingId, cancellationToken);
                     var filesDto = _mapper.Map<List<FileDto>>(files); 
 
                     foreach (var item in filesDto)

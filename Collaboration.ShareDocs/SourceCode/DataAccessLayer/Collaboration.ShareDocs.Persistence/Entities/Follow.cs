@@ -5,20 +5,33 @@ using System.Text;
 namespace Collaboration.ShareDocs.Persistence.Entities
 {
     public class Follow
-    { 
-        public Guid FollowerId { get; set; }
-        public ApplicationUser Follower { get; set; }
-
+    {
+        /// <summary>
+        /// User ID
+        /// </summary>
         public Guid FollowingId { get; set; }
-        public ApplicationUser following { get; set; }
 
+        /// <summary>
+        /// User
+        /// </summary>
+        public ApplicationUser Following { get; set; }
+
+        /// <summary>
+        /// Follower ID
+        /// </summary>
+        public Guid FollowerId { get; set; }
+
+        /// <summary>
+        /// Follower
+        /// </summary>
+        public ApplicationUser Follower { get; set; }
 
         public Follow(Guid followerId, Guid followingId)
         {
             FollowerId = followerId;
             FollowingId = followingId;
-            
         }
+
         public Follow()
         {
 

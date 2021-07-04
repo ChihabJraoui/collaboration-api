@@ -12,15 +12,15 @@ namespace Collaboration.ShareDocs.Persistence.Configurations
             modelBuilder.HasKey(bc => new { bc.FollowerId, bc.FollowingId });
 
 
-            modelBuilder.HasOne(bc => bc.Follower)
-                        .WithMany(c => c.Followers)
-                        .HasForeignKey(bc => bc.FollowerId)
-                        .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.HasOne(e => e.Follower)
+                .WithMany(user => user.Followings)
+                .HasForeignKey(e => e.FollowerId)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.HasOne(bc => bc.following)
-                                  .WithMany(c => c.Followings)
-                                  .HasForeignKey(bc => bc.FollowingId)
-                                  .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.HasOne(e => e.Following)
+                .WithMany(user => user.Follows)
+                .HasForeignKey(e => e.FollowingId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

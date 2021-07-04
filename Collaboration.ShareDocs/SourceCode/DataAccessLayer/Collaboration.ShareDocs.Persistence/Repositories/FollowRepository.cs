@@ -10,13 +10,32 @@ using System.Threading.Tasks;
 
 namespace Collaboration.ShareDocs.Persistence.Repositories
 {
-    public class FollowRepository : GenericRepository<Follow>,IFollowRepository
+    public class FollowRepository : GenericRepository<Follow>, IFollowRepository
     {
         private readonly AppDbContext _context;
 
         public FollowRepository(AppDbContext context) : base(context)
         {
             _context = context;
+        }
+
+        public async Task<List<ApplicationUser>> GetFollowers(Guid userId, CancellationToken cancellationToken)
+        {
+            var result = await dbSet.Where(w => w.FollowingId == userId)
+                .Select(w => w.Follower)
+                .ToListAsync(cancellationToken);
+
+            return result;
+        }
+
+        public async Task<List<ApplicationUser>> GetFollowings(Guid userId, CancellationToken cancellationToken)
+        {
+            //userid is the currentuser
+            var result = await dbSet.Where(w => w.Follower.Id == userId)
+                .Select(w => w.Following)
+                .ToListAsync(cancellationToken);
+
+            return result;
         }
 
         public async Task<Follow> CreateAsync(Follow obj, CancellationToken cancellationToken)
@@ -49,13 +68,6 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
         public Task<Follow> GetFollowerById(Guid id)
         {
             throw new NotImplementedException();
-        }
-
-        public async Task<List<Guid>> GetFollowing(Guid userId, CancellationToken cancellationToken)
-        {
-            //userid is the currentuser
-            var result = await dbSet.Where(w => w.Follower.Id == userId).Select(w => w.following.Id).ToListAsync(cancellationToken);
-            return result;
         }
 
         public async Task<Follow> IsFollowing(Guid id,string currentUserId)
