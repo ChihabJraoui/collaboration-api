@@ -12,6 +12,33 @@ namespace Collaboration.ShareDocs.Api.Controllers
     [Route("api/folders")]
     public class FoldersController:BaseController
     {
+
+        /// <summary>
+        /// Get Folder by Id
+        /// </summary>
+        /// <param name="FolderId">GetFolderCommand</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("")]
+        public async Task<IActionResult> GetByFilter([FromQuery] GetFolderFilterCommand command)
+        {
+            var result = await this.Mediator.Send(command);
+            return FormatResponseToActionResult(result);
+        }
+
+        /// <summary>
+        /// Get Folder by Id
+        /// </summary>
+        /// <param name="FolderId">GetFolderCommand</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("{folderId:Guid}")]
+        public async Task<IActionResult> GetFolderDetails([FromRoute] Guid folderId)
+        {
+            var result = await this.Mediator.Send(new GetFolderCommand { FolderId = folderId });
+            return FormatResponseToActionResult(result);
+        }
+
         /// <summary>
         /// Create new Folder
         /// </summary>
@@ -49,31 +76,5 @@ namespace Collaboration.ShareDocs.Api.Controllers
             var result = await this.Mediator.Send(command);
             return FormatResponseToActionResult(result);
         }
-        /// <summary>
-        /// Get Folder by Id
-        /// </summary>
-        /// <param name="FolderId">GetFolderCommand</param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("")]
-        public async Task<IActionResult> Get([FromQuery] Guid folderid)
-        {
-            var result = await this.Mediator.Send(new GetFolderCommand { FolderId = folderid });
-            return FormatResponseToActionResult(result);
-        }
-
-        /// <summary>
-        /// Get Folder by Id
-        /// </summary>
-        /// <param name="FolderId">GetFolderCommand</param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("filter")]
-        public async Task<IActionResult> GetByFilter([FromQuery] Guid id)
-        {
-            var result = await this.Mediator.Send(new GetFolderFilterCommand { Proprety = id });
-            return FormatResponseToActionResult(result);
-        }
-        
     }
 }

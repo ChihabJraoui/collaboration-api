@@ -20,6 +20,7 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
         {
             _context = context;
         }
+
         public async Task<Folder> CreateFolderChild(Folder folder, Folder folderParent, Project project, Component component, CancellationToken cancellationToken)
         {
             var folderChild = new Folder(component.Name)
@@ -39,6 +40,7 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
             return folderChild;
 
         }
+
         public async Task<Folder> CreateAsync(Folder obj, CancellationToken cancellationToken)
         {
             await base.InsertAsync(obj, cancellationToken);
@@ -59,16 +61,39 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
 
             return Folder;
         }
-        public async Task<List<Folder>> GetManyAsync(Guid id, CancellationToken cancellationToken)
-        {
-            var Folder = await dbSet.Where(w => w.FolderId == id || w.CreatedBy == id.ToString()).Include(y=>y.Files).ToListAsync();
 
-            return Folder;
+        /// <summary>
+        /// Get Many / Filter folders
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="projectId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task<List<Folder>> FilterAsync(Guid? userId, Guid? projectId, CancellationToken cancellationToken)
+        {
+            var query = dbSet.AsQueryable();
+
+            if(userId != null)
+            {
+                query = query.Where(e => e.CreatedBy == userId.ToString());
+            }
+
+            if(projectId != null)
+            {
+                query = query.Where(e => e.Project.Id == projectId);
+
+            }
+
+            query = query.Include(e => e.Files);
+
+            return await query.ToListAsync();
         }
+
         public async Task<List<Folder>> GetByProjectIdAsync(Guid projectId, CancellationToken cancellationToken)
         {
             return await dbSet.Where(w => w.Project.Id == projectId).ToListAsync(cancellationToken);
         }
+
         public async Task<List<Folder>> GetByCreatedAsync(Guid userId, CancellationToken cancellationToken)
         {
             return await dbSet.Where(w => new Guid(w.CreatedBy) == userId).ToListAsync(cancellationToken);
