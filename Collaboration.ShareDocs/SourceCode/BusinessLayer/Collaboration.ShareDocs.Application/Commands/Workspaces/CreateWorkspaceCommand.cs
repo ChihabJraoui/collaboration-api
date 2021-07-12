@@ -17,6 +17,8 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
     {
         public string Name { get; set; }
         public string Description { get; set; }
+        public bool IsPrivate { get; set; }
+
 
 
         public class Handler : IRequestHandler<CreateWorkspaceCommand, ApiResponseDetails>
@@ -53,7 +55,8 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
                 {
                     Name = request.Name,
                     Description = request.Description,
-                    Image = "https://ui-avatars.com/api/?background=random&name=" + request.Name 
+                    Image = "https://ui-avatars.com/api/?background=random&name=" + request.Name,
+                    IsPrivate = request.IsPrivate
                 };
 
                 var workspace = await _unitOfWork.WorkspaceRepository.CreateAsync(newWorkspace, cancellationToken);
