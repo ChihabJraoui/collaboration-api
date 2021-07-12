@@ -6,25 +6,26 @@ namespace Collaboration.ShareDocs.Persistence.Entities
 {
     public class Follow
     {
+        public int Id { get; set; }
         /// <summary>
         /// User ID
-        /// </summary>
-        public Guid FollowingId { get; set; }
-
-        /// <summary>
-        /// User
-        /// </summary>
-        public ApplicationUser Following { get; set; }
-
-        /// <summary>
-        /// Follower ID
         /// </summary>
         public Guid FollowerId { get; set; }
 
         /// <summary>
+        /// User
+        /// </summary>
+        public ApplicationUser User { get; set; }
+
+        /// <summary>
+        /// Follower ID
+        /// </summary>
+        public Guid FollowingId { get; set; }
+
+        /// <summary>
         /// Follower
         /// </summary>
-        public ApplicationUser Follower { get; set; }
+        public ApplicationUser Following { get; set; }
 
         public Follow(Guid followerId, Guid followingId)
         {

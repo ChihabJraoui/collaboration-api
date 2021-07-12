@@ -4,14 +4,16 @@ using Collaboration.ShareDocs.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Collaboration.ShareDocs.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210709102448_AddFollowingModel")]
+    partial class AddFollowingModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -227,18 +229,15 @@ namespace Collaboration.ShareDocs.Persistence.Migrations
 
             modelBuilder.Entity("Collaboration.ShareDocs.Persistence.Entities.Follow", b =>
                 {
-                    b.Property<Guid>("FollowingId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("FollowerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
+                    b.Property<Guid>("FollowingId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("FollowingId", "FollowerId");
+                    b.HasKey("FollowerId", "FollowingId");
 
-                    b.HasIndex("FollowerId");
+                    b.HasIndex("FollowingId");
 
                     b.ToTable("Follow");
                 });
@@ -526,14 +525,15 @@ namespace Collaboration.ShareDocs.Persistence.Migrations
             modelBuilder.Entity("Collaboration.ShareDocs.Persistence.Entities.Follow", b =>
                 {
                     b.HasOne("Collaboration.ShareDocs.Persistence.Entities.ApplicationUser", "Follower")
-                        .WithMany("Followers")
+                        .WithMany("Followings")
                         .HasForeignKey("FollowerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Collaboration.ShareDocs.Persistence.Entities.ApplicationUser", "Following")
-                        .WithMany("Followings")
+                        .WithMany("Followers")
                         .HasForeignKey("FollowingId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Follower");

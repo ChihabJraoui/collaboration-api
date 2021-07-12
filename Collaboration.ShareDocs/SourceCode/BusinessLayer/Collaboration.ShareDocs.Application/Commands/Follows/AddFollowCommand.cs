@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -48,35 +49,49 @@ namespace Collaboration.ShareDocs.Application.Commands.Follows
                     var message = string.Format(Resource.Error_NotFound, request.UserId);
                     return ApiCustomResponse.NotFound(message);
                 }
+                //var isExist = await _unitOfWork.FollowRepository.IsFollowing(user.Id, _currentUserService.UserId);
 
-                if (await _unitOfWork.FollowRepository.IsFollowing(user.Id, _currentUserService.UserId) != null)
+                if (user.Id.ToString() == _currentUserService.UserId)
                 {
                     var message = string.Format(Resource.Error_NotValid, request.UserId);
                     return ApiCustomResponse.NotFound(message);
                 }
+                //if (isExist != null && user.Id.ToString() == _currentUserService.UserId)
+                //{
+                //    var message = string.Format(Resource.Error_NotValid, request.UserId);
+                //    return ApiCustomResponse.NotFound(message);
+                //}
 
+                var me = await this._userManager.Users
+                    .Include(e => e.Followers)
+                    .SingleOrDefaultAsync(u => u.Id == new Guid(_currentUserService.UserId), cancellationToken);
                 var follow = new Follow()
                 {
+                    User = me,
+                    Following = user,
                     FollowerId = new Guid(_currentUserService.UserId),
                     FollowingId = user.Id
                 };
 
-                var me = await this._userManager.Users
-                    .Include(e => e.Follows)
-                    .SingleOrDefaultAsync(u => u.Id == new Guid(_currentUserService.UserId), cancellationToken);
-                
+
+
                 var follower = await _unitOfWork.FollowRepository.CreateAsync(follow, cancellationToken);
-                //me.Follows.Add(follower); ??????
+                //me.Followings.Where(u=>u.);
+                //user.Followers.Add(me);
+
+
+
+
 
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-                var response = _mapper.Map<FollowerDto>(follower);
+                //var response = _mapper.Map<FollowerDto>();
 
                 var username = await this._userManager.FindByIdAsync(_currentUserService.UserId);
 
                 var notification = new Notification
                 {
-                    Text = $"you had followed by {username.UserName}",
+                    //Text = $"you had followed by {response.Follower.UserName}",
                     Category = Persistence.Enums.Category.FollowEvent
                 };
 
@@ -84,7 +99,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Follows
                 await _unitOfWork.UserNotificationRepository.AssignNotificationToTheUser(notification, user.Id.ToString(), cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-                return ApiCustomResponse.ReturnedObject(response);
+                return ApiCustomResponse.ReturnedObject();
             }
         }
     }

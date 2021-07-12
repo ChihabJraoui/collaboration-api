@@ -22,20 +22,22 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
         public async Task<List<ApplicationUser>> GetFollowers(Guid userId, CancellationToken cancellationToken)
         {
             var result = await dbSet.Where(w => w.FollowingId == userId)
-                .Select(w => w.Follower)
+                .Select(w => w.User)
                 .ToListAsync(cancellationToken);
 
             return result;
+            
         }
 
         public async Task<List<ApplicationUser>> GetFollowings(Guid userId, CancellationToken cancellationToken)
         {
             //userid is the currentuser
-            var result = await dbSet.Where(w => w.Follower.Id == userId)
+            var result = await dbSet.Where(w => w.Following.Id == userId)
                 .Select(w => w.Following)
                 .ToListAsync(cancellationToken);
 
             return result;
+          
         }
 
         public async Task<Follow> CreateAsync(Follow obj, CancellationToken cancellationToken)
@@ -72,7 +74,9 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
 
         public async Task<Follow> IsFollowing(Guid id,string currentUserId)
         {
-            return await dbSet.Where(w => w.FollowerId == new Guid(currentUserId) && w.FollowingId == id).FirstOrDefaultAsync();
+            var result = await dbSet.Where(w => w.FollowerId == new Guid(currentUserId) && w.FollowingId == id).FirstOrDefaultAsync();
+            return result;
+           
         }
 
         public Task<Follow> UpdateAsync(Follow obj, CancellationToken cancellationToken)

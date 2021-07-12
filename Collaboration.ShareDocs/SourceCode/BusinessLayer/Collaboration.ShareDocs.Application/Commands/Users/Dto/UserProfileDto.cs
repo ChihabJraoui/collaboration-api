@@ -17,6 +17,8 @@ namespace Collaboration.ShareDocs.Application.Commands.Users.Dto
         public string PhoneNumber { get; set; }
         public bool IsActive { get; set; }
         public string Image { get; set; }
+        public ICollection<Follow> Followers { get; set; }
+        public ICollection<Follow> Followings { get; set; }
 
         public virtual void Mapping(Profile profile)
         {
