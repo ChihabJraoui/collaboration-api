@@ -22,9 +22,9 @@ namespace Collaboration.ShareDocs.Persistence.Entities
         
         public  ICollection<UserProject> Projects { get; set; }
 
-
-        public virtual ICollection<ApplicationUser> Followers { get; set; } 
-
+        [JsonIgnore]
+        public virtual ICollection<ApplicationUser> Followers { get; set; }
+        [JsonIgnore]
         public virtual ICollection<ApplicationUser> Followings{ get; set; } 
 
         [JsonIgnore]
