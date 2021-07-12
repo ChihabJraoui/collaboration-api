@@ -11,12 +11,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Collaboration.ShareDocs.Persistence.Entities;
 using Collaboration.ShareDocs.Resources;
+using System.Text.Json.Serialization;
 
 namespace Collaboration.ShareDocs.Application.Commands.Workspaces
 {
     public class UpdateWorkspaceCommand : IRequest<ApiResponseDetails>
     {
-        public Guid WorkspaceId { get; set; }
+        public Guid  WorkspaceId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
