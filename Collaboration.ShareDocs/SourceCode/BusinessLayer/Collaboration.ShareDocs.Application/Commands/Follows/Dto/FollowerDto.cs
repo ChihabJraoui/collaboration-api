@@ -6,7 +6,7 @@ using System;
 
 namespace Collaboration.ShareDocs.Application.Commands.Follows.Dto
 {
-    public class FollowerDto : IMapForm<Follow>
+    public class FollowerDto : IMapForm<ApplicationUser>
     {
         public Guid FollowerId { get; set; }
 
@@ -15,7 +15,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Follows.Dto
 
         public virtual void Mapping(Profile profile)
         {
-            profile.CreateMap<Follow, FollowerDto>();
+            profile.CreateMap<ApplicationUser, FollowerDto>();
         }
     }
 }

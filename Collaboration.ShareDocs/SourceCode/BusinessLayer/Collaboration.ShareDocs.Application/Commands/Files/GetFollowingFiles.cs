@@ -42,26 +42,26 @@ namespace Collaboration.ShareDocs.Application.Commands.Files
                 var timeLines = new List<TimeLineDto>();
                 var filesList = new List<File>();
                 var profiles = new List<ApplicationUser>();
-                var followings = await _unitOfWork.FollowRepository.GetFollowings(new Guid(_currentUserService.UserId), cancellationToken);
+                //var followings = await _unitOfWork.FollowRepository.GetFollowings(new Guid(_currentUserService.UserId), cancellationToken);
 
-                foreach (var following in followings)
-                {
-                    var profile = await _userManager.FindByIdAsync(following.Id.ToString());
-                    var userProfileDto = _mapper.Map<UserProfileDto>(profile);
+                //foreach (var following in followings)
+                //{
+                //    var profile = await _userManager.FindByIdAsync(following.Id.ToString());
+                //    var userProfileDto = _mapper.Map<UserProfileDto>(profile);
 
-                    var files = await _unitOfWork.FileRepository.GetByCreatedByAsync(following.Id, cancellationToken);
+                //    var files = await _unitOfWork.FileRepository.GetByCreatedByAsync(following.Id, cancellationToken);
 
-                    var filesDto = _mapper.Map<List<FileDto>>(files); 
+                //    var filesDto = _mapper.Map<List<FileDto>>(files); 
 
-                    foreach (var item in filesDto)
-                    {
-                        timeLines.Add(new TimeLineDto
-                        {
-                            Author = userProfileDto,
-                            File = item
-                        });
-                    }
-                }
+                //    foreach (var item in filesDto)
+                //    {
+                //        timeLines.Add(new TimeLineDto
+                //        {
+                //            Author = userProfileDto,
+                //            File = item
+                //        });
+                //    }
+                //}
 
                 return ApiCustomResponse.ReturnedObject(timeLines);
             }

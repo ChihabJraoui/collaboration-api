@@ -93,19 +93,19 @@ namespace Collaboration.ShareDocs.Persistence
             }
         }
 
-        private IFollowRepository _followRepository;
-        public IFollowRepository FollowRepository
-        {
-            get
-            {
+        //private IFollowRepository _followRepository;
+        //public IFollowRepository FollowRepository
+        //{
+        //    get
+        //    {
 
-                if (_followRepository == null)
-                {
-                    this._followRepository = new FollowRepository(_context);
-                }
-                return _followRepository;
-            }
-        }
+        //        if (_followRepository == null)
+        //        {
+        //            this._followRepository = new FollowRepository(_context);
+        //        }
+        //        return _followRepository;
+        //    }
+        //}
         private INotificationRepository _notificationRepository;
        
 

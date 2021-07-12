@@ -71,13 +71,13 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
                 await _unitOfWork.NotificationRepository.Create(notification, new Guid(_currentUserService.UserId), cancellationToken);
 
                 // Get followers
-                var followingUsers = await _unitOfWork.FollowRepository.GetFollowings(new Guid(_currentUserService.UserId), cancellationToken);
+                //var followingUsers = await _unitOfWork.FollowRepository.GetFollowings(new Guid(_currentUserService.UserId), cancellationToken);
 
-                if (followingUsers.Count > 0)
-                {
-                    // Send notifications to followers
-                    //await _unitOfWork.UserNotificationRepository.AssignNotificationToTheUsers(notification, followingUsers, cancellationToken);
-                }
+                //if (followingUsers.Count > 0)
+                //{
+                //    // Send notifications to followers
+                //    //await _unitOfWork.UserNotificationRepository.AssignNotificationToTheUsers(notification, followingUsers, cancellationToken);
+                //}
 
                 // Save changes
                 await _unitOfWork.SaveChangesAsync(cancellationToken);

@@ -62,24 +62,6 @@ namespace Collaboration.ShareDocs.Persistence
         {
             modelBuilder.Entity<NotificationApplicationUser>()
                     .HasKey(k => new { k.NotificationId, k.ApplicationUserId });
-            modelBuilder.Entity<Follow>()
-                    .HasKey(k => new { k.FollowingId, k.FollowerId});
-
-
-
-
-            modelBuilder.Entity<Follow>(entity =>
-            {
-
-                entity.HasOne(d => d.Following)
-                    .WithMany(p => p.Followings)
-                    .HasForeignKey(d => d.FollowingId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.Followers)
-                    .HasForeignKey(d => d.FollowerId);
-            });
            
 
             // Customize the ASP.NET Identity model and override the defaults if needed.

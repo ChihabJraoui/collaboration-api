@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -17,6 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Commands\Follows\GetFollowersCommand.cs" />
+    <Compile Remove="Commands\Follows\GetFollowingsCommand.cs" />
+    <Compile Remove="Commands\Follows\IsFollowingCommand.cs" />
+    <Compile Remove="Commands\Follows\UnfollowCommand.cs" />
     <Compile Remove="Common\Behaviours\ValidationBehaviour.cs" />
   </ItemGroup>
 

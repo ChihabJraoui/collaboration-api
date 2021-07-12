@@ -65,19 +65,9 @@ namespace Collaboration.ShareDocs.Application.Commands.Follows
                 var me = await this._userManager.Users
                     .Include(e => e.Followers)
                     .SingleOrDefaultAsync(u => u.Id == new Guid(_currentUserService.UserId), cancellationToken);
-                var follow = new Follow()
-                {
-                    User = me,
-                    Following = user,
-                    FollowerId = new Guid(_currentUserService.UserId),
-                    FollowingId = user.Id
-                };
-
-
-
-                var follower = await _unitOfWork.FollowRepository.CreateAsync(follow, cancellationToken);
-                //me.Followings.Where(u=>u.);
-                //user.Followers.Add(me);
+               
+                me.Followings.Add(user);
+                user.Followers.Add(me);
 
 
 

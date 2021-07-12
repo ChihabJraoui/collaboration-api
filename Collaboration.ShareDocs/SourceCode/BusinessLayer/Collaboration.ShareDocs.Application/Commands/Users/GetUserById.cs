@@ -40,7 +40,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Users
 
             public async Task<ApiResponseDetails> Handle(GetUserById request, CancellationToken cancellationToken)
             {
-                var user = await this._userManager.Users.Include(u=>u.Followers).Include(u => u.Followings).SingleOrDefaultAsync(u => u.Id == request.UserId, cancellationToken);
+                var user = await this._userManager.Users.Include(u=>u.Followers).Include(u => u.Followings).AsNoTracking().SingleOrDefaultAsync(u => u.Id == request.UserId, cancellationToken);
 
 
                 if (user == null)

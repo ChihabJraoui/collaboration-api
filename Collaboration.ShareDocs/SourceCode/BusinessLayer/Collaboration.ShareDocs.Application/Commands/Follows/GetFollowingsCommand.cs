@@ -49,7 +49,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Follows
                     return ApiCustomResponse.NotFound(message);
                 }
 
-                var followings = await _unitOfWork.FollowRepository.GetFollowings(request.UserId, cancellationToken);
+                //var followings = await _unitOfWork.FollowRepository.GetFollowings(request.UserId, cancellationToken);
 
                 var response = _mapper.Map<List<ApplicationUser>>(followings);
                 return ApiCustomResponse.ReturnedObject(response);

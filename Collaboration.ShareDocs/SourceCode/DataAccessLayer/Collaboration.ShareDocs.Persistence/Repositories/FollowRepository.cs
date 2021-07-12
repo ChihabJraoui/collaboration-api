@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 
 namespace Collaboration.ShareDocs.Persistence.Repositories
 {
-    public class FollowRepository : GenericRepository<Follow>, IFollowRepository
+    public class FollowRepository : 
+        GenericRepository<Follow>, IFollowRepository
     {
         private readonly AppDbContext _context;
 

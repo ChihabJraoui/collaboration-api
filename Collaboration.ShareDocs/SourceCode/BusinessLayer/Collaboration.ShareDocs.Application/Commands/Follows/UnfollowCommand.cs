@@ -39,23 +39,23 @@ namespace Collaboration.ShareDocs.Application.Commands.Follows
 
             public async Task<ApiResponseDetails> Handle(UnfollowCommand request, CancellationToken cancellationToken)
             {
-                var user = await this._userManager.Users.SingleOrDefaultAsync(u => u.Id == request.FollowingId, cancellationToken);
+                //var user = await this._userManager.Users.SingleOrDefaultAsync(u => u.Id == request.FollowingId, cancellationToken);
 
-                if (user == null)
-                {
-                    var message = string.Format(Resource.Error_NotFound, request.FollowingId);
-                    return ApiCustomResponse.NotFound(message);
-                }
-                var isFollowing = await this._unitOfWork.FollowRepository.IsFollowing(request.FollowingId, _currentUserService.UserId);
-                if(isFollowing == null)
-                {
-                    var message = string.Format(Resource.Error_NotFound, request.FollowingId);
-                    return ApiCustomResponse.NotFound(message);
-                }
-                var follower = _unitOfWork.FollowRepository.Delete(isFollowing);
-                await _unitOfWork.SaveChangesAsync(cancellationToken);
-                var response = _mapper.Map<FollowerDto>(isFollowing);
-                return ApiCustomResponse.ReturnedObject(response);
+                //if (user == null)
+                //{
+                //    var message = string.Format(Resource.Error_NotFound, request.FollowingId);
+                //    return ApiCustomResponse.NotFound(message);
+                //}
+                //var isFollowing = await this._unitOfWork.FollowRepository.IsFollowing(request.FollowingId, _currentUserService.UserId);
+                //if(isFollowing == null)
+                //{
+                //    var message = string.Format(Resource.Error_NotFound, request.FollowingId);
+                //    return ApiCustomResponse.NotFound(message);
+                //}
+                //var follower = _unitOfWork.FollowRepository.Delete(isFollowing);
+                //await _unitOfWork.SaveChangesAsync(cancellationToken);
+                //var response = _mapper.Map<FollowerDto>(isFollowing);
+                //return ApiCustomResponse.ReturnedObject(response);
 
             }
         }
