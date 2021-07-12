@@ -17,7 +17,6 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public string Image { get; set; }
 
 
         public class Handler : IRequestHandler<CreateWorkspaceCommand, ApiResponseDetails>
@@ -54,7 +53,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
                 {
                     Name = request.Name,
                     Description = request.Description,
-                    Image = request.Image
+                    Image = "https://ui-avatars.com/api/?background=random&name=" + request.Name 
                 };
 
                 var workspace = await _unitOfWork.WorkspaceRepository.CreateAsync(newWorkspace, cancellationToken);
@@ -71,13 +70,13 @@ namespace Collaboration.ShareDocs.Application.Commands.Workspaces
                 await _unitOfWork.NotificationRepository.Create(notification, new Guid(_currentUserService.UserId), cancellationToken);
 
                 // Get followers
-                var followingUsers = await _unitOfWork.FollowRepository.GetFollowings(new Guid(_currentUserService.UserId), cancellationToken);
+                //var followingUsers = await _unitOfWork.FollowRepository.GetFollowings(new Guid(_currentUserService.UserId), cancellationToken);
 
-                if (followingUsers.Count > 0)
-                {
-                    // Send notifications to followers
-                    //await _unitOfWork.UserNotificationRepository.AssignNotificationToTheUsers(notification, followingUsers, cancellationToken);
-                }
+                //if (followingUsers.Count > 0)
+                //{
+                //    // Send notifications to followers
+                //    //await _unitOfWork.UserNotificationRepository.AssignNotificationToTheUsers(notification, followingUsers, cancellationToken);
+                //}
 
                 // Save changes
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
