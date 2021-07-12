@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Commands\Follows\GetFollowersCommand.cs" />
     <Compile Remove="Commands\Follows\GetFollowingsCommand.cs" />
     <Compile Remove="Commands\Follows\IsFollowingCommand.cs" />
     <Compile Remove="Commands\Follows\UnfollowCommand.cs" />

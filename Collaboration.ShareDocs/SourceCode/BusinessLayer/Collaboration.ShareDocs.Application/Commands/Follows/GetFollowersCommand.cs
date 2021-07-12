@@ -48,10 +48,10 @@ namespace Collaboration.ShareDocs.Application.Commands.Follows
                     var message = string.Format(Resource.Error_NotFound, request.UserId);
                     return ApiCustomResponse.NotFound(message);
                 }
+                var followers= await _userManager.Users.Where(u=>u.Id == request.UserId).Include(u => u.Followers).Select(u=>u.Followers).SingleOrDefaultAsync( cancellationToken);
+                //var followers = await _unitOfWork.FollowRepository.GetFollowers(request.UserId, cancellationToken);
 
-                var followers = await _unitOfWork.FollowRepository.GetFollowers(request.UserId, cancellationToken);
-
-                var response = _mapper.Map<List<ApplicationUser>>(followers);
+                var response = _mapper.Map<List<ResponseUserDto>>(followers);
                 return ApiCustomResponse.ReturnedObject(response);
             }
         }
