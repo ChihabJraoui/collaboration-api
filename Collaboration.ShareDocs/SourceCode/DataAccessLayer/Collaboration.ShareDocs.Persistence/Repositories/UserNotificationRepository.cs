@@ -60,7 +60,7 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
 
             return notification.IsRead;
         }
-        public async Task AssignNotificationToTheUsers(Notification notification, List<Guid> followingUsers, CancellationToken cancellationToken)
+        public async Task AssignNotificationToTheUsers(Notification notification, ICollection<ApplicationUser> followingUsers, CancellationToken cancellationToken)
         {
             //TODO:Aassign notification to the user 
 
