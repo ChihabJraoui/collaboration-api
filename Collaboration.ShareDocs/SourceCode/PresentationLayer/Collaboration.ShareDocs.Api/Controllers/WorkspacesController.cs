@@ -22,7 +22,7 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("")]
-        public async Task<IActionResult> GetAll([FromQuery] string? keyword )
+        public async Task<IActionResult> GetAll([FromQuery] string keyword )
         {
             var result = await this.Mediator.Send(new GetWorkspacesCommand {Keyword = keyword });
             return FormatResponseToActionResult(result);

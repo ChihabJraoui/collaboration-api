@@ -19,28 +19,28 @@ namespace Collaboration.ShareDocs.Application.Commands.Users
     public class GetUserById: IRequest<ApiResponseDetails>
     {
         public Guid UserId { get; set; }
-
+        public string UserName { get; set; }
         public class Handler : IRequestHandler<GetUserById, ApiResponseDetails>
         {
             private readonly UserManager<ApplicationUser> _userManager;
-
+            private readonly IUserRepository _userRepository;
             private readonly IMapper _mapper;
 
             private readonly ICurrentUserService _currentUserService;
 
             public Handler(
-                UserManager<ApplicationUser> userManager,
+                IUserRepository userRepository,
                 IMapper mapper,
                 ICurrentUserService currentUserService)
             {
-                this._userManager = userManager;
+                this._userRepository = userRepository;
                 this._mapper = mapper;
                 this._currentUserService = currentUserService;
             }
 
             public async Task<ApiResponseDetails> Handle(GetUserById request, CancellationToken cancellationToken)
             {
-                var user = await this._userManager.Users.Include(u=>u.Followers).Include(u => u.Followings).AsNoTracking().SingleOrDefaultAsync(u => u.Id == request.UserId, cancellationToken);
+                var user = await this._userRepository.GetUser(request.UserId,cancellationToken);
 
 
                 if (user == null)

@@ -56,8 +56,7 @@ namespace Collaboration.ShareDocs.Api
 
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                })
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<GetUserCommand>());
+                });
             // Customise default API behaviour
             services.Configure<ApiBehaviorOptions>(options =>
             {

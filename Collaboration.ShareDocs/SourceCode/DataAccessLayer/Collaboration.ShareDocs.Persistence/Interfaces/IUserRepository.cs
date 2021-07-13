@@ -10,7 +10,8 @@ namespace Collaboration.ShareDocs.Persistence.Interfaces
     public interface IUserRepository
     {
         Task<ApplicationUser> GetUser(Guid userId, CancellationToken cancellationToken);
+        Task<ICollection<ApplicationUser>> GetUserByKeyword(string keyword, CancellationToken cancellationToken);
+        Task<ICollection<ApplicationUser>> GetUsers(CancellationToken cancellationToken);
 
-            
     }
 }
