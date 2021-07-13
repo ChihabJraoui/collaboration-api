@@ -10,8 +10,8 @@ namespace Collaboration.ShareDocs.Application.Commands.Follows.Dto
     {
         public Guid FollowerId { get; set; }
 
-        public ApplicationUser Follower { get; set; }
-        //public UserProfileDto Follower { get; set; }
+        public ResponseUserDto Follower { get; set; }
+        
 
         public virtual void Mapping(Profile profile)
         {

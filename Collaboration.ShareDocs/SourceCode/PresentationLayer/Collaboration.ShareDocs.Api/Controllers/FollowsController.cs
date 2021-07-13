@@ -30,13 +30,13 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        //[HttpGet]
-        //[Route("{userId:Guid}/followings")]
-        //public async Task<IActionResult> GetFollowings(Guid userId)
-        //{
-        //    var result = await this.Mediator.Send(new GetFollowingsCommand { UserId = userId });
-        //    return FormatResponseToActionResult(result);
-        //}
+        [HttpGet]
+        [Route("{userId:Guid}/followings")]
+        public async Task<IActionResult> GetFollowings(Guid userId)
+        {
+            var result = await this.Mediator.Send(new GetFollowingsCommand { UserId = userId });
+            return FormatResponseToActionResult(result);
+        }
 
         /// <summary>
         /// 
@@ -69,12 +69,12 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// </summary>
         /// <param name = "command" ></ param >
         /// < returns ></ returns >
-        //[HttpDelete]
-        //[Route("{followingId:Guid}")]
-        //public async Task<IActionResult> Unfollow(Guid followingId)
-        //{
-        //    var result = await this.Mediator.Send(new UnfollowCommand() { FollowingId = followingId });
-        //    return FormatResponseToActionResult(result);
-        //}
+        [HttpDelete]
+        [Route("{userId:Guid}")]
+        public async Task<IActionResult> Unfollow(Guid userId)
+        {
+            var result = await this.Mediator.Send(new UnfollowCommand() { UserId = userId });
+            return FormatResponseToActionResult(result);
+        }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Collaboration.ShareDocs.Persistence.Interfaces
 {
-    public interface IFollowRepository : IRepositoryBase<Follow>
+    public interface IFollowRepository 
     {
         /// <summary>
         /// Get Followers
@@ -14,7 +14,7 @@ namespace Collaboration.ShareDocs.Persistence.Interfaces
         /// <param name="userId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<List<ApplicationUser>> GetFollowers(Guid userId, CancellationToken cancellationToken);
+        Task<ICollection<ApplicationUser>> GetFollowers(Guid userId, CancellationToken cancellationToken);
 
         /// <summary>
         /// Get Followings
@@ -22,19 +22,8 @@ namespace Collaboration.ShareDocs.Persistence.Interfaces
         /// <param name="userId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<List<ApplicationUser>> GetFollowings(Guid userId, CancellationToken cancellationToken);
-
-        /// <summary>
-        ///  GetFollower
-        /// </summary>
-        /// <param name=""></param>
-        /// <returns>Guid</returns>
-        Task<Follow> GetAsync(Guid followerId, Guid memberId);
-
+        Task<ICollection<ApplicationUser>> GetFollowings(Guid userId, CancellationToken cancellationToken);
         Task<string> GetCurrentUser();
-
-        Task<Follow> GetFollowerById(Guid id);
-
-        Task<Follow> IsFollowing(Guid id,string currentUserId);
+        Task<bool> IsFollowing(Guid id,string currentUserId);
     }
 }

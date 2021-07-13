@@ -24,32 +24,36 @@ namespace Collaboration.ShareDocs.Application.Commands.Follows
         public class Handler : IRequestHandler<GetFollowersCommand, ApiResponseDetails>
         {
             private readonly IUnitOfWork _unitOfWork;
+            private readonly IFollowRepository _followRepository;
             private readonly ICurrentUserService _currentUserService;
             private readonly IMapper _mapper;
-            private readonly UserManager<ApplicationUser> _userManager;
+            private readonly IUserRepository _userRepository;
 
             public Handler(IUnitOfWork unitOfWork,
-                UserManager<ApplicationUser> userManager,
+                IUserRepository userRepository,
+                IFollowRepository followRepository,
                 ICurrentUserService currentUserService,
                 IMapper mapper)
             {
                 this._unitOfWork = unitOfWork;
+                _followRepository=followRepository;
                 this._currentUserService = currentUserService;
                 _mapper = mapper;
-                this._userManager = userManager;
+                this._userRepository = userRepository;
             }
             
             public async Task<ApiResponseDetails> Handle(GetFollowersCommand request, CancellationToken cancellationToken)
             {
-                var user = await this._userManager.Users.SingleOrDefaultAsync(e => e.Id == request.UserId);
+
+                var user = await _userRepository.GetUser(request.UserId, cancellationToken);
 
                 if (user == null)
                 {
                     var message = string.Format(Resource.Error_NotFound, request.UserId);
                     return ApiCustomResponse.NotFound(message);
                 }
-                var followers= await _userManager.Users.Where(u=>u.Id == request.UserId).Include(u => u.Followers).Select(u=>u.Followers).SingleOrDefaultAsync( cancellationToken);
-                //var followers = await _unitOfWork.FollowRepository.GetFollowers(request.UserId, cancellationToken);
+                var followers = await _followRepository.GetFollowers(user.Id, cancellationToken);
+               
 
                 var response = _mapper.Map<List<ResponseUserDto>>(followers);
                 return ApiCustomResponse.ReturnedObject(response);
