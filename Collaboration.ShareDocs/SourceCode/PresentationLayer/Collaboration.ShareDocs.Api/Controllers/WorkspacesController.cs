@@ -60,10 +60,11 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// <param name="command"> new </param>
         /// <returns></returns>
         [HttpPut]
-        [Route("{workspaceId:Guid}")]
-        public async Task<IActionResult> Update([FromRoute] Guid workspaceId, UpdateWorkspaceCommand command)
+        [Route("")]
+        public async Task<IActionResult> Update( UpdateWorkspaceCommand command)
         {
-            command.WorkspaceId = workspaceId;
+            
+            
             var result = await this.Mediator.Send(command);
 
             return FormatResponseToActionResult(result);

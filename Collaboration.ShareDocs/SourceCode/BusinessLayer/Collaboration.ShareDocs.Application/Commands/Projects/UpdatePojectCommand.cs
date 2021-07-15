@@ -55,14 +55,23 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
                         var message = string.Format(Resource.Error_NameExist, request.Label);
                         return ApiCustomResponse.ValidationError(new Error("Label", message));
                     }
+                    break;
                 }
                
 
+                if(request.Label != "")
+                {
+                    project.Label = request.Label;
+                }
+                if (request.Description  != "")
+                {
+                    project.Description = request.Description;
+                }
+                if (request.Icon != "")
+                {
+                    project.Icon = request.Icon;
+                }
 
-                project.Label = request.Label;
-                project.Description = request.Description;
-                project.Icon = request.Icon;
-                
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
                 var response = _mapper.Map<ProjectDto>(project);
                 return ApiCustomResponse.ReturnedObject(response);

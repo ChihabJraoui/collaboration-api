@@ -23,7 +23,7 @@ namespace Collaboration.ShareDocs.Persistence.Interfaces
         /// </summary>
         /// <param name="keyWord">GetProjectByKeyWord</param>
         /// <returns>Projects</returns>
-        Task<List<string>> GetByKeyWordAsync(string keyWord, CancellationToken cancellationToken);
+        Task<List<Project>> GetByKeyWordAsync(string keyWord, CancellationToken cancellationToken);
 
         /// <summary>
         /// 

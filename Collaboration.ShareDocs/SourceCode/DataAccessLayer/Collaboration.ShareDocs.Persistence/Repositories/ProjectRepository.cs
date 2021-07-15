@@ -72,14 +72,15 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
             await _context.SaveChangesAsync(cancellationToken);
             return project;
         }
-        public async Task<List<string>> GetByKeyWordAsync(string keyWord, CancellationToken cancellationToken)
+        public async Task<List<Project>> GetByKeyWordAsync(string keyWord, CancellationToken cancellationToken)
         {
-            return await dbSet.Where(w => w.Label.Contains(keyWord)).Select(x => x.Label).ToListAsync(cancellationToken);
+            return await dbSet.Where(w => w.Label.Contains(keyWord)).ToListAsync(cancellationToken);
         }
 
         public async Task<List<Project>> GetByCreatedAsync(Guid userId, CancellationToken cancellationToken)
         {
-            return await dbSet.Where(w => new Guid(w.CreatedBy) == userId).ToListAsync(cancellationToken);
+             var response = await dbSet.Where(w =>w.CreatedBy == userId.ToString()).ToListAsync(cancellationToken);
+            return response;
         }
 
 

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Collaboration.ShareDocs.Application.Commands.Projects.Dto;
 using Collaboration.ShareDocs.Application.Common.Response;
 using Collaboration.ShareDocs.Persistence.Interfaces;
 using Collaboration.ShareDocs.Resources;
@@ -31,12 +32,8 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
                     var message = string.Format(Resource.Error_NotValid, request);
                     return ApiCustomResponse.NotValid(request.Keyword, message, "");
                 }
-                var response = await _unitOfWork.ProjectRepository.GetByKeyWordAsync(request.Keyword, cancellationToken);
-                if (response.Count == 0)
-                {
-                    var message = string.Format(Resource.Error_NotFound, request);
-                    return ApiCustomResponse.NotFound(message);
-                }
+                var projects = await _unitOfWork.ProjectRepository.GetByKeyWordAsync(request.Keyword, cancellationToken);
+                var response = _mapper.Map<List<ProjectDto>>(projects);
                 return ApiCustomResponse.ReturnedObject(response);
             }
         }

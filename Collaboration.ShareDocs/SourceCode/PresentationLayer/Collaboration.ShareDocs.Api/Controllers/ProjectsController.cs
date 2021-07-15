@@ -56,8 +56,8 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// <param name="command"> new </param>
         /// <returns></returns>
         [HttpPut]
-        [Route("{projectId:Guid}")]
-        public async Task<IActionResult> Update([FromRoute] Guid projectId, UpdateProjectCommand command)
+        [Route("")]
+        public async Task<IActionResult> Update( UpdateProjectCommand command)
         {
             var result = await this.Mediator.Send(command);
             return FormatResponseToActionResult(result);
@@ -70,9 +70,9 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// <returns></returns>
         [HttpDelete]
         [Route("{projectId:Guid}")]
-        public async Task<IActionResult> Delete([FromRoute] Guid projectId, DeleteProjectCommand command)
+        public async Task<IActionResult> Delete([FromRoute] Guid projectId)
         {
-            var result = await this.Mediator.Send(command);
+            var result = await this.Mediator.Send(new DeleteProjectCommand { ProjectId = projectId });
             return FormatResponseToActionResult(result);
         }
 
