@@ -41,7 +41,6 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
                 var response = _mapper.Map<ProjectDto>(project);
                 return ApiCustomResponse.ReturnedObject(response);
-
             }
         }
     }

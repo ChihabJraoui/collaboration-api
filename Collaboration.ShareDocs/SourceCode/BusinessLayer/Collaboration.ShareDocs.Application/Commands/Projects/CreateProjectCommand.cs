@@ -54,21 +54,23 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
                     var message = string.Format(Resource.Error_NameExist, request.Label);
                     return ApiCustomResponse.ValidationError(new Error("Label", message));
                 }
-
+                var defaultUser = new List<ApplicationUser>();
+                var owner = await this._userManager.FindByIdAsync(_currentUserService.UserId);
                 var newProject = new Project()
                 {
                     Label = request.Label,
                     Description = request.Description,
-                    Workspace = workspace
+                    Workspace = workspace,
+                    Icon = "https://ui-avatars.com/api/?background=random&name=" + request.Label,
                 };
 
                 await _unitOfWork.ProjectRepository.CreateAsync(newProject, cancellationToken);
                 
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
-                var username = await this._userManager.FindByIdAsync(_currentUserService.UserId);
+               
                 var notification = new Notification
                 {
-                    Text = $"{username.UserName} has shared {newProject.Label} in the {newProject.Workspace.Name}",
+                    Text = $"{owner.UserName} has shared {newProject.Label} in the {newProject.Workspace.Name}",
                     Category = Persistence.Enums.Category.project
                 };
                 //followingUsers

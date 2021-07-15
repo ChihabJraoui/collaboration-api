@@ -18,7 +18,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects.Dto
 
         public string Icon { get; set; }
 
-        public DateTime CreatedAt { get; set; }
+        public DateTime Created { get; set; }
 
         public string CreatedBy { get; set; }
 
