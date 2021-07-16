@@ -16,12 +16,14 @@ namespace Collaboration.ShareDocs.Persistence
         private readonly AppDbContext _context;
         private readonly IHubContext<NotificationHub,IHubClient> _hubContext;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IHubContext<IndividualChatHub> _chatHubContext;
 
-        public UnitOfWork(AppDbContext appDbContext, IHubContext<NotificationHub,IHubClient> hubContext,UserManager<ApplicationUser> userManager)
+        public UnitOfWork(AppDbContext appDbContext, IHubContext<NotificationHub,IHubClient> hubContext, IHubContext<IndividualChatHub> chathubContext,UserManager<ApplicationUser> userManager)
         {
             _context = appDbContext;
             _hubContext = hubContext;
             _userManager = userManager;
+            _chatHubContext = chathubContext;
         }
 
         private IFolderRepository _folderRepository;
@@ -76,6 +78,20 @@ namespace Collaboration.ShareDocs.Persistence
                     this._workspaceRepository = new WorkspaceRepository(_context);
                 }
                 return _workspaceRepository;
+            }
+        }
+
+        private IIndividualChatRepository _IndividualChatRepository;
+        public IIndividualChatRepository IndividualChatRepository
+        {
+            get
+            {
+
+                if (_IndividualChatRepository == null)
+                {
+                    this._IndividualChatRepository = new IndividualChatRepository(_context, _chatHubContext, _userManager);
+                }
+                return _IndividualChatRepository;
             }
         }
 

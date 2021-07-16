@@ -29,7 +29,7 @@ namespace Collaboration.ShareDocs.Persistence
                         config.Password.RequireLowercase         = false;
                         config.Password.RequireUppercase         = false;
                         config.Password.RequireNonAlphanumeric   = false;
-                        config.Password.RequiredLength           = 8;
+                        config.Password.RequiredLength           = 3;
                         config.User.RequireUniqueEmail           = true;
                     })
                     .AddEntityFrameworkStores<AppDbContext>()
@@ -69,6 +69,7 @@ namespace Collaboration.ShareDocs.Persistence
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IFollowRepository, FollowRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IIndividualChatRepository, IndividualChatRepository>();
             services.AddTransient<INotificationRepository, NotificationRepository>();
             services.AddTransient<INotificationApplicationUser, UserNotificationRepository>();
             services.AddTransient<IUserProjectRepository, UserProjectRepository>();
