@@ -62,6 +62,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
                     Description = request.Description,
                     Workspace = workspace,
                     Icon = "https://ui-avatars.com/api/?background=random&name=" + request.Label,
+                    
                 };
 
                 await _unitOfWork.ProjectRepository.CreateAsync(newProject, cancellationToken);
