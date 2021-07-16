@@ -101,7 +101,7 @@ namespace Collaboration.ShareDocs.Persistence
 
                 if (_followRepository == null)
                 {
-                    this._followRepository = new FollowRepository(_context);
+                    this._followRepository = new FollowRepository(_context, _userManager);
                 }
                 return _followRepository;
             }

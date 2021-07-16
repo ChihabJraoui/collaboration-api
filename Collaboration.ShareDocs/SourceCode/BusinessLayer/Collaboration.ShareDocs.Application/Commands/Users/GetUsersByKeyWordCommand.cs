@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Collaboration.ShareDocs.Application.Commands.Users.Dto;
 using Collaboration.ShareDocs.Application.Common.Response;
 using Collaboration.ShareDocs.Persistence.Entities;
 using Collaboration.ShareDocs.Persistence.Interfaces;
@@ -21,12 +22,12 @@ namespace Collaboration.ShareDocs.Application.Commands.Users
 
         public class Handler : IRequestHandler<GetUsersByKeyWordCommand, ApiResponseDetails>
         {
-            private readonly UserManager<ApplicationUser> _userManager;
+            private readonly IUserRepository _userRepository;
             private readonly ICurrentUserService _currentUserService;
             private readonly IMapper _mapper;
-            public Handler(UserManager<ApplicationUser> userManager, ICurrentUserService currentUserService, IMapper mapper)
+            public Handler(IUserRepository userRepository, ICurrentUserService currentUserService, IMapper mapper)
             {
-                _userManager = userManager;
+                _userRepository = userRepository;
                 _currentUserService = currentUserService;
                 _mapper = mapper;
 
@@ -36,15 +37,13 @@ namespace Collaboration.ShareDocs.Application.Commands.Users
             {
                 if(request.Keyword == null)
                 {
-                    var message = string.Format(Resource.Error_NotValid, request);
-                    return ApiCustomResponse.NotValid(request.Keyword, message, "");
+                    var allUsers = await _userRepository.GetUsers(cancellationToken);
+                    var resp = _mapper.Map<List<ResponseUserDto>>(allUsers);
+                    return ApiCustomResponse.ReturnedObject(resp);
                 }
-                var response = await _userManager.Users.Where(w => w.UserName.Contains(request.Keyword)).Select(x => x.UserName).ToListAsync(cancellationToken);
-                if (response.Count == 0)
-                {
-                    var message = string.Format(Resource.Error_NotFound, request);
-                    return ApiCustomResponse.NotFound(message);
-                }
+                
+                var users = await _userRepository.GetUserByKeyword(request.Keyword, cancellationToken);
+                var response = _mapper.Map<List<ResponseUserDto>>(users);
                 return ApiCustomResponse.ReturnedObject(response);
 
             }

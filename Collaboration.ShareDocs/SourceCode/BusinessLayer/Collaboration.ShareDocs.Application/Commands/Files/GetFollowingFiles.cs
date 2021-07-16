@@ -51,7 +51,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Files
 
                     var files = await _unitOfWork.FileRepository.GetByCreatedByAsync(following.Id, cancellationToken);
 
-                    var filesDto = _mapper.Map<List<FileDto>>(files); 
+                    var filesDto = _mapper.Map<List<FileDto>>(files);
 
                     foreach (var item in filesDto)
                     {

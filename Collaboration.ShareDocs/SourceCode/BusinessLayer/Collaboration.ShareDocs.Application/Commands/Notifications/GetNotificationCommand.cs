@@ -36,7 +36,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Notifications
             public async Task<ApiResponseDetails> Handle(GetNotificationCommand request, CancellationToken cancellationToken)
             {
                 var notifications = await _unitOfWork.UserNotificationRepository.GetUserNotifications(_currentUserService.UserId, cancellationToken);
-                //var notificationfeatch = await _n
+                
                 var countNoti = notifications.Count;
                 var notificationDto = _mapper.Map<List<NotificationDto>>(notifications);
                 var response = new NotifDto

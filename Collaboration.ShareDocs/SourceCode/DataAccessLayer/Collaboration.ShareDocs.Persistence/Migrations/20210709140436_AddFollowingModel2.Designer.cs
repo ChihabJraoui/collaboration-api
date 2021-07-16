@@ -4,35 +4,22 @@ using Collaboration.ShareDocs.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Collaboration.ShareDocs.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210709140436_AddFollowingModel2")]
+    partial class AddFollowingModel2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("ApplicationUserApplicationUser", b =>
-                {
-                    b.Property<Guid>("FollowersId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("FollowingsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("FollowersId", "FollowingsId");
-
-                    b.HasIndex("FollowingsId");
-
-                    b.ToTable("ApplicationUserApplicationUser");
-                });
 
             modelBuilder.Entity("Collaboration.ShareDocs.Persistence.Entities.ApplicationRole", b =>
                 {
@@ -238,6 +225,24 @@ namespace Collaboration.ShareDocs.Persistence.Migrations
                     b.HasIndex("ProjectId");
 
                     b.ToTable("Folders");
+                });
+
+            modelBuilder.Entity("Collaboration.ShareDocs.Persistence.Entities.Follow", b =>
+                {
+                    b.Property<Guid>("FollowingId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("FollowerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("FollowingId", "FollowerId");
+
+                    b.HasIndex("FollowerId");
+
+                    b.ToTable("Follow");
                 });
 
             modelBuilder.Entity("Collaboration.ShareDocs.Persistence.Entities.Notification", b =>
@@ -496,21 +501,6 @@ namespace Collaboration.ShareDocs.Persistence.Migrations
                     b.ToTable("UserTokens");
                 });
 
-            modelBuilder.Entity("ApplicationUserApplicationUser", b =>
-                {
-                    b.HasOne("Collaboration.ShareDocs.Persistence.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("FollowersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Collaboration.ShareDocs.Persistence.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("FollowingsId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Collaboration.ShareDocs.Persistence.Entities.File", b =>
                 {
                     b.HasOne("Collaboration.ShareDocs.Persistence.Entities.Folder", "Parent")
@@ -533,6 +523,24 @@ namespace Collaboration.ShareDocs.Persistence.Migrations
                     b.Navigation("Parent");
 
                     b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("Collaboration.ShareDocs.Persistence.Entities.Follow", b =>
+                {
+                    b.HasOne("Collaboration.ShareDocs.Persistence.Entities.ApplicationUser", "Follower")
+                        .WithMany("Followers")
+                        .HasForeignKey("FollowerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Collaboration.ShareDocs.Persistence.Entities.ApplicationUser", "Following")
+                        .WithMany("Followings")
+                        .HasForeignKey("FollowingId")
+                        .IsRequired();
+
+                    b.Navigation("Follower");
+
+                    b.Navigation("Following");
                 });
 
             modelBuilder.Entity("Collaboration.ShareDocs.Persistence.Entities.NotificationApplicationUser", b =>
@@ -633,6 +641,10 @@ namespace Collaboration.ShareDocs.Persistence.Migrations
 
             modelBuilder.Entity("Collaboration.ShareDocs.Persistence.Entities.ApplicationUser", b =>
                 {
+                    b.Navigation("Followers");
+
+                    b.Navigation("Followings");
+
                     b.Navigation("NotificationApplicationUsers");
 
                     b.Navigation("Projects");

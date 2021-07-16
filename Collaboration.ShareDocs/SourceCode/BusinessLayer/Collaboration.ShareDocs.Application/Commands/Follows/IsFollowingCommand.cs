@@ -38,30 +38,30 @@ namespace Collaboration.ShareDocs.Application.Commands.Follows
 
             public async Task<ApiResponseDetails> Handle(IsFollowingCommand request, CancellationToken cancellationToken)
             {
-                var IsFollowing = false;
+                //var IsFollowing = false;
 
-                var user = await this._userManager.Users.SingleOrDefaultAsync(u => u.Id == request.UserId, cancellationToken);
+                //var user = await this._userManager.Users.SingleOrDefaultAsync(u => u.Id == request.UserId, cancellationToken);
 
-                if (user == null)
-                {
-                    var message = string.Format(Resource.Error_NotFound, request.UserId);
-                    return ApiCustomResponse.NotFound(message);
-                }
+                //if (user == null)
+                //{
+                //    var message = string.Format(Resource.Error_NotFound, request.UserId);
+                //    return ApiCustomResponse.NotFound(message);
+                //}
 
-                if (_currentUserService.IsAuthenticated == false)
-                {
-                    var message = string.Format(Resource.Error_NotValid);
-                    return ApiCustomResponse.NotFound(message);
-                }
+                //if (_currentUserService.IsAuthenticated == false)
+                //{
+                //    var message = string.Format(Resource.Error_NotValid);
+                //    return ApiCustomResponse.NotFound(message);
+                //}
 
-                var response = await _unitOfWork.FollowRepository.IsFollowing(user.Id, _currentUserService.UserId);
+                //var response = await _unitOfWork.FollowRepository.IsFollowing(user.Id, _currentUserService.UserId);
                 
-                if (response != null)
-                {
-                    IsFollowing = true;
-                }
+                //if (response != null)
+                //{
+                //    IsFollowing = true;
+                //}
 
-                return ApiCustomResponse.ReturnedObject(IsFollowing);
+                //return ApiCustomResponse.ReturnedObject(IsFollowing);
 
             }
         }

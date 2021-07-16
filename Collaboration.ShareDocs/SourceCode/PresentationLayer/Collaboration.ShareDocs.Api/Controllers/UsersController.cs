@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace Collaboration.ShareDocs.Api.Controllers
@@ -12,18 +13,7 @@ namespace Collaboration.ShareDocs.Api.Controllers
     [Route("api/users")]
     public class UsersController:BaseController
     {
-        /// <summary>
-        /// Get User by username
-        /// </summary>
-        /// <param name="Username">GetUserCommand</param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("{username}")]
-        public async Task<IActionResult> Get(string username)
-        {
-            var result = await this.Mediator.Send(new GetUserCommand { Username = username });
-            return FormatResponseToActionResult(result);
-        }
+        
         [HttpGet]
         [Route("{userId:Guid}")]
         public async Task<IActionResult> GetById(Guid userId)
@@ -34,11 +24,11 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// <summary>
         /// Get Users by keyword
         /// </summary>
-        /// <param name="UserId">GetUsersCommand</param>
+        /// <param name="UserId">GetUsersCommand or Get All Users</param>
         /// <returns>string</returns>
         [HttpGet]
         [Route("{keyword}")]
-        public async Task<IActionResult> GetByKyword(string keyword)
+        public async Task<IActionResult> GetByKyword([FromRoute] string keyword)
         {
             var result = await this.Mediator.Send(new GetUsersByKeyWordCommand { Keyword = keyword });
             return FormatResponseToActionResult(result);

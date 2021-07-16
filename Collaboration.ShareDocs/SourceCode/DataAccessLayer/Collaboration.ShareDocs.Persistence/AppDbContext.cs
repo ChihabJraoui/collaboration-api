@@ -56,13 +56,14 @@ namespace Collaboration.ShareDocs.Persistence
         public DbSet<File> Files { get; set; }
         public DbSet<Folder> Folders { get; set; }
         public DbSet<UserProject> UserProjects { get; set; }
-        public DbSet<Follow> Follows { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<NotificationApplicationUser> UserNotifications { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<NotificationApplicationUser>()
                     .HasKey(k => new { k.NotificationId, k.ApplicationUserId });
+           
+
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);

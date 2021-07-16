@@ -64,7 +64,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Files
                 };
                 //followingUsers
                 var followingUsers = await _unitOfWork.FollowRepository.GetFollowings(new Guid(_currentUserService.UserId), cancellationToken);
-                
+
                 if (followingUsers == null)
                 {
                     var message = string.Format(Resource.Error_NotFound, _currentUserService.UserId);
@@ -73,13 +73,12 @@ namespace Collaboration.ShareDocs.Application.Commands.Files
 
                 await _unitOfWork.NotificationRepository.Create(notification, new Guid(_currentUserService.UserId), cancellationToken);
 
-                //await _unitOfWork.UserNotificationRepository.AssignNotificationToTheUsers( notification, followingUsers, cancellationToken);
+                await _unitOfWork.UserNotificationRepository.AssignNotificationToTheUsers(notification, followingUsers, cancellationToken);
 
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
                 
                 var response = _mapper.Map<FileDto>(file);
                 return ApiCustomResponse.ReturnedObject(response);
-
             }
         }
     }

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Collaboration.ShareDocs.Application.Commands.Users.Dto
 {
-    public class UserProfileDto : IMapForm<ApplicationUser>
+    public class ResponseUserDto : IMapForm<ApplicationUser>
     {
         public Guid Id { get; set; }
         public string FirstName { get; set; }
@@ -17,13 +17,12 @@ namespace Collaboration.ShareDocs.Application.Commands.Users.Dto
         public string PhoneNumber { get; set; }
         public bool IsActive { get; set; }
         public string Image { get; set; }
-        public ICollection<ResponseUserDto> Followers { get; set; }
-        public ICollection<ResponseUserDto> Followings { get; set; }
 
         public virtual void Mapping(Profile profile)
         {
-            profile.CreateMap<ApplicationUser, UserProfileDto>();
+            profile.CreateMap<ApplicationUser, ResponseUserDto>();
         }
 
+    
     }
 }

@@ -23,13 +23,18 @@ namespace Collaboration.ShareDocs.Persistence.Entities
         public  ICollection<UserProject> Projects { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<Follow> Follows { get; set; }
-
+        public virtual ICollection<ApplicationUser> Followers { get; set; }
         [JsonIgnore]
-        public virtual ICollection<Follow> Followings{ get; set; }
+        public virtual ICollection<ApplicationUser> Followings{ get; set; } 
 
         [JsonIgnore]
         public List<NotificationApplicationUser> NotificationApplicationUsers { get; set; }
+        public ApplicationUser()
+        {
+            Followers = new List<ApplicationUser>();
+            Followings = new List<ApplicationUser>();
+        }
+       
 
     }
 }

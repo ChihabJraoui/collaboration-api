@@ -62,6 +62,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
                     Description = request.Description,
                     Workspace = workspace,
                     Icon = "https://ui-avatars.com/api/?background=random&name=" + request.Label,
+                    
                 };
 
                 await _unitOfWork.ProjectRepository.CreateAsync(newProject, cancellationToken);
@@ -73,7 +74,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
                     Text = $"{owner.UserName} has shared {newProject.Label} in the {newProject.Workspace.Name}",
                     Category = Persistence.Enums.Category.project
                 };
-                //followingUsers
+                // followingUsers
                 var followingUsers = await _unitOfWork.FollowRepository.GetFollowings(new Guid(_currentUserService.UserId), cancellationToken);
                 if (followingUsers == null)
                 {
@@ -82,13 +83,11 @@ namespace Collaboration.ShareDocs.Application.Commands.Projects
                 }
                 await _unitOfWork.NotificationRepository.Create(notification, new Guid(_currentUserService.UserId), cancellationToken);
 
-                //await _unitOfWork.UserNotificationRepository.AssignNotificationToTheUsers(notification, followingUsers, cancellationToken);
+                await _unitOfWork.UserNotificationRepository.AssignNotificationToTheUsers(notification, followingUsers, cancellationToken);
 
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
                 var response = _mapper.Map<ProjectDto>(newProject);
                 return ApiCustomResponse.ReturnedObject(response);
-
-
             }
         }
     }

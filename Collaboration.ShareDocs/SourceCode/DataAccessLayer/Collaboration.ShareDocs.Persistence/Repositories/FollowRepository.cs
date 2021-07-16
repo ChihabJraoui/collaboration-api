@@ -1,5 +1,6 @@
 ﻿using Collaboration.ShareDocs.Persistence.Entities;
 using Collaboration.ShareDocs.Persistence.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,54 +11,15 @@ using System.Threading.Tasks;
 
 namespace Collaboration.ShareDocs.Persistence.Repositories
 {
-    public class FollowRepository : GenericRepository<Follow>, IFollowRepository
+    public class FollowRepository : IFollowRepository
     {
         private readonly AppDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public FollowRepository(AppDbContext context) : base(context)
+        public FollowRepository(AppDbContext context, UserManager<ApplicationUser> userManager) 
         {
             _context = context;
-        }
-
-        public async Task<List<ApplicationUser>> GetFollowers(Guid userId, CancellationToken cancellationToken)
-        {
-            var result = await dbSet.Where(w => w.FollowingId == userId)
-                .Select(w => w.Follower)
-                .ToListAsync(cancellationToken);
-
-            return result;
-        }
-
-        public async Task<List<ApplicationUser>> GetFollowings(Guid userId, CancellationToken cancellationToken)
-        {
-            //userid is the currentuser
-            var result = await dbSet.Where(w => w.Follower.Id == userId)
-                .Select(w => w.Following)
-                .ToListAsync(cancellationToken);
-
-            return result;
-        }
-
-        public async Task<Follow> CreateAsync(Follow obj, CancellationToken cancellationToken)
-        {
-            await base.InsertAsync(obj, cancellationToken);
-
-            return obj;
-        }
-
-        public Task<Follow> Delete(Follow follower)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Follow> GetAsync(Guid followerId, Guid memberId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Follow> GetAsync(Guid id, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
+            _userManager = userManager;
         }
 
         public Task<string> GetCurrentUser()
@@ -65,24 +27,22 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<Follow> GetFollowerById(Guid id)
+        public async Task<ICollection<ApplicationUser>> GetFollowers(Guid userId, CancellationToken cancellationToken)
+        {
+            var followers = await _userManager.Users.Where(u => u.Id == userId).Include(u => u.Followers).Select(u => u.Followers).SingleOrDefaultAsync(cancellationToken);
+            return followers;   
+        }
+
+        public async Task<ICollection<ApplicationUser>> GetFollowings(Guid userId, CancellationToken cancellationToken)
+        {
+            var followings = await _userManager.Users.Where(u => u.Id == userId).Include(u => u.Followings).Select(u => u.Followings).SingleOrDefaultAsync(cancellationToken);
+            return followings;
+
+        }
+
+        public Task<bool> IsFollowing(Guid id, string currentUserId)
         {
             throw new NotImplementedException();
-        }
-
-        public async Task<Follow> IsFollowing(Guid id,string currentUserId)
-        {
-            return await dbSet.Where(w => w.FollowerId == new Guid(currentUserId) && w.FollowingId == id).FirstOrDefaultAsync();
-        }
-
-        public Task<Follow> UpdateAsync(Follow obj, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-         bool IRepositoryBase<Follow>.Delete(Follow obj)
-        {
-            return base.Delete(obj);
         }
     }
 }
