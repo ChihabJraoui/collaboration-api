@@ -4,14 +4,16 @@ using Collaboration.ShareDocs.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Collaboration.ShareDocs.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210716090837_AddIndividualChatModel")]
+    partial class AddIndividualChatModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -240,7 +242,7 @@ namespace Collaboration.ShareDocs.Persistence.Migrations
                     b.ToTable("Folders");
                 });
 
-            modelBuilder.Entity("Collaboration.ShareDocs.Persistence.Entities.IndividualChat", b =>
+            modelBuilder.Entity("Collaboration.ShareDocs.Persistence.Entities.IndivudialChat", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -264,7 +266,7 @@ namespace Collaboration.ShareDocs.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("IndividualChats");
+                    b.ToTable("IndivudialChats");
                 });
 
             modelBuilder.Entity("Collaboration.ShareDocs.Persistence.Entities.Notification", b =>
@@ -562,7 +564,7 @@ namespace Collaboration.ShareDocs.Persistence.Migrations
                     b.Navigation("Project");
                 });
 
-            modelBuilder.Entity("Collaboration.ShareDocs.Persistence.Entities.IndividualChat", b =>
+            modelBuilder.Entity("Collaboration.ShareDocs.Persistence.Entities.IndivudialChat", b =>
                 {
                     b.HasOne("Collaboration.ShareDocs.Persistence.Entities.ApplicationUser", "From")
                         .WithMany()

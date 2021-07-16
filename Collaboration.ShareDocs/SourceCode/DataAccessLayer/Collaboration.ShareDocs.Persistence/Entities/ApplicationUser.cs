@@ -29,10 +29,13 @@ namespace Collaboration.ShareDocs.Persistence.Entities
 
         [JsonIgnore]
         public List<NotificationApplicationUser> NotificationApplicationUsers { get; set; }
+
+        public ICollection<IndividualChat> ChatMessagings { get; set; }
         public ApplicationUser()
         {
             Followers = new List<ApplicationUser>();
             Followings = new List<ApplicationUser>();
+            ChatMessagings = new HashSet<IndividualChat>();
         }
        
 

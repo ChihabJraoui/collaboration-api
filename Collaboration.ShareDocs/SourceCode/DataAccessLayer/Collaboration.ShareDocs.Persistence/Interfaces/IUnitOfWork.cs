@@ -18,6 +18,8 @@ namespace Collaboration.ShareDocs.Persistence.Interfaces
         INotificationRepository NotificationRepository { get; }
         INotificationApplicationUser UserNotificationRepository { get; }
         IUserProjectRepository UserProjectRepository { get; }
+        IIndividualChatRepository IndividualChatRepository { get; }
+           
 
         void Save();
 
