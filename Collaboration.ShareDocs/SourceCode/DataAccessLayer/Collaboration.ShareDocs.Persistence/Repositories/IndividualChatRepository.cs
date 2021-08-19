@@ -13,12 +13,13 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
 {
     public class IndividualChatRepository : GenericRepository<IndividualChat>, IIndividualChatRepository
     {
-        public IndividualChatRepository(AppDbContext context,
+        private readonly IHubContext<IndividualChatHub> _hubContext;
 
+        public IndividualChatRepository(AppDbContext context,
             IHubContext<IndividualChatHub> hubContext,
             UserManager<ApplicationUser> userManager) : base(context)
         {
-
+            _hubContext = hubContext;
         }
         public async Task Create(IndividualChat individualChat, CancellationToken cancellationToken)
         {

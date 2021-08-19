@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Collaboration.ShareDocs.Application.Commands.IndividualChat.Dto;
 using Collaboration.ShareDocs.Application.Common.Response;
+using Collaboration.ShareDocs.Persistence.Hubs;
 using Collaboration.ShareDocs.Persistence.Interfaces;
 using MediatR;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Collaboration.ShareDocs.Application.Commands.IndividualChat
 {
-    public class IndividualChatCommand:IRequest<ApiResponseDetails>
+    public class IndividualChatCommand: Hub, IRequest<ApiResponseDetails>
     {
         public string Message { get; set; }
         public Guid To { get; set; }
@@ -25,13 +27,15 @@ namespace Collaboration.ShareDocs.Application.Commands.IndividualChat
             private readonly IUserRepository _userRepository;
 
             private readonly INotificationRepository _notificationRepository;
+            private readonly IHubContext<IndividualChatHub> _hubContext;
 
             public Handler(IUnitOfWork unitOfWork,
                 IUserRepository userRepository,
                 IFollowRepository followRepository,
                 ICurrentUserService currentUserService,
                 INotificationRepository notificationRepository,
-                IMapper mapper)
+                IMapper mapper,
+                IHubContext<IndividualChatHub> hubContext)
             {
                 this._unitOfWork = unitOfWork;
                 this._currentUserService = currentUserService;
@@ -39,11 +43,13 @@ namespace Collaboration.ShareDocs.Application.Commands.IndividualChat
                 _followRepository = followRepository;
                 this._userRepository = userRepository;
                 this._notificationRepository = notificationRepository;
+                _hubContext = hubContext;
             }
 
             public async Task<ApiResponseDetails> Handle(IndividualChatCommand request, CancellationToken cancellationToken)
             {
                 var currentUser = await _userRepository.GetUser(new Guid(_currentUserService.UserId), cancellationToken);
+                //handle error of id
                 var user = await _userRepository.GetUser(request.To, cancellationToken);
                 var message = new Persistence.Entities.IndividualChat {
                     Text = request.Message,
@@ -53,6 +59,8 @@ namespace Collaboration.ShareDocs.Application.Commands.IndividualChat
                 };
                 await _unitOfWork.IndividualChatRepository.Create(message,cancellationToken);
                 await _unitOfWork.SaveChangesAsync();
+                await _hubContext.Clients.All.SendAsync("Recive Message", message.Text);
+
                 var response = _mapper.Map<IndividualChatDto>(message);
                 return ApiCustomResponse.ReturnedObject(response);
 

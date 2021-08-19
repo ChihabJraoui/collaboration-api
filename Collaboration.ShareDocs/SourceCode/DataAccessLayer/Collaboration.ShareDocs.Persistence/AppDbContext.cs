@@ -59,6 +59,7 @@ namespace Collaboration.ShareDocs.Persistence
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<NotificationApplicationUser> UserNotifications { get; set; }
         public DbSet<IndividualChat> IndividualChats { get; set; }
+        public DbSet<Group> Groups { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<NotificationApplicationUser>()
