@@ -69,20 +69,26 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
         /// <param name="projectId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<List<Folder>> FilterAsync(Guid? userId, Guid? projectId, CancellationToken cancellationToken)
+        public async Task<List<Folder>> FilterAsync(Guid? userId, Guid? projectId,Guid? folderParentId ,CancellationToken cancellationToken)
         {
             var query = dbSet.AsQueryable();
 
-            if(userId != null)
+            if(userId != new Guid())
             {
                 query = query.Where(e => e.CreatedBy == userId.ToString());
             }
 
-            if(projectId != null)
+            if(projectId != new Guid())
             {
                 query = query.Where(e => e.Project.Id == projectId);
 
             }
+            if (folderParentId != new Guid())
+            {
+                query = query.Where(f => f.Parent.FolderId == folderParentId); 
+
+            }
+
 
             query = query.Include(e => e.Files);
 
@@ -119,6 +125,12 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
         public Task<Folder> UpdateAsync(Folder obj, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<List<Folder>> GetFoldersByParentId(Guid folderParentId)
+        {
+            var folders = await dbSet.Where(f => f.Parent.FolderId == folderParentId).ToListAsync();
+            return folders;
         }
     }
 }

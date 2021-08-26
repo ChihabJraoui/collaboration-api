@@ -94,6 +94,19 @@ namespace Collaboration.ShareDocs.Persistence
                 return _IndividualChatRepository;
             }
         }
+        private IGroupRepository _IGroupRepository;
+         public IGroupRepository GroupRepository
+        {
+            get
+            {
+
+                if (_IGroupRepository == null)
+                {
+                    this._IGroupRepository = new GroupRepository(_context);
+                }
+                return _IGroupRepository;
+            }
+        }
 
         private IMethodesRepository _methodRepository;
         public IMethodesRepository MethodRepository

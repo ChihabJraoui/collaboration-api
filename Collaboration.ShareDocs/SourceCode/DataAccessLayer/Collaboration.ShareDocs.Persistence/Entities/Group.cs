@@ -18,7 +18,12 @@ namespace Collaboration.ShareDocs.Persistence.Entities
             Members = new List<ApplicationUser>();
             Messages = new List<IndividualChat>();
         }
-
+        public Group(string name,Guid owner)
+        {
+            Name = name;
+            Owner = owner;
+            CreatedAt = DateTime.Now;
+        }
 
        
     }

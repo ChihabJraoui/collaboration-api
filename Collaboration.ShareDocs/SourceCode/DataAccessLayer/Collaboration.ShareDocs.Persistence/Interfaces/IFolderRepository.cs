@@ -33,6 +33,7 @@ namespace Collaboration.ShareDocs.Persistence.Interfaces
         Task<List<Folder>> GetByProjectIdAsync(Guid projectId, CancellationToken cancellationToken);
         Task<List<Folder>> GetByCreatedAsync(Guid userId, CancellationToken cancellationToken);
 
-        Task<List<Folder>> FilterAsync(Guid? projectId, Guid? userId, CancellationToken cancellationToken);
+        Task<List<Folder>> FilterAsync(Guid? projectId, Guid? userId,Guid? folderParentId, CancellationToken cancellationToken);
+        Task<List<Folder>> GetFoldersByParentId(Guid folderParentId);
     }
 }
