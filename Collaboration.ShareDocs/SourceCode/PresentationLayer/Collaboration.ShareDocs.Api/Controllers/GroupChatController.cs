@@ -2,12 +2,13 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Collaboration.ShareDocs.Api.Controllers
 {
     [Authorize]
-    [Microsoft.AspNetCore.Mvc.Route("api/GroupChat")]
+    [Microsoft.AspNetCore.Mvc.Route("api/groupChat")]
     public class GroupChatController : BaseController
     {
         /// <summary>
@@ -47,5 +48,18 @@ namespace Collaboration.ShareDocs.Api.Controllers
             var result = await this.Mediator.Send(command);
             return FormatResponseToActionResult(result);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Microsoft.AspNetCore.Mvc.Route("{groupId:Guid}")]
+        public async Task<IActionResult> GetGroup([FromRoute] Guid groupId)
+        {
+            var result = await this.Mediator.Send(new GetGroupChatByIdCommand() { GroupId = groupId});
+            return FormatResponseToActionResult(result);
+        }
+
     }
 }

@@ -1,26 +1,24 @@
 ﻿using AutoMapper;
+using Collaboration.ShareDocs.Application.Commands.GroupChat.Dto;
+using Collaboration.ShareDocs.Application.Commands.IndividualChat.Dto;
 using Collaboration.ShareDocs.Application.Common.Response;
 using Collaboration.ShareDocs.Persistence.Entities;
 using Collaboration.ShareDocs.Persistence.Interfaces;
 using Collaboration.ShareDocs.Resources;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Collaboration.ShareDocs.Application.Commands.GroupChat
 {
-    public class JoinGroupCommand : IRequest<ApiResponseDetails>
+    public class GetGroupChatByIdCommand:IRequest<ApiResponseDetails>
     {
         public Guid GroupId { get; set; }
-        public Guid[] UsersId { get; set; }
-
-        public class Handler : IRequestHandler<JoinGroupCommand, ApiResponseDetails>
+        public class Handler : IRequestHandler<GetGroupChatByIdCommand, ApiResponseDetails>
         {
             private readonly IUnitOfWork _unitOfWork;
             private readonly ICurrentUserService _currentUserService;
@@ -38,7 +36,7 @@ namespace Collaboration.ShareDocs.Application.Commands.GroupChat
                 _userManager = userManager;
                 _userProjectRepository = userProjectRepository;
             }
-            public async Task<ApiResponseDetails> Handle(JoinGroupCommand request, CancellationToken cancellationToken)
+            public async Task<ApiResponseDetails> Handle(GetGroupChatByIdCommand request, CancellationToken cancellationToken)
             {
                 var group = await _unitOfWork.GroupRepository.GetAsync(request.GroupId, cancellationToken);
                 if (group == null)
@@ -46,25 +44,10 @@ namespace Collaboration.ShareDocs.Application.Commands.GroupChat
                     var message = string.Format(Resource.Error_NotFound, group, request.GroupId);
                     return ApiCustomResponse.NotFound(message);
                 }
-                foreach (var userId in request.UsersId)
-                {
-                    var userDb = await this._userManager.Users.Where(u => u.Id == userId).FirstOrDefaultAsync();
+                var response = _mapper.Map<CreateGroupDto>(group);
+                return ApiCustomResponse.ReturnedObject(response);
 
-                    if (userDb == null)
-                    {
-                        var message = string.Format(Resource.Error_NotFound, userDb, userId);
-                        return ApiCustomResponse.NotFound(message);
-                    }
-
-                    group.Members.Add(userDb);
-
-                     await _unitOfWork.SaveChangesAsync(cancellationToken);
-                    
-                }
-                return ApiCustomResponse.ReturnedObject();
             }
         }
     }
 }
-
-

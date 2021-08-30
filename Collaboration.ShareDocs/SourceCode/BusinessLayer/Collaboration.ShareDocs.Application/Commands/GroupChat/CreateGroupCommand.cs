@@ -44,8 +44,11 @@ namespace Collaboration.ShareDocs.Application.Commands.GroupChat
             public async Task<ApiResponseDetails> Handle(CreateGroupCommand request, CancellationToken cancellationToken)
             {
                 var owner = await _userRepository.GetUser(new Guid(_currentUserService.UserId), cancellationToken);
-                var group = new Group(request.Name, owner.Id);
+                var group = new Group() { Name = request.Name, Owner = owner.Id };
                 var newGroup= await _unitOfWork.GroupRepository.CreateGroup(group, cancellationToken);
+                
+                await _unitOfWork.SaveChangesAsync();
+                newGroup.Members.Add(owner);
                 await _unitOfWork.SaveChangesAsync();
                 var response = _mapper.Map<CreateGroupDto>(newGroup);
                 return ApiCustomResponse.ReturnedObject(response);

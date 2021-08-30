@@ -30,7 +30,7 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
 
         public async Task<Group> GetAsync(Guid id, CancellationToken cancellationToken)
         {
-            var group = await dbSet.Where(w => w.GroupID == id)
+            var group = await dbSet.Where(w => w.GroupID == id).Include(m=>m.Members)
                .SingleOrDefaultAsync(cancellationToken);
             return group;
         }
