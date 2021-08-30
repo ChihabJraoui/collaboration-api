@@ -70,6 +70,8 @@ namespace Collaboration.ShareDocs.Persistence
             services.AddScoped<IFollowRepository, FollowRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IIndividualChatRepository, IndividualChatRepository>();
+            services.AddScoped<IGroupRepository, GroupRepository>();
+
             services.AddTransient<INotificationRepository, NotificationRepository>();
             services.AddTransient<INotificationApplicationUser, UserNotificationRepository>();
             services.AddTransient<IUserProjectRepository, UserProjectRepository>();

@@ -18,6 +18,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Folders
         public Guid ProjectId { get; set; }
 
         public Guid UserId { get; set; }
+        public Guid FolderParentId { get; set; }
 
         public class Handler : IRequestHandler<GetFolderFilterCommand, ApiResponseDetails>
         {
@@ -34,7 +35,7 @@ namespace Collaboration.ShareDocs.Application.Commands.Folders
 
             public async Task<ApiResponseDetails> Handle(GetFolderFilterCommand request, CancellationToken cancellationToken)
             {
-                var folders = await _unitOfWork.FolderRepository.FilterAsync(request.UserId, request.ProjectId, cancellationToken);
+                var folders = await _unitOfWork.FolderRepository.FilterAsync(request.UserId, request.ProjectId,request.FolderParentId, cancellationToken);
                 
                 var response = _mapper.Map<List<FolderDto>>(folders);
 

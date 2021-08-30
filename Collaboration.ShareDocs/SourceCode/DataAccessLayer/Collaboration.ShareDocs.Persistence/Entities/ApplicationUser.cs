@@ -31,6 +31,8 @@ namespace Collaboration.ShareDocs.Persistence.Entities
         public List<NotificationApplicationUser> NotificationApplicationUsers { get; set; }
 
         public ICollection<IndividualChat> ChatMessagings { get; set; }
+        public List<Group> Groups { get; set; }
+
         public ApplicationUser()
         {
             Followers = new List<ApplicationUser>();
