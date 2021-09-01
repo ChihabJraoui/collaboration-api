@@ -28,11 +28,10 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
             await base.InsertAsync(individualChat, cancellationToken);
         }
 
-        public async Task<List<string>> GetChatAsync(Guid currentUserId, Guid userId)
+        public async Task<List<IndividualChat>> GetChatAsync(Guid currentUserId, Guid userId)
         {
-            var history= await dbSet.Where(u => (u.UserId == userId) && (u.From.Id == currentUserId)).Select(t => t.Text && t.SentAt).ToListAsync();
-            return history;
-            //throw new NotImplementedException();
+            var history= await dbSet.Where(u => (u.UserId == userId) && (u.From.Id == currentUserId)).OrderByDescending(w=>w.SentAt).ToListAsync();
+            return history; 
         }
     }
 }

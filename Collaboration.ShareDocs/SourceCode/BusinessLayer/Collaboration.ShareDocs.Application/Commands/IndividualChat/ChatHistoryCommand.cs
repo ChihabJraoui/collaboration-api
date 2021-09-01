@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Collaboration.ShareDocs.Application.Commands.IndividualChat.Dto;
 using Collaboration.ShareDocs.Application.Common.Response;
 using Collaboration.ShareDocs.Persistence.Interfaces;
+using Collaboration.ShareDocs.Resources;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -40,11 +42,18 @@ namespace Collaboration.ShareDocs.Application.Commands.IndividualChat
             public async  Task<ApiResponseDetails> Handle(ChatHistoryCommand request, CancellationToken cancellationToken)
             {
                 var currentUser = await _userRepository.GetUser(new Guid(_currentUserService.UserId), cancellationToken);
+
                 var user = await _userRepository.GetUser(request.UserId, cancellationToken);
+                if (user == null)
+                {
+                    var message = string.Format(Resource.Error_NotFound, request.UserId);
+                    return ApiCustomResponse.NotFound(message);
+                }
+
                 var chatMessaging = await _unitOfWork.IndividualChatRepository.GetChatAsync(currentUser.Id, user.Id);
-                var response = _mapper.Map<List<string>>(chatMessaging);
+                var response = _mapper.Map<List<IndividualChatDto>>(chatMessaging);
                 return ApiCustomResponse.ReturnedObject(response);
-                //throw new NotImplementedException();
+                
             }
         }
     }

@@ -10,6 +10,6 @@ namespace Collaboration.ShareDocs.Persistence.Interfaces
     public interface IIndividualChatRepository
     {
         Task Create(IndividualChat individualChat,CancellationToken cancellationToken);
-        Task<List<string>> GetChatAsync(Guid currentUserId, Guid userId);
+        Task<List<IndividualChat>> GetChatAsync(Guid currentUserId, Guid userId);
     }
 }
