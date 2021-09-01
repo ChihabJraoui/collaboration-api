@@ -25,6 +25,18 @@ namespace Collaboration.ShareDocs.Api.Controllers
             var result = await this.Mediator.Send(command);
             return FormatResponseToActionResult(result);
         }
+        /// <summary>
+        /// Create new Folder
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpGet]
+
+        public async Task<IActionResult> History([FromQuery] Guid usereId)
+        {
+            var result = await this.Mediator.Send(new ChatHistoryCommand() { UserId = usereId});
+            return FormatResponseToActionResult(result);
+        }
 
     }
 }

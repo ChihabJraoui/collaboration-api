@@ -3,8 +3,10 @@ using Collaboration.ShareDocs.Persistence.Hubs;
 using Collaboration.ShareDocs.Persistence.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,6 +26,13 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
         public async Task Create(IndividualChat individualChat, CancellationToken cancellationToken)
         {
             await base.InsertAsync(individualChat, cancellationToken);
+        }
+
+        public async Task<List<string>> GetChatAsync(Guid currentUserId, Guid userId)
+        {
+            var history= await dbSet.Where(u => (u.UserId == userId) && (u.From.Id == currentUserId)).Select(t => t.Text && t.SentAt).ToListAsync();
+            return history;
+            //throw new NotImplementedException();
         }
     }
 }
