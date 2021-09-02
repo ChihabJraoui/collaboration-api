@@ -16,5 +16,6 @@ namespace Collaboration.ShareDocs.Persistence.Interfaces
         /// <param name="cancellationToken"></param>
         /// <returns>Group</returns>
         Task<Group> CreateGroup(Group group, CancellationToken cancellationToken);
+        Task<List<Group>> GetGroupsAsync(ApplicationUser member, CancellationToken cancellationToken);
     }
 }

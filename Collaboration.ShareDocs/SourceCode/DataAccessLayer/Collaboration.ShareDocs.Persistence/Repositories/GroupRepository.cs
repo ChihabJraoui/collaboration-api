@@ -35,6 +35,12 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
             return group;
         }
 
+        public async Task<List<Group>> GetGroupsAsync(ApplicationUser member, CancellationToken cancellationToken)
+        {
+            var groups = await dbSet.Where(w => w.Members.Contains(member)).ToListAsync();
+            return groups;
+        }
+
         public Task<Group> UpdateAsync(Group obj, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
