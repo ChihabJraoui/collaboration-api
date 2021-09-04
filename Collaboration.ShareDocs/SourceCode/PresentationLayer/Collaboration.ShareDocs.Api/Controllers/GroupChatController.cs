@@ -61,5 +61,18 @@ namespace Collaboration.ShareDocs.Api.Controllers
             return FormatResponseToActionResult(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Microsoft.AspNetCore.Mvc.Route("groups/{memberId:Guid}")]
+        public async Task<IActionResult> GetGroups([FromRoute] Guid memberId)
+        {
+            var result = await this.Mediator.Send(new GetGroupsByMemberId() { MemberId = memberId });
+            return FormatResponseToActionResult(result);
+        }
+
     }
 }
