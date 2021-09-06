@@ -19,7 +19,7 @@ namespace Collaboration.ShareDocs.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateGroup(CreateGroupCommand command)
         {
-            var result = await this.Mediator.Send(new CreateGroupCommand { Name = command.Name });
+            var result = await this.Mediator.Send(command);
             return FormatResponseToActionResult(result);
         }
         /// <summary>
