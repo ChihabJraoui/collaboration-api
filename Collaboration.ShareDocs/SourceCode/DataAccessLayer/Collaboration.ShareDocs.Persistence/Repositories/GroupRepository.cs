@@ -41,6 +41,12 @@ namespace Collaboration.ShareDocs.Persistence.Repositories
             return groups;
         }
 
+        public async Task<List<List<IndividualChat>>> GetHistory(Guid groupID, CancellationToken cancellationToken)
+        {
+            var history = await dbSet.Where(h => h.GroupID == groupID).Select(m => m.Messages).ToListAsync(cancellationToken);
+            return history;
+        }
+
         public async Task<List<List<ApplicationUser>>>GetMemberAsync(Guid guid, CancellationToken cancellationToken)
         {
             var members = await dbSet.Where(w => w.GroupID == guid).Select(m => m.Members).ToListAsync();

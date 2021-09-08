@@ -87,5 +87,18 @@ namespace Collaboration.ShareDocs.Api.Controllers
             return FormatResponseToActionResult(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Microsoft.AspNetCore.Mvc.Route("history/{groupId:Guid}")]
+        public async Task<IActionResult> GetHistory([FromRoute] Guid groupId)
+        {
+            var result = await this.Mediator.Send(new GroupChatHistoryCommand() { groupId = groupId });
+            return FormatResponseToActionResult(result);
+        }
+
     }
 }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Collaboration.ShareDocs.Api.Controllers
 {
     [Authorize]
-    [Microsoft.AspNetCore.Mvc.Route("api/Chats")]
+    [Microsoft.AspNetCore.Mvc.Route("api/chats")]
     public class ChatsController:BaseController
     {
         /// <summary>
