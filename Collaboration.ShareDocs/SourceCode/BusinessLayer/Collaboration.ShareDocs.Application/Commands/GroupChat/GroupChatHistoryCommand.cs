@@ -42,24 +42,25 @@ namespace Collaboration.ShareDocs.Application.Commands.GroupChat
             }
             public async Task<ApiResponseDetails> Handle(GroupChatHistoryCommand request, CancellationToken cancellationToken)
             {
+                
                 var group = await _unitOfWork.GroupRepository.GetAsync(request.groupId, cancellationToken);
                 var currentUser = await _userRepository.GetUser(new Guid(_currentUserService.UserId), cancellationToken);
                 var history = await _unitOfWork.GroupRepository.GetHistory(group.GroupID, cancellationToken);
-                foreach (var chat in history)
-                {
-                    foreach (var ch in chat)
-                    {
-                        if (ch.From.Id == currentUser.Id)
-                        {
-                            reply = true;
-                        }
-                        var entity = _mapper.Map<IndividualChatDto>(ch);
-                        var model = new GroupChatHistoryDto() { Messages = entity, replay = reply };
+                //foreach (var chat in history)
+                //{
+                //    foreach (var ch in chat)
+                //    {
+                //        if (ch.From.Id == currentUser.Id)
+                //        {
+                //            reply = true;
+                //        }
+                //        var entity = _mapper.Map<IndividualChatDto>(ch);
+                //        var model = new GroupChatHistoryDto() { Messages = entity, replay = reply };
                        
-                    }
+                //    }
                     
-                }
-                var response = _mapper.Map<List<List<IndividualChatDto>>>(history);
+                //}
+                var response = _mapper.Map<List<List<GroupChatHistoryDto>>>(history);
                 return ApiCustomResponse.ReturnedObject(response);
 
 
