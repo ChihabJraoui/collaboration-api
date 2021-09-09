@@ -48,19 +48,22 @@ namespace Collaboration.ShareDocs.Application.Commands.GroupChat
         public async Task<ApiResponseDetails> Handle(GroupChatCommand request, CancellationToken cancellationToken)
         {
             var currentUser = await _userRepository.GetUser(new Guid(_currentUserService.UserId), cancellationToken);
+            //chek if current user is part of the group
             //handle error of id
             var message = new Persistence.Entities.IndividualChat
             {
                 Text = request.Message,
                 From = currentUser,
-                To = null,
+                To = currentUser,
                 SentAt = DateTime.Now
             };
+            await _unitOfWork.IndividualChatRepository.Create(message, cancellationToken);
+            await _unitOfWork.SaveChangesAsync();
 
             var group = await _unitOfWork.GroupRepository.GetAsync(request.GroupId, cancellationToken);
             group.Messages.Add(message);
-            group.Members.Add(currentUser);
-           // await _unitOfWork.SaveChangesAsync(cancellationToken);
+            
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
             await _hubContext.Clients.All.SendAsync("Recive Message", message.Text);
 
             var response = _mapper.Map<IndividualChatDto>(message);
