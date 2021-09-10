@@ -93,7 +93,7 @@ namespace Collaboration.ShareDocs.Api.Controllers
         /// <param name="command"></param>
         /// <returns></returns>
         [HttpGet]
-        [Microsoft.AspNetCore.Mvc.Route("history/{groupId:Guid}")]
+        [Microsoft.AspNetCore.Mvc.Route("chatHistory/{groupId:Guid}")]
         public async Task<IActionResult> GetHistory([FromRoute] Guid groupId)
         {
             var result = await this.Mediator.Send(new GroupChatHistoryCommand() { groupId = groupId });
