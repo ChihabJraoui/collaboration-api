@@ -46,7 +46,11 @@ namespace Collaboration.ShareDocs.Application.Commands.GroupChat
             public async Task<ApiResponseDetails> Handle(CreateGroupCommand request, CancellationToken cancellationToken)
             {
                 var owner = await _userRepository.GetUser(new Guid(_currentUserService.UserId), cancellationToken);
-                var group = new Group() { Name = request.Name, Owner = owner.Id };
+                var group = new Group() { 
+                    Name = request.Name,
+                    Owner = owner.Id ,
+                    Image= " https://ui-avatars.com/api/?background=random&name=" + request.Name
+            };
                 var newGroup= await _unitOfWork.GroupRepository.CreateGroup(group, cancellationToken);
                 
                 await _unitOfWork.SaveChangesAsync();
