@@ -64,7 +64,7 @@ namespace Collaboration.ShareDocs.Application.Commands.GroupChat
                 var model = new GroupChatHistoryModelDto
                 {
                     History = response,
-                    Name = currentUser.FirstName + ' ' + currentUser.LastName
+                    NameGroup = group.Name
             };
                 
                 return ApiCustomResponse.ReturnedObject(model);

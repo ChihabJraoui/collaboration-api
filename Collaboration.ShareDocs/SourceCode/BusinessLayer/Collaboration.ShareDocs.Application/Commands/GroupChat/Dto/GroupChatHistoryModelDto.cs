@@ -7,7 +7,7 @@ namespace Collaboration.ShareDocs.Application.Commands.GroupChat.Dto
     public class GroupChatHistoryModelDto
     {
         public List<List<GroupChatHistoryDto>> History { get; set; }
-        public string Name { get; set; }
+        public string NameGroup { get; set; }
 
     }
 }
