@@ -51,8 +51,15 @@ namespace Collaboration.ShareDocs.Application.Commands.IndividualChat
                 }
 
                 var chatMessaging = await _unitOfWork.IndividualChatRepository.GetChatAsync(currentUser.Id, user.Id);
+               
                 var response = _mapper.Map<List<IndividualChatDto>>(chatMessaging);
-                return ApiCustomResponse.ReturnedObject(response);
+                var model = new IndividulChatModelDto()
+                {
+                    History = response,
+                    UserName = user.FirstName + ' ' + user.LastName
+
+                };
+                return ApiCustomResponse.ReturnedObject(model);
                 
             }
         }

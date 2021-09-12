@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Collaboration.ShareDocs.Application.Commands.Users.Dto;
 using Collaboration.ShareDocs.Application.Common.Mapping;
 using Collaboration.ShareDocs.Persistence.Entities;
 using System;
@@ -12,7 +13,8 @@ namespace Collaboration.ShareDocs.Application.Commands.GroupChat.Dto
         public Guid GroupID { get; set; }
         public string Name { get; set; }
         public Guid Owner { get; set; }
-        public List<ApplicationUser> Members { get; set; }
+        public string Image { get; set; }
+        public List<ResponseUserDto> Members { get; set; }
         public DateTime CreatedAt { get; set; }
 
         public virtual void Mapping(Profile profile)

@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Collaboration.ShareDocs.Application.Commands.IndividualChat
 {
-    public class IndividualChatCommand: Hub, IRequest<ApiResponseDetails>
+    public class IndividualChatCommand: IRequest<ApiResponseDetails>
     {
         public string Message { get; set; }
         public Guid To { get; set; }

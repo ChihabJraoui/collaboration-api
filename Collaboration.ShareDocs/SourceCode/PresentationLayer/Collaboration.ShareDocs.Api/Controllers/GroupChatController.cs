@@ -19,7 +19,7 @@ namespace Collaboration.ShareDocs.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateGroup(CreateGroupCommand command)
         {
-            var result = await this.Mediator.Send(new CreateGroupCommand { Name = command.Name });
+            var result = await this.Mediator.Send(command);
             return FormatResponseToActionResult(result);
         }
         /// <summary>
@@ -71,6 +71,32 @@ namespace Collaboration.ShareDocs.Api.Controllers
         public async Task<IActionResult> GetGroups([FromRoute] Guid memberId)
         {
             var result = await this.Mediator.Send(new GetGroupsByMemberId() { MemberId = memberId });
+            return FormatResponseToActionResult(result);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Microsoft.AspNetCore.Mvc.Route("members/{groupId:Guid}")]
+        public async Task<IActionResult> GetMembers([FromRoute] Guid groupId)
+        {
+            var result = await this.Mediator.Send(new GetGroupMemberCommand() { GroupId = groupId });
+            return FormatResponseToActionResult(result);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Microsoft.AspNetCore.Mvc.Route("chatHistory/{groupId:Guid}")]
+        public async Task<IActionResult> GetHistory([FromRoute] Guid groupId)
+        {
+            var result = await this.Mediator.Send(new GroupChatHistoryCommand() { groupId = groupId });
             return FormatResponseToActionResult(result);
         }
 
